@@ -8,11 +8,19 @@
 #ifndef DATA_HPP_
 #define DATA_HPP_
 
+#include <boost/multi_array.hpp>
+
 class ATSPData{
 private:
+	int dimension;
 
 public:
+	boost::multi_array<int,2> data;
+
 	ATSPData();
+	void setDimension(int dimension);
+	int getDimension();
+	void print();
 };
 
 #endif /* DATA_HPP_ */

@@ -13,18 +13,23 @@
 #include <boost/foreach.hpp>
 #include <boost/algorithm/string.hpp>
 
+#include <boost/algorithm/string/regex.hpp>
+#include <boost/lexical_cast.hpp>
+
 #include <list>
 
 using namespace std;
+using namespace boost;
 
-Parser::Parser(string filename) : filePath(filename.c_str()) {
+Parser::Parser(string filename) :
+	filePath(filename.c_str()) {
 
 }
 
-void Parser::load(){
+void Parser::load() {
 	boost::filesystem::fstream file(filePath);
 
-	if (!file.is_open()){
+	if (!file.is_open()) {
 		cerr << "Bad file" << endl;
 		return;
 	}
@@ -33,15 +38,61 @@ void Parser::load(){
 	ATSPData data;
 	vector<string> tokens;
 
-	while (file.good()){
-		getline(file,line);
+	while (file.good()) {
+		getline(file, line);
 
-		boost::split(tokens, line, boost::is_any_of("\t "));
+		replace_all_regex(line, regex("[ \t\n]+"), string(" "));
+		replace_all_regex(line, regex("[ \t\n]+$"), string(""));
+		replace_all_regex(line, regex("^[ \t\n]+"), string(""));
 
-		BOOST_FOREACH(string token, tokens)
-		{
-			std::cout << token << '\n';  ;
+		split(tokens, line, boost::is_any_of("\t\n "));
+
+		if (tokens[0] == "DIMENSION:") {
+			try {
+				data.setDimension(lexical_cast<int> (tokens[1]));
+			} catch (bad_lexical_cast &) {
+				cerr << "Bad dimensions" << endl;
+				return;
+			}
 		}
 
+		if (tokens[0] == "EDGE_WEIGHT_SECTION") {
+			cout << "Reading wheights" << endl;
+			break;
+		}
 	}
+
+	int x = 0, y = 0;
+
+	while (file.good()) {
+		getline(file, line);
+
+		replace_all_regex(line, regex("[ \t\n]+"), string(" "));
+		replace_all_regex(line, regex("[ \t\n]+$"), string(""));
+		replace_all_regex(line, regex("^[ \t\n]+"), string(""));
+
+		split(tokens, line, boost::is_any_of("\t\n "));
+
+		if (tokens[0] == "EOF") {
+			cout << "End" << endl;
+			break;
+		}
+
+		BOOST_FOREACH(string tok, tokens)
+		{
+			try {
+				data.data[x++][y] = lexical_cast<int>(tok);
+				if (x >= data.getDimension()){
+					x = 0;
+					y++;
+				}
+
+			} catch(bad_lexical_cast &) {
+				cerr << "Bad value" << endl;
+				return;
+			}
+		}
+	}
+
+	data.print();
 }
