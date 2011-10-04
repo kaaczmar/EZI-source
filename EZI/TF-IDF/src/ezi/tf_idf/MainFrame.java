@@ -14,6 +14,9 @@ import java.awt.event.ActionEvent;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+
+import ezi.tf_idf.utils.Stemmer;
+
 import java.awt.Font;
 
 public class MainFrame extends JFrame {
@@ -87,6 +90,27 @@ public class MainFrame extends JFrame {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
+		Stemmer s = new Stemmer();
+		
+		s.add('m');
+		s.add('a');
+		s.add('t');
+		s.add('i');
+		s.add('n');
+		s.add('g');
+		s.stem();
+		System.out.println(s.toString());
+		
+		s.add('f');
+		s.add('l');
+		s.add('i');
+		s.add('e');
+		s.add('s');
+		s.stem();
+		System.out.println(s.toString());
+		
+		return;
+		/*
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -97,5 +121,6 @@ public class MainFrame extends JFrame {
 				}
 			}
 		});
+		*/
 	}
 }
