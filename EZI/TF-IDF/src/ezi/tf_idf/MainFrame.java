@@ -15,6 +15,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JButton;
 
+import ezi.tf_idf.data.Document;
 import ezi.tf_idf.utils.Stemmer;
 
 import java.awt.Font;
@@ -90,24 +91,11 @@ public class MainFrame extends JFrame {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		Stemmer s = new Stemmer();
-		
-		s.add('m');
-		s.add('a');
-		s.add('t');
-		s.add('i');
-		s.add('n');
-		s.add('g');
-		s.stem();
-		System.out.println(s.toString());
-		
-		s.add('f');
-		s.add('l');
-		s.add('i');
-		s.add('e');
-		s.add('s');
-		s.stem();
-		System.out.println(s.toString());
+		Document doc = new Document("UCI Machine Learning Repository",
+"Welcome to the UCI Machine Learning Repository! ... The majority of the entries in the "+
+"repository were contributed by machine learning researchers outside of UCI. ..."+ 
+"Description: A repository of databases, domain theories and data generators that are used by the machine learning...");
+		System.out.println(doc.getStemmedDocument());
 		
 		return;
 		/*
