@@ -31,6 +31,6 @@ public class Document {
 		}
 		s.stem();
 		stemmedDocument += s.toString();
-		stemmedDocument = stemmedDocument.replaceAll("[ \t\n]+", " ");
+		stemmedDocument = stemmedDocument.replaceAll("[ \t\n]+", " ").trim();
 	}
 }
