@@ -16,6 +16,7 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 
 import ezi.tf_idf.data.Document;
+import ezi.tf_idf.data.Term;
 import ezi.tf_idf.utils.Stemmer;
 
 import java.awt.Font;
@@ -96,6 +97,9 @@ public class MainFrame extends JFrame {
 "repository were contributed by machine learning researchers outside of UCI. ..."+ 
 "Description: A repository of databases, domain theories and data generators that are used by the machine learning...");
 		System.out.println(doc.getStemmedDocument());
+		
+		Term term = new Term("international");
+		System.out.println(term.getStemmedTerm());
 		
 		return;
 		/*

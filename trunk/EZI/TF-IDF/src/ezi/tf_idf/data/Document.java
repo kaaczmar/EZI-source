@@ -13,12 +13,12 @@ public class Document {
 	
 	public Document(String title, String content)
 	{
-		this.title = title;
-		this.content = content;
+		this.title = title.trim();
+		this.content = content.trim();
 		stemmedDocument = "";
 		
 		Stemmer s = new Stemmer();
-		String temp = title + "\n" + content;
+		String temp = this.title + "\n" + this.content;
 		for (int i = 0; i < temp.length(); i++)
 		{
 			char ch = temp.charAt(i);
