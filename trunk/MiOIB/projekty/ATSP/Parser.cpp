@@ -26,16 +26,15 @@ Parser::Parser(string filename) :
 
 }
 
-void Parser::load() {
+bool Parser::load(ATSPData &data) {
 	boost::filesystem::fstream file(filePath);
 
 	if (!file.is_open()) {
 		cerr << "Bad file" << endl;
-		return;
+		return false;
 	}
 
 	string line;
-	ATSPData data;
 	vector<string> tokens;
 
 	while (file.good()) {
@@ -52,7 +51,7 @@ void Parser::load() {
 				data.setDimension(lexical_cast<int> (tokens[1]));
 			} catch (bad_lexical_cast &) {
 				cerr << "Bad dimensions" << endl;
-				return;
+				return false;
 			}
 		}
 
@@ -80,6 +79,9 @@ void Parser::load() {
 
 		BOOST_FOREACH(string tok, tokens)
 		{
+			if (tok.length() == 0)
+				continue;
+
 			try {
 				data.data[x++][y] = lexical_cast<int>(tok);
 				if (x >= data.getDimension()){
@@ -88,11 +90,11 @@ void Parser::load() {
 				}
 
 			} catch(bad_lexical_cast &) {
-				cerr << "Bad value" << endl;
-				return;
+				cerr << "Bad value: " << tok << "[" << tok.length() << "]" << endl;
 			}
 		}
 	}
 
-	data.print();
+//	data.print();
+	return true;
 }
