@@ -18,6 +18,8 @@ import java.io.File;
 
 import javax.swing.JSeparator;
 
+import ezi.tf_idf.utils.DocumentFileParser;
+
 public class MainFrame extends JFrame {
 
 	private static final long serialVersionUID = 4320302161936573161L;
