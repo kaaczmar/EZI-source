@@ -1,4 +1,4 @@
-package ezi.tf_idf;
+package ezi.tf_idf.utils;
 
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
@@ -6,25 +6,32 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import ezi.tf_idf.data.Document;
+
 public class DocumentFileParser {
 	public static ArrayList<Document> parse(String filename){
 		System.out.println("Parsing: " + filename);
 		
-		int id = 0;		
 		ArrayList<Document> documents = new ArrayList<Document>();
-		Document currentDocument = new Document(id++);
+		String title = null;
+		String content = null;
 		
 		try {
 			BufferedReader in = new BufferedReader(new FileReader(filename));
 			String str;
 			while ((str = in.readLine()) != null) {
-				if (currentDocument.getTitle()== null){
-					currentDocument.setTitle(str);
-					System.out.println("Dokument " + currentDocument.getId() + " -> " + currentDocument.getTitle());
+				if (title== null){
+					title = new String(str);
+					System.out.println("Dokument " + title);
+					content = new String();
 				}
 				else if (str.equalsIgnoreCase("")) {
-					documents.add(currentDocument);
-					currentDocument = new Document(id++);
+					documents.add(new Document(title, content));
+					System.out.println("Content: " + content);
+					title = null;
+					content = null;
+				} else {
+					content += str;
 				}
 			}
 			in.close();
