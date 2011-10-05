@@ -18,7 +18,7 @@ import ezi.tf_idf.utils.Stemmer;
  * @author Mateusz
  * 
  */
-public class Document {
+public class Document implements Comparable<Document> {
 	protected String title;
 	private String content;
 	private String stemmedDocument;
@@ -56,6 +56,7 @@ public class Document {
 
 		Stemmer s = new Stemmer();
 		String temp = this.title + "\n" + this.content;
+		temp = temp.toLowerCase();
 		for (int i = 0; i < temp.length(); i++) {
 			char ch = temp.charAt(i);
 			if (Character.isLetter(ch))
@@ -108,5 +109,12 @@ public class Document {
 		}
 		similiarity = similiarity
 				/ (tfidf.getVectorLength() * document.tfidf.getVectorLength());
+	}
+
+	@Override
+	public int compareTo(Document o) {
+		if (o.getSimiliarity() > getSimiliarity()) return 1;
+		if (o.getSimiliarity() < getSimiliarity()) return -1;
+		return 0;
 	}
 }
