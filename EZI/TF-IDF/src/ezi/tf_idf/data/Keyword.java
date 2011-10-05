@@ -21,7 +21,7 @@ public class Keyword {
 	}
 
 	public Keyword(String term) {
-		originalKeyword = term.replaceAll("[ \t\n]+", " ").trim();
+		originalKeyword = term.replaceAll("[ \t\n]+", " ").trim().toLowerCase();
 
 		Stemmer s = new Stemmer();
 		for (int i = 0; i < originalKeyword.length(); i++) {

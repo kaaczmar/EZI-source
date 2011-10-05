@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -129,9 +130,14 @@ public class MainFrame extends JFrame {
 		Query query = new Query(textFieldQuery.getText(), keywords, idf);
 		for (Document document : documents)
 		{
-			document.calculateTFSimiliarity(query);
-			System.out.println(document.getTitle() + " TF: " + document.getSimiliarity());
+			//document.calculateTFSimiliarity(query);
+			//System.out.println(document.getTitle() + " TF: " + document.getSimiliarity());
 			document.calculateTFIDFSimiliarity(query);
+		}
+		Collections.sort(documents);
+		//check documents list
+		for (Document document : documents)
+		{
 			System.out.println(document.getTitle() + " TFIDF: " + document.getSimiliarity());
 		}
 	}

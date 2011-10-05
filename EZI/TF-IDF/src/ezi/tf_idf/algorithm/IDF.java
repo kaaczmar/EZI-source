@@ -37,11 +37,20 @@ public class IDF {
 				if (document.contains(word.getStemmedKeyword()))
 					count += 1;
 			}
-			count = documents.size() / count;
-			count = Math.log10(count);
-			idfValues.put(word.getStemmedKeyword(), count);
-
-			System.out.println(word.getStemmedKeyword() + ": " + count);
+			if (count == 0)
+			{
+				idfValues.put(word.getStemmedKeyword(), count);
+				
+				System.out.println("Hey, documents don't have this word! " + word.getStemmedKeyword());
+			}
+			else
+			{
+				count = documents.size() / count;
+				count = Math.log10(count);
+				idfValues.put(word.getStemmedKeyword(), count);
+	
+				System.out.println(word.getStemmedKeyword() + ": " + count);
+			}
 		}
 	}
 }
