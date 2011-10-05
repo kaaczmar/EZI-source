@@ -1,29 +1,38 @@
 package ezi.tf_idf;
 
 import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JFileChooser;
-import javax.swing.JMenuBar;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
-import javax.swing.JTextField;
-import javax.swing.JButton;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
+import java.util.ArrayList;
 
+import javax.swing.JButton;
+import javax.swing.JFileChooser;
+import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 import javax.swing.JSeparator;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 
+import ezi.tf_idf.algorithm.IDF;
+import ezi.tf_idf.data.Document;
+import ezi.tf_idf.data.Keyword;
+import ezi.tf_idf.data.Query;
 import ezi.tf_idf.utils.DocumentFileParser;
+import ezi.tf_idf.utils.KeywordFileParser;
 
 public class MainFrame extends JFrame {
 
 	private static final long serialVersionUID = 4320302161936573161L;
 
+	private ArrayList<Keyword> keywords;
+	private ArrayList<Document> documents;
+	private IDF idf;
+	
 	private JPanel contentPane;
 
 	private JMenuBar menuBar;
@@ -70,7 +79,7 @@ public class MainFrame extends JFrame {
 		mntmOpen = new JMenuItem("Open keywords file");
 		mntmOpen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				
+				loadKeywords();
 			}
 		});
 		menuFile.add(mntmOpen);
@@ -107,12 +116,69 @@ public class MainFrame extends JFrame {
 		
 		btnSearch = new JButton("Search");
 		btnSearch.setBounds(669, 43, 117, 25);
+		btnSearch.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				computeTFIDF();
+			}
+		});
 		contentPane.add(btnSearch);
+	}
+	
+	private void computeTFIDF()
+	{
+		Query query = new Query(textFieldQuery.getText(), keywords, idf);
+		for (Document document : documents)
+		{
+			document.calculateTFSimiliarity(query);
+			System.out.println(document.getTitle() + " TF: " + document.getSimiliarity());
+			document.calculateTFIDFSimiliarity(query);
+			System.out.println(document.getTitle() + " TFIDF: " + document.getSimiliarity());
+		}
 	}
 	
 	private void loadDocuments(){
 		if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
-			DocumentFileParser.parse(fileChooser.getSelectedFile().getAbsolutePath());
+			documents = DocumentFileParser.parse(fileChooser.getSelectedFile().getAbsolutePath());
+			if (keywords != null)
+			{
+				idf = new IDF(documents, keywords);
+				
+				for (Document document : documents)
+				{
+					document.applyKeywordSet(keywords);
+					document.applyIDF(idf);
+				}
+				
+				textFieldQuery.setText("<---type your query here--->");		
+				textFieldQuery.setEnabled(true);
+			}
+			else
+			{
+				textFieldQuery.setText("<---load keywords file first--->");
+			}
+		}
+	}
+	
+	private void loadKeywords(){
+		if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
+			keywords = KeywordFileParser.parse(fileChooser.getSelectedFile().getAbsolutePath());
+			if (documents != null)
+			{
+				idf = new IDF(documents, keywords);
+				
+				for (Document document : documents)
+				{
+					document.applyKeywordSet(keywords);
+					document.applyIDF(idf);
+				}
+				
+				textFieldQuery.setText("<---type your query here--->");
+				textFieldQuery.setEnabled(true);
+			}
+			else
+			{
+				textFieldQuery.setText("<---load documents file first--->");
+			}
 		}
 	}
 	
@@ -120,17 +186,6 @@ public class MainFrame extends JFrame {
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-//	Document doc = new Document("UCI Machine Learning Repository",
-//"Welcome to the UCI Machine Learning Repository! ... The majority of the entries in the "+
-//"repository were contributed by machine learning researchers outside of UCI. ..."+ 
-//"Description: A repository of databases, domain theories and data generators that are used by the machine learning...");
-//		System.out.println(doc.getStemmedDocument());
-//		
-//		Term term = new Term("international");
-//		System.out.println(term.getStemmedTerm());
-//		
-//		return;
-	
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
