@@ -11,15 +11,12 @@ import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JButton;
-
-import ezi.tf_idf.data.Document;
-import ezi.tf_idf.data.Term;
-import ezi.tf_idf.utils.Stemmer;
-
 import java.awt.Font;
+import java.io.File;
+
+import javax.swing.JSeparator;
 
 public class MainFrame extends JFrame {
 
@@ -35,6 +32,12 @@ public class MainFrame extends JFrame {
 	private JFileChooser fileChooser;
 	private JTextField textFieldQuery;
 	private JButton btnSearch;
+	private JMenu mnView;
+	private JMenuItem mntmOriginalDocuments;
+	private JMenuItem mntmStemmedDocuments;
+	private JMenuItem mntmOriginalKeywords;
+	private JMenuItem mntmStemmedKeywords;
+	private JSeparator separator;
 
 	/**
 	 * Create the frame.
@@ -46,6 +49,7 @@ public class MainFrame extends JFrame {
 		setBounds(100, 100, 800, 600);
 		
 		fileChooser = new JFileChooser();
+		fileChooser.setCurrentDirectory(new File("."));
 		
 		menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -56,7 +60,7 @@ public class MainFrame extends JFrame {
 		mntmOpenDocumentsFile = new JMenuItem("Open documents file");
 		mntmOpenDocumentsFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				fileChooser.showOpenDialog(null);
+				loadDocuments();
 			}
 		});
 		menuFile.add(mntmOpenDocumentsFile);
@@ -64,12 +68,28 @@ public class MainFrame extends JFrame {
 		mntmOpen = new JMenuItem("Open keywords file");
 		mntmOpen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
-					
-				}
+				
 			}
 		});
 		menuFile.add(mntmOpen);
+		
+		mnView = new JMenu("View");
+		menuBar.add(mnView);
+		
+		mntmOriginalDocuments = new JMenuItem("Original documents");
+		mnView.add(mntmOriginalDocuments);
+		
+		mntmStemmedDocuments = new JMenuItem("Stemmed documents");
+		mnView.add(mntmStemmedDocuments);
+		
+		separator = new JSeparator();
+		mnView.add(separator);
+		
+		mntmOriginalKeywords = new JMenuItem("Original keywords");
+		mnView.add(mntmOriginalKeywords);
+		
+		mntmStemmedKeywords = new JMenuItem("Stemmed keywords");
+		mnView.add(mntmStemmedKeywords);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -88,21 +108,27 @@ public class MainFrame extends JFrame {
 		contentPane.add(btnSearch);
 	}
 	
+	private void loadDocuments(){
+		if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
+			DocumentFileParser.parse(fileChooser.getSelectedFile().getAbsolutePath());
+		}
+	}
+	
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
-		Document doc = new Document("UCI Machine Learning Repository",
-"Welcome to the UCI Machine Learning Repository! ... The majority of the entries in the "+
-"repository were contributed by machine learning researchers outside of UCI. ..."+ 
-"Description: A repository of databases, domain theories and data generators that are used by the machine learning...");
-		System.out.println(doc.getStemmedDocument());
-		
-		Term term = new Term("international");
-		System.out.println(term.getStemmedTerm());
-		
-		return;
-		/*
+//	Document doc = new Document("UCI Machine Learning Repository",
+//"Welcome to the UCI Machine Learning Repository! ... The majority of the entries in the "+
+//"repository were contributed by machine learning researchers outside of UCI. ..."+ 
+//"Description: A repository of databases, domain theories and data generators that are used by the machine learning...");
+//		System.out.println(doc.getStemmedDocument());
+//		
+//		Term term = new Term("international");
+//		System.out.println(term.getStemmedTerm());
+//		
+//		return;
+	
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
@@ -113,6 +139,5 @@ public class MainFrame extends JFrame {
 				}
 			}
 		});
-		*/
 	}
 }
