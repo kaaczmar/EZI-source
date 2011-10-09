@@ -15,28 +15,31 @@ import javax.swing.text.StyledDocument;
 
 import ezi.tf_idf.data.Document;
 import ezi.tf_idf.data.Keyword;
+import javax.swing.JRadioButton;
+import javax.swing.ButtonGroup;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
-public class PresentationDialog extends JDialog {
+public abstract class PresentationDialog extends JDialog {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -6063877896245955998L;
-	private JScrollPane scrollPane;
-	private JTextPane displayTextPane;
-
+	protected JScrollPane scrollPane;
+	protected JTextPane displayTextPane;
 	/**
-	 * Launch the application.
+	 * @wbp.nonvisual location=660,137
 	 */
-	// public static void main(String[] args) {
-	// try {
-	// PresentationDialog dialog = new PresentationDialog();
-	// dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-	// dialog.setVisible(true);
-	// } catch (Exception e) {
-	// e.printStackTrace();
-	// }
-	// }
+	protected final ButtonGroup typeButtonGroup = new ButtonGroup();
+	protected JRadioButton rdbtnOriginal;
+	protected JRadioButton rdbtnStemmed;
+	
+	protected DefaultStyledDocument originalDocument;
+	protected DefaultStyledDocument stemmedDocument;
+	protected SimpleAttributeSet titleAttributes;
+	protected SimpleAttributeSet textAttributes;
+	protected SimpleAttributeSet errorAttributes;
 
 	/**
 	 * Create the dialog.
@@ -47,113 +50,55 @@ public class PresentationDialog extends JDialog {
 		getContentPane().setLayout(null);
 
 		scrollPane = new JScrollPane();
-		scrollPane.setBounds(12, 12, 774, 546);
+		scrollPane.setBounds(12, 39, 774, 519);
 
 		getContentPane().add(scrollPane);
 
 		displayTextPane = new JTextPane();
 		displayTextPane.setEditable(false);
 		scrollPane.setViewportView(displayTextPane);
-
-	}
-
-	public void displayDocuments(String title, ArrayList<Document> documents,
-			boolean stemmed) {
-		this.setTitle(title);
-
-		StyledDocument document = new DefaultStyledDocument();
 		
-		SimpleAttributeSet titleAttributes = new SimpleAttributeSet();
+		rdbtnOriginal = new JRadioButton("Original");
+		rdbtnOriginal.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if (rdbtnOriginal.isSelected())
+					displayTextPane.setStyledDocument(originalDocument);
+			}
+		});
+		rdbtnOriginal.setSelected(true);
+		rdbtnOriginal.setBounds(12, 8, 149, 23);
+		
+		rdbtnStemmed = new JRadioButton("Stemmed");
+		rdbtnStemmed.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				if (rdbtnStemmed.isSelected())
+					displayTextPane.setStyledDocument(stemmedDocument);
+			}
+		});
+		rdbtnStemmed.setBounds(198, 8, 149, 23);
+		
+		typeButtonGroup.add(rdbtnOriginal);
+		typeButtonGroup.add(rdbtnStemmed);
+		
+		getContentPane().add(rdbtnOriginal);
+		getContentPane().add(rdbtnStemmed);
+		
+		titleAttributes = new SimpleAttributeSet();
 		titleAttributes.addAttribute(StyleConstants.CharacterConstants.Bold,
 				Boolean.TRUE);
 		titleAttributes.addAttribute(
 				StyleConstants.CharacterConstants.Underline, Boolean.TRUE);
 		
-		SimpleAttributeSet textAttributes = new SimpleAttributeSet();
+		textAttributes = new SimpleAttributeSet();
 		
-		SimpleAttributeSet errorAttributes = new SimpleAttributeSet();
-		
+		errorAttributes = new SimpleAttributeSet();
 		errorAttributes.addAttribute(StyleConstants.Foreground, Color.RED);
 		errorAttributes.addAttribute(StyleConstants.CharacterConstants.Bold,
 				Boolean.TRUE);
-
-		if (documents == null) {
-			try {
-				document.insertString(document.getLength(), "No documents to display at this time", errorAttributes);
-			} catch (BadLocationException e) {
-				e.printStackTrace();
-			}
-		} else {
-
-			for (Document doc : documents) {
-				if (stemmed)
-					try {
-						document.insertString(document.getLength(), doc
-								.getTitle()
-								+ "\n", titleAttributes);
-						document.insertString(document.getLength(), doc
-								.getStemmedDocument()
-								+ "\n\n", textAttributes);
-					} catch (BadLocationException e) {
-						e.printStackTrace();
-					}
-				else {
-					try {
-						document.insertString(document.getLength(), doc
-								.getTitle()
-								+ "\n", titleAttributes);
-						document.insertString(document.getLength(), doc
-								.getContent()
-								+ "\n\n", textAttributes);
-					} catch (BadLocationException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-		}
 		
-		displayTextPane.setStyledDocument(document);
+		originalDocument = new DefaultStyledDocument();
+		stemmedDocument = new DefaultStyledDocument();
+
 	}
-	
-	public void displayKeywords(String title, ArrayList<Keyword> keywords,
-			boolean stemmed) {
-		this.setTitle(title);
 
-		StyledDocument document = new DefaultStyledDocument();
-		
-		SimpleAttributeSet textAttributes = new SimpleAttributeSet();
-		
-		SimpleAttributeSet errorAttributes = new SimpleAttributeSet();
-		
-		errorAttributes.addAttribute(StyleConstants.Foreground, Color.RED);
-		errorAttributes.addAttribute(StyleConstants.CharacterConstants.Bold,
-				Boolean.TRUE);
-
-		if (keywords == null) {
-			try {
-				document.insertString(document.getLength(), "No keywords to display at this time", errorAttributes);
-			} catch (BadLocationException e) {
-				e.printStackTrace();
-			}
-		} else {
-
-			for (Keyword keyword : keywords) {
-				if (stemmed)
-					try {
-						document.insertString(document.getLength(), keyword.getStemmedKeyword() + "\n", textAttributes);
-					} catch (BadLocationException e) {
-						e.printStackTrace();
-					}
-				else {
-					try {
-						document.insertString(document.getLength(), keyword.getOriginalKeyword() + "\n", textAttributes);
-					} catch (BadLocationException e) {
-						e.printStackTrace();
-					}
-				}
-			}
-		}
-		
-		displayTextPane.setStyledDocument(document);
-	}
 }
