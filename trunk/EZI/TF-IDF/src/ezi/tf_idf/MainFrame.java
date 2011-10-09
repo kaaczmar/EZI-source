@@ -89,18 +89,38 @@ public class MainFrame extends JFrame {
 		menuBar.add(mnView);
 		
 		mntmOriginalDocuments = new JMenuItem("Original documents");
+		mntmOriginalDocuments.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				showOriginalDocuments();
+			}
+		});
 		mnView.add(mntmOriginalDocuments);
 		
 		mntmStemmedDocuments = new JMenuItem("Stemmed documents");
+		mntmStemmedDocuments.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				showStemmedDocuments();
+			}
+		});
 		mnView.add(mntmStemmedDocuments);
 		
 		separator = new JSeparator();
 		mnView.add(separator);
 		
 		mntmOriginalKeywords = new JMenuItem("Original keywords");
+		mntmOriginalKeywords.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				showOriginalKeywords();
+			}
+		});
 		mnView.add(mntmOriginalKeywords);
 		
 		mntmStemmedKeywords = new JMenuItem("Stemmed keywords");
+		mntmStemmedKeywords.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				showStemmedKeywords();
+			}
+		});
 		mnView.add(mntmStemmedKeywords);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -186,6 +206,30 @@ public class MainFrame extends JFrame {
 				textFieldQuery.setText("<---load documents file first--->");
 			}
 		}
+	}
+	
+	private void showOriginalDocuments(){
+		PresentationDialog dialog = new PresentationDialog();
+		dialog.displayDocuments("Original documents", documents, false);
+		dialog.setVisible(true);
+	}
+	
+	private void showStemmedDocuments(){
+		PresentationDialog dialog = new PresentationDialog();
+		dialog.displayDocuments("Stemmed documents", documents, true);
+		dialog.setVisible(true);
+	}
+	
+	private void showOriginalKeywords(){
+		PresentationDialog dialog = new PresentationDialog();
+		dialog.displayKeywords("Original keywords", keywords, false);
+		dialog.setVisible(true);
+	}
+	
+	private void showStemmedKeywords(){
+		PresentationDialog dialog = new PresentationDialog();
+		dialog.displayKeywords("Stemmed keywords", keywords, true);
+		dialog.setVisible(true);
 	}
 	
 	/**
