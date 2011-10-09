@@ -45,11 +45,11 @@ public class MainFrame extends JFrame {
 	private JTextField textFieldQuery;
 	private JButton btnSearch;
 	private JMenu mnView;
-	private JMenuItem mntmOriginalDocuments;
-	private JMenuItem mntmStemmedDocuments;
-	private JMenuItem mntmOriginalKeywords;
-	private JMenuItem mntmStemmedKeywords;
-	private JSeparator separator;
+	private JMenuItem mntmDocuments;
+	private JMenuItem mntmKeywords;
+	
+	private DocumentPresentationDialog documentPresentationDialog;
+	private KeywordPresentationDialog keywordPresentationDialog;
 
 	/**
 	 * Create the frame.
@@ -62,6 +62,9 @@ public class MainFrame extends JFrame {
 		
 		fileChooser = new JFileChooser();
 		fileChooser.setCurrentDirectory(new File("."));
+		
+		keywordPresentationDialog = new KeywordPresentationDialog();
+		documentPresentationDialog = new DocumentPresentationDialog();
 		
 		menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
@@ -88,40 +91,21 @@ public class MainFrame extends JFrame {
 		mnView = new JMenu("View");
 		menuBar.add(mnView);
 		
-		mntmOriginalDocuments = new JMenuItem("Original documents");
-		mntmOriginalDocuments.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				showOriginalDocuments();
-			}
-		});
-		mnView.add(mntmOriginalDocuments);
-		
-		mntmStemmedDocuments = new JMenuItem("Stemmed documents");
-		mntmStemmedDocuments.addActionListener(new ActionListener() {
+		mntmDocuments = new JMenuItem("Documents");
+		mntmDocuments.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				showStemmedDocuments();
 			}
 		});
-		mnView.add(mntmStemmedDocuments);
+		mnView.add(mntmDocuments);
 		
-		separator = new JSeparator();
-		mnView.add(separator);
-		
-		mntmOriginalKeywords = new JMenuItem("Original keywords");
-		mntmOriginalKeywords.addActionListener(new ActionListener() {
+		mntmKeywords = new JMenuItem("Keywords");
+		mntmKeywords.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				showOriginalKeywords();
 			}
 		});
-		mnView.add(mntmOriginalKeywords);
-		
-		mntmStemmedKeywords = new JMenuItem("Stemmed keywords");
-		mntmStemmedKeywords.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-				showStemmedKeywords();
-			}
-		});
-		mnView.add(mntmStemmedKeywords);
+		mnView.add(mntmKeywords);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -143,6 +127,7 @@ public class MainFrame extends JFrame {
 			}
 		});
 		contentPane.add(btnSearch);
+		
 	}
 	
 	private void computeTFIDF()
@@ -165,6 +150,8 @@ public class MainFrame extends JFrame {
 	private void loadDocuments(){
 		if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
 			documents = DocumentFileParser.parse(fileChooser.getSelectedFile().getAbsolutePath());
+			documentPresentationDialog.update(documents);
+			
 			if (keywords != null)
 			{
 				idf = new IDF(documents, keywords);
@@ -188,6 +175,8 @@ public class MainFrame extends JFrame {
 	private void loadKeywords(){
 		if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
 			keywords = KeywordFileParser.parse(fileChooser.getSelectedFile().getAbsolutePath());
+			keywordPresentationDialog.update(keywords);
+			
 			if (documents != null)
 			{
 				idf = new IDF(documents, keywords);
@@ -208,28 +197,12 @@ public class MainFrame extends JFrame {
 		}
 	}
 	
-	private void showOriginalDocuments(){
-		PresentationDialog dialog = new PresentationDialog();
-		dialog.displayDocuments("Original documents", documents, false);
-		dialog.setVisible(true);
-	}
-	
 	private void showStemmedDocuments(){
-		PresentationDialog dialog = new PresentationDialog();
-		dialog.displayDocuments("Stemmed documents", documents, true);
-		dialog.setVisible(true);
+		documentPresentationDialog.setVisible(true);
 	}
 	
 	private void showOriginalKeywords(){
-		PresentationDialog dialog = new PresentationDialog();
-		dialog.displayKeywords("Original keywords", keywords, false);
-		dialog.setVisible(true);
-	}
-	
-	private void showStemmedKeywords(){
-		PresentationDialog dialog = new PresentationDialog();
-		dialog.displayKeywords("Stemmed keywords", keywords, true);
-		dialog.setVisible(true);
+		keywordPresentationDialog.setVisible(true);
 	}
 	
 	/**
