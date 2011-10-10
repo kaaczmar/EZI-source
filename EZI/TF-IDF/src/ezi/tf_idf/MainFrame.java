@@ -15,7 +15,6 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
-import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
@@ -33,21 +32,21 @@ public class MainFrame extends JFrame {
 	private ArrayList<Keyword> keywords;
 	private ArrayList<Document> documents;
 	private IDF idf;
-	
+
 	private JPanel contentPane;
 
 	private JMenuBar menuBar;
 	private JMenu menuFile;
 	private JMenuItem mntmOpenDocumentsFile;
 	private JMenuItem mntmOpen;
-	
+
 	private JFileChooser fileChooser;
 	private JTextField textFieldQuery;
 	private JButton btnSearch;
 	private JMenu mnView;
 	private JMenuItem mntmDocuments;
 	private JMenuItem mntmKeywords;
-	
+
 	private DocumentPresentationDialog documentPresentationDialog;
 	private KeywordPresentationDialog keywordPresentationDialog;
 
@@ -59,19 +58,19 @@ public class MainFrame extends JFrame {
 		setTitle("CJ Search Engine");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 600);
-		
+
 		fileChooser = new JFileChooser();
 		fileChooser.setCurrentDirectory(new File("."));
-		
+
 		keywordPresentationDialog = new KeywordPresentationDialog();
 		documentPresentationDialog = new DocumentPresentationDialog();
-		
+
 		menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
-		
+
 		menuFile = new JMenu("File");
 		menuBar.add(menuFile);
-		
+
 		mntmOpenDocumentsFile = new JMenuItem("Open documents file");
 		mntmOpenDocumentsFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -79,7 +78,7 @@ public class MainFrame extends JFrame {
 			}
 		});
 		menuFile.add(mntmOpenDocumentsFile);
-		
+
 		mntmOpen = new JMenuItem("Open keywords file");
 		mntmOpen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -87,10 +86,10 @@ public class MainFrame extends JFrame {
 			}
 		});
 		menuFile.add(mntmOpen);
-		
+
 		mnView = new JMenu("View");
 		menuBar.add(mnView);
-		
+
 		mntmDocuments = new JMenuItem("Documents");
 		mntmDocuments.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -98,7 +97,7 @@ public class MainFrame extends JFrame {
 			}
 		});
 		mnView.add(mntmDocuments);
-		
+
 		mntmKeywords = new JMenuItem("Keywords");
 		mntmKeywords.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -110,15 +109,16 @@ public class MainFrame extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
-		
+
 		textFieldQuery = new JTextField();
 		textFieldQuery.setFont(new Font("Dialog", Font.PLAIN, 16));
-		textFieldQuery.setText("<---load documents and keywords files first--->");
+		textFieldQuery
+				.setText("<---load documents and keywords files first--->");
 		textFieldQuery.setEnabled(false);
 		textFieldQuery.setBounds(12, 12, 774, 25);
 		contentPane.add(textFieldQuery);
 		textFieldQuery.setColumns(10);
-		
+
 		btnSearch = new JButton("Search");
 		btnSearch.setBounds(669, 43, 117, 25);
 		btnSearch.addActionListener(new ActionListener() {
@@ -127,84 +127,77 @@ public class MainFrame extends JFrame {
 			}
 		});
 		contentPane.add(btnSearch);
-		
+
 	}
-	
-	private void computeTFIDF()
-	{
+
+	private void computeTFIDF() {
 		Query query = new Query(textFieldQuery.getText(), keywords, idf);
-		for (Document document : documents)
-		{
-			//document.calculateTFSimiliarity(query);
-			//System.out.println(document.getTitle() + " TF: " + document.getSimiliarity());
+		for (Document document : documents) {
+			// document.calculateTFSimiliarity(query);
+			// System.out.println(document.getTitle() + " TF: " +
+			// document.getSimiliarity());
 			document.calculateTFIDFSimiliarity(query);
 		}
 		Collections.sort(documents);
-		//check documents list
-		for (Document document : documents)
-		{
-			System.out.println(document.getTitle() + " TFIDF: " + document.getSimiliarity());
+		// check documents list
+		for (Document document : documents) {
+			System.out.println(document.getTitle() + " TFIDF: "
+					+ document.getSimiliarity());
 		}
 	}
-	
-	private void loadDocuments(){
-		if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
-			documents = DocumentFileParser.parse(fileChooser.getSelectedFile().getAbsolutePath());
+
+	private void loadDocuments() {
+		if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+			documents = DocumentFileParser.parse(fileChooser.getSelectedFile()
+					.getAbsolutePath());
 			documentPresentationDialog.update(documents);
-			
-			if (keywords != null)
-			{
+
+			if (keywords != null) {
 				idf = new IDF(documents, keywords);
-				
-				for (Document document : documents)
-				{
+
+				for (Document document : documents) {
 					document.applyKeywordSet(keywords);
 					document.applyIDF(idf);
 				}
-				
-				textFieldQuery.setText("<---type your query here--->");		
+
+				textFieldQuery.setText("<---type your query here--->");
 				textFieldQuery.setEnabled(true);
-			}
-			else
-			{
+			} else {
 				textFieldQuery.setText("<---load keywords file first--->");
 			}
 		}
 	}
-	
-	private void loadKeywords(){
-		if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
-			keywords = KeywordFileParser.parse(fileChooser.getSelectedFile().getAbsolutePath());
+
+	private void loadKeywords() {
+		if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+			keywords = KeywordFileParser.parse(fileChooser.getSelectedFile()
+					.getAbsolutePath());
 			keywordPresentationDialog.update(keywords);
-			
-			if (documents != null)
-			{
+
+			if (documents != null) {
 				idf = new IDF(documents, keywords);
-				
-				for (Document document : documents)
-				{
+
+				for (Document document : documents) {
 					document.applyKeywordSet(keywords);
 					document.applyIDF(idf);
 				}
-				
+
 				textFieldQuery.setText("<---type your query here--->");
 				textFieldQuery.setEnabled(true);
-			}
-			else
-			{
+			} else {
 				textFieldQuery.setText("<---load documents file first--->");
 			}
 		}
 	}
-	
-	private void showStemmedDocuments(){
+
+	private void showStemmedDocuments() {
 		documentPresentationDialog.setVisible(true);
 	}
-	
-	private void showOriginalKeywords(){
+
+	private void showOriginalKeywords() {
 		keywordPresentationDialog.setVisible(true);
 	}
-	
+
 	/**
 	 * Launch the application.
 	 */

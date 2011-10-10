@@ -32,6 +32,7 @@ public class TF {
 		values = new HashMap<String, Double>();
 		maxCount = 0;
 		for (Keyword word : keywords) {
+			if (word.getIsDoubled()) continue;
 			Integer value = bag.getWordCount(word.getStemmedKeyword());
 			values.put(word.getStemmedKeyword(), new Double(value));
 			if (maxCount < value)
@@ -40,6 +41,7 @@ public class TF {
 
 		vectorLength = 0.0;
 		for (Keyword word : keywords) {
+			if (word.getIsDoubled()) continue;
 			vectorLength += Math.pow(getWordValue(word.getStemmedKeyword()), 2);
 		}
 		vectorLength = Math.sqrt(vectorLength);

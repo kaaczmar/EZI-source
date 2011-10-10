@@ -33,11 +33,16 @@ public class KeywordFileParser {
 								+ keyword.getStemmedKeyword());
 						keywords.add(keyword);
 					} else
+					{
+						//set the property isDoubled for keyword and add to the list
+						keyword.setIsDoubled(true);
+						keywords.add(keyword);
 						System.out
 								.println("Hey, you have a double keyword there! ["
 										+ keyword.getOriginalKeyword()
 										+ ","
 										+ keyword.getStemmedKeyword() + "]");
+					}
 				}
 			}
 			in.close();

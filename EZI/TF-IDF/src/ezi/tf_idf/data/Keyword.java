@@ -11,6 +11,7 @@ import ezi.tf_idf.utils.Stemmer;
 public class Keyword {
 	private String originalKeyword;
 	private String stemmedKeyword;
+	private Boolean isDoubled;
 
 	public String getOriginalKeyword() {
 		return originalKeyword;
@@ -20,7 +21,17 @@ public class Keyword {
 		return stemmedKeyword;
 	}
 
+	public Boolean getIsDoubled() {
+		return isDoubled;
+	}
+
+	public void setIsDoubled(Boolean isDoubled) {
+		this.isDoubled = isDoubled;
+	}
+	
 	public Keyword(String term) {
+		isDoubled = false;
+		
 		originalKeyword = term.replaceAll("[ \t\n]+", " ").trim().toLowerCase();
 
 		Stemmer s = new Stemmer();

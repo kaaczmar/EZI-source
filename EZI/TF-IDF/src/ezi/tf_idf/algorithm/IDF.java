@@ -32,6 +32,7 @@ public class IDF {
 	public IDF(ArrayList<Document> documents, ArrayList<Keyword> keywords) {
 		idfValues = new HashMap<String, Double>();
 		for (Keyword word : keywords) {
+			if (word.getIsDoubled()) continue;
 			Double count = 0.0;
 			for (Document document : documents) {
 				if (document.contains(word.getStemmedKeyword()))
