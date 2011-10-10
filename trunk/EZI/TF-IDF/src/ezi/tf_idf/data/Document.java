@@ -1,17 +1,6 @@
 package ezi.tf_idf.data;
 
-import java.awt.Component;
-import java.awt.Dimension;
 import java.util.ArrayList;
-
-import javax.swing.JList;
-import javax.swing.JTextPane;
-import javax.swing.ListCellRenderer;
-import javax.swing.text.BadLocationException;
-import javax.swing.text.DefaultStyledDocument;
-import javax.swing.text.SimpleAttributeSet;
-import javax.swing.text.StyleConstants;
-import javax.swing.text.StyledDocument;
 
 import ezi.tf_idf.algorithm.BagOfWords;
 import ezi.tf_idf.algorithm.IDF;
@@ -67,7 +56,7 @@ public class Document implements Comparable<Document> {
 
 		Stemmer s = new Stemmer();
 		String temp = this.title + "\n" + this.content;
-		temp = temp.toLowerCase();
+		temp = temp.toLowerCase().replace('-', ' ').replaceAll("[ \t\n]+", " ");
 		for (int i = 0; i < temp.length(); i++) {
 			char ch = temp.charAt(i);
 			if (Character.isLetter(ch))
@@ -128,8 +117,10 @@ public class Document implements Comparable<Document> {
 
 	@Override
 	public int compareTo(Document o) {
-		if (o.getSimiliarity() > getSimiliarity()) return 1;
-		if (o.getSimiliarity() < getSimiliarity()) return -1;
+		if (o.getSimiliarity() > getSimiliarity())
+			return 1;
+		if (o.getSimiliarity() < getSimiliarity())
+			return -1;
 		return 0;
 	}
 }
