@@ -22,11 +22,11 @@ public class DocumentFileParser {
 			while ((str = in.readLine()) != null) {
 				if (title == null) {
 					title = new String(str);
-					System.out.println("Document " + title);
+//					System.out.println("Document " + title);
 					content = new String();
 				} else if (str.equalsIgnoreCase("")) {
 					documents.add(new Document(title, content));
-					System.out.println("Content: " + content);
+//					System.out.println("Content: " + content);
 					title = null;
 					content = null;
 				} else {
@@ -35,7 +35,7 @@ public class DocumentFileParser {
 			}
 			if (!content.equals(null)) {
 				documents.add(new Document(title, content));
-				System.out.println("Content: " + content);
+//				System.out.println("Content: " + content);
 			}
 			in.close();
 		} catch (FileNotFoundException e) {
