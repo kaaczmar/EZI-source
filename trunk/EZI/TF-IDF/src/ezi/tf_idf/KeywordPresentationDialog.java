@@ -2,9 +2,12 @@ package ezi.tf_idf;
 
 import java.util.ArrayList;
 
+import javax.swing.JList;
+import javax.swing.ListSelectionModel;
 import javax.swing.text.BadLocationException;
 import javax.swing.text.DefaultStyledDocument;
 
+import ezi.tf_idf.data.CustomListCellRenderers;
 import ezi.tf_idf.data.Keyword;
 
 public class KeywordPresentationDialog extends PresentationDialog{
@@ -16,34 +19,27 @@ public class KeywordPresentationDialog extends PresentationDialog{
 
 	public KeywordPresentationDialog() {
 		this.setTitle("Keywords");
-		try {
-			originalDocument.insertString(originalDocument.getLength(), "No keywords to display at this time", errorAttributes);
-			stemmedDocument.insertString(stemmedDocument.getLength(), "No keywords to display at this time", errorAttributes);
-		} catch (BadLocationException e) {
-			e.printStackTrace();
-		}
-		
-		displayTextPane.setStyledDocument(originalDocument);
+	
+		displayList = new JList(new String[]{"No keywords to display at this time"});
+		scrollPane.setViewportView(displayList);
 	}
 	
 	public void update(ArrayList<Keyword> keywords){
-		originalDocument = new DefaultStyledDocument();
-		stemmedDocument = new DefaultStyledDocument();
+		displayList = new JList(keywords.toArray());
+		displayList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		
-		try{
-			for (Keyword keyword : keywords) {
-				stemmedDocument.insertString(stemmedDocument.getLength(), keyword.getStemmedKeyword() + "\n", textAttributes);
-				originalDocument.insertString(originalDocument.getLength(), keyword.getOriginalKeyword() + "\n", textAttributes);
-			}
-		} catch (BadLocationException e) {
-			e.printStackTrace();
+		if (rdbtnOriginal.isSelected()){
+			displayList.setCellRenderer(new CustomListCellRenderers.OriginalKeywordCellRenderer());
 		}
-		if (rdbtnOriginal.isSelected())
-			displayTextPane.setStyledDocument(originalDocument);
-		else
-			displayTextPane.setStyledDocument(stemmedDocument);
-		
+		else{
+			displayList.setCellRenderer(new CustomListCellRenderers.StemmedKeywordCellRenderer());
+		}
+
+		scrollPane.setViewportView(displayList);
 		scrollPane.getVerticalScrollBar().setValue(0);
+		
+		rdbtnOriginal.setEnabled(true);
+		rdbtnStemmed.setEnabled(true);
 	
 	}
 	

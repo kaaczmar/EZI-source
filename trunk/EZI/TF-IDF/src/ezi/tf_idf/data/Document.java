@@ -1,6 +1,17 @@
 package ezi.tf_idf.data;
 
+import java.awt.Component;
+import java.awt.Dimension;
 import java.util.ArrayList;
+
+import javax.swing.JList;
+import javax.swing.JTextPane;
+import javax.swing.ListCellRenderer;
+import javax.swing.text.BadLocationException;
+import javax.swing.text.DefaultStyledDocument;
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+import javax.swing.text.StyledDocument;
 
 import ezi.tf_idf.algorithm.BagOfWords;
 import ezi.tf_idf.algorithm.IDF;
@@ -70,6 +81,10 @@ public class Document implements Comparable<Document> {
 		stemmedDocument += s.toString();
 		stemmedDocument = stemmedDocument.replaceAll("[ \t\n]+", " ").trim();
 		bag = new BagOfWords(stemmedDocument);
+	}
+
+	public Document() {
+		// TODO Auto-generated constructor stub
 	}
 
 	public void applyKeywordSet(ArrayList<Keyword> keywords) {
