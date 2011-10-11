@@ -96,4 +96,26 @@ public class CustomListCellRenderers {
 		
 	}
 	
+	public static class ResultsCellRenderer implements ListCellRenderer{
+
+		@Override
+		public Component getListCellRendererComponent(JList list, Object value,
+				int index, boolean isSelected, boolean cellHasFocus) {
+			Document object = (Document) value;
+
+			String text = new String("<table width=550px><tr><td width=7%>" + (index+1) + "</td><td width=80%>" + object.getTitle() + "</td><td width=13%>" + Math.round(object.getSimiliarity()*10000) / 10000.0 +"</td></tr>");
+			
+			JEditorPane textPane = new JEditorPane();
+			textPane.setContentType("text/html");
+			textPane.setText(text);
+
+			if (cellHasFocus || isSelected){
+				textPane.setBackground(Color.LIGHT_GRAY);
+			}
+			
+			return textPane;		
+		}
+		
+	}
+	
 }

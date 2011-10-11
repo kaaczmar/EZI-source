@@ -10,7 +10,7 @@ import ezi.tf_idf.data.Document;
 
 public class DocumentFileParser {
 	public static ArrayList<Document> parse(String filename) {
-		System.out.println("Parsing: " + filename);
+//		System.out.println("Parsing: " + filename);
 
 		ArrayList<Document> documents = new ArrayList<Document>();
 		String title = null;

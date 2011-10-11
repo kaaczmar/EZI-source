@@ -21,15 +21,16 @@ public class DocumentPresentationDialog extends PresentationDialog{
 	public DocumentPresentationDialog() {
 		this.setTitle("Documents");
 		
-		displayList = new JList(new String[]{"No documents to display at this time"});
-		displayList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		scrollPane.setViewportView(displayList);
+		displayList.setListData(new String[]{"No documents to display at this time"});
+//		displayList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+//		scrollPane.setViewportView(displayList);
 		
 	}
 	
 	public void update(ArrayList<Document> documents){
-		displayList = new JList(documents.toArray());
-		displayList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+//		displayList = new JList(documents.toArray());
+//		displayList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		displayList.setListData(documents.toArray());
 		
 		if (rdbtnOriginal.isSelected()){
 			displayList.setCellRenderer(new CustomListCellRenderers.OriginalDocumentCellRenderer());
@@ -38,7 +39,7 @@ public class DocumentPresentationDialog extends PresentationDialog{
 			displayList.setCellRenderer(new CustomListCellRenderers.StemmedDocumentCellRenderer());
 		}
 
-		scrollPane.setViewportView(displayList);
+//		scrollPane.setViewportView(displayList);
 		scrollPane.getVerticalScrollBar().setValue(0);
 		
 		rdbtnOriginal.setEnabled(true);

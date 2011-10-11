@@ -42,7 +42,7 @@ public class IDF {
 			{
 				idfValues.put(word.getStemmedKeyword(), count);
 				
-				System.out.println("Hey, documents don't have this word! " + word.getStemmedKeyword());
+//				System.out.println("Hey, documents don't have this word! " + word.getStemmedKeyword());
 			}
 			else
 			{
@@ -50,7 +50,7 @@ public class IDF {
 				count = Math.log10(count);
 				idfValues.put(word.getStemmedKeyword(), count);
 	
-				System.out.println(word.getStemmedKeyword() + ": " + count);
+//				System.out.println(word.getStemmedKeyword() + ": " + count);
 			}
 		}
 	}
