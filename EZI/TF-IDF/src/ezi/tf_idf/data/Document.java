@@ -24,7 +24,7 @@ public class Document implements Comparable<Document> {
 	private String stemmedDocument;
 	private BagOfWords bag;
 	private TF tf;
-	private TFIDF tfidf;
+	protected TFIDF tfidf;
 	private Double similiarity;
 
 	public String getTitle() {
@@ -78,13 +78,14 @@ public class Document implements Comparable<Document> {
 
 	public void applyKeywordSet(ArrayList<Keyword> keywords) {
 		tf = new TF(bag, keywords);
-//		System.out.println(getTitle() + " length TF: " + tf.getVectorLength());
+		// System.out.println(getTitle() + " length TF: " +
+		// tf.getVectorLength());
 	}
 
 	public void applyIDF(IDF idf) {
 		tfidf = new TFIDF(idf, tf);
-//		System.out.println(getTitle() + " length TFIDF: "
-//				+ tfidf.getVectorLength());
+		// System.out.println(getTitle() + " length TFIDF: "
+		// + tfidf.getVectorLength());
 	}
 
 	public void calculateTFSimiliarity(Document document) {

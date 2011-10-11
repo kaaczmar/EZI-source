@@ -4,6 +4,10 @@ import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,11 +15,13 @@ import java.util.Collections;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JSeparator;
+import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
 import javax.swing.border.EmptyBorder;
@@ -27,12 +33,6 @@ import ezi.tf_idf.data.Keyword;
 import ezi.tf_idf.data.Query;
 import ezi.tf_idf.utils.DocumentFileParser;
 import ezi.tf_idf.utils.KeywordFileParser;
-import javax.swing.JList;
-import javax.swing.JScrollPane;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 public class MainFrame extends JFrame {
 
@@ -41,25 +41,25 @@ public class MainFrame extends JFrame {
 	private ArrayList<Keyword> keywords;
 	private ArrayList<Document> documents;
 	private IDF idf;
-	
+
 	private JPanel contentPane;
 
 	private JMenuBar menuBar;
 	private JMenu menuFile;
 	private JMenuItem mntmOpenDocumentsFile;
 	private JMenuItem mntmOpen;
-	
+
 	private JFileChooser fileChooser;
 	private JTextField textFieldQuery;
 	private JButton btnSearch;
 	private JMenu mnView;
 	private JMenuItem mntmDocuments;
 	private JMenuItem mntmKeywords;
-	
+
 	private DocumentPresentationDialog documentPresentationDialog;
 	private KeywordPresentationDialog keywordPresentationDialog;
 	private SingleDocumentPresentationDialog singleDocumentPresentationDialog;
-	
+
 	private JList list;
 	private JScrollPane scrollPane;
 
@@ -71,20 +71,20 @@ public class MainFrame extends JFrame {
 		setTitle("CJ Search Engine");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 800, 600);
-		
+
 		fileChooser = new JFileChooser();
 		fileChooser.setCurrentDirectory(new File("."));
-		
+
 		keywordPresentationDialog = new KeywordPresentationDialog();
 		documentPresentationDialog = new DocumentPresentationDialog();
 		singleDocumentPresentationDialog = new SingleDocumentPresentationDialog();
-		
+
 		menuBar = new JMenuBar();
 		setJMenuBar(menuBar);
-		
+
 		menuFile = new JMenu("File");
 		menuBar.add(menuFile);
-		
+
 		mntmOpenDocumentsFile = new JMenuItem("Open documents file");
 		mntmOpenDocumentsFile.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -92,7 +92,7 @@ public class MainFrame extends JFrame {
 			}
 		});
 		menuFile.add(mntmOpenDocumentsFile);
-		
+
 		mntmOpen = new JMenuItem("Open keywords file");
 		mntmOpen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -100,10 +100,10 @@ public class MainFrame extends JFrame {
 			}
 		});
 		menuFile.add(mntmOpen);
-		
+
 		mnView = new JMenu("View");
 		menuBar.add(mnView);
-		
+
 		mntmDocuments = new JMenuItem("Documents");
 		mntmDocuments.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -111,7 +111,7 @@ public class MainFrame extends JFrame {
 			}
 		});
 		mnView.add(mntmDocuments);
-		
+
 		mntmKeywords = new JMenuItem("Keywords");
 		mntmKeywords.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -133,12 +133,13 @@ public class MainFrame extends JFrame {
 			}
 		});
 		textFieldQuery.setFont(new Font("Dialog", Font.PLAIN, 16));
-		textFieldQuery.setText("<---load documents and keywords files first--->");
+		textFieldQuery
+				.setText("<---load documents and keywords files first--->");
 		textFieldQuery.setEnabled(false);
 		textFieldQuery.setBounds(12, 12, 774, 25);
 		contentPane.add(textFieldQuery);
 		textFieldQuery.setColumns(10);
-		
+
 		btnSearch = new JButton("Search");
 		btnSearch.setEnabled(false);
 		btnSearch.setBounds(669, 43, 117, 25);
@@ -148,117 +149,120 @@ public class MainFrame extends JFrame {
 			}
 		});
 		contentPane.add(btnSearch);
-		
+
 		scrollPane = new JScrollPane();
 		scrollPane.setVisible(false);
 		scrollPane.setBounds(12, 82, 774, 455);
 		contentPane.add(scrollPane);
-		
+
 		list = new JList();
 		list.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		list.setCellRenderer(new CustomListCellRenderers.ResultsCellRenderer());
 		list.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (e.getClickCount() >= 2){
-					singleDocumentPresentationDialog.displayDocument((Document)list.getSelectedValue());
+				if (e.getClickCount() >= 2) {
+					singleDocumentPresentationDialog
+							.displayDocument((Document) list.getSelectedValue());
 					singleDocumentPresentationDialog.setVisible(true);
 				}
-					
+
 			}
 		});
 		scrollPane.setViewportView(list);
-		
+
 	}
-	
-	private void computeTFIDF()
-	{
+
+	private void computeTFIDF() {
 		Query query = new Query(textFieldQuery.getText(), keywords, idf);
-		for (Document document : documents)
-		{
-			//document.calculateTFSimiliarity(query);
-			//System.out.println(document.getTitle() + " TF: " + document.getSimiliarity());
+
+		if (!query.getIsQueryValid()) {
+			JOptionPane
+					.showMessageDialog(
+							this,
+							"Ups! Your query is not compatible with keywords database, sorry...",
+							"Query invalid", JOptionPane.ERROR_MESSAGE);
+		}
+
+		for (Document document : documents) {
+			// document.calculateTFSimiliarity(query);
+			// System.out.println(document.getTitle() + " TF: " +
+			// document.getSimiliarity());
 			document.calculateTFIDFSimiliarity(query);
 		}
 		Collections.sort(documents);
-		//check documents list
-//		for (Document document : documents)
-//		{
-//			System.out.println(document.getTitle() + " TFIDF: " + document.getSimiliarity());
-//		}
-		
+		// check documents list
+		// for (Document document : documents)
+		// {
+		// System.out.println(document.getTitle() + " TFIDF: " +
+		// document.getSimiliarity());
+		// }
+
 		showResults();
 	}
-	
-	private void loadDocuments(){
+
+	private void loadDocuments() {
 		fileChooser.setSelectedFile(new File(""));
-		if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
-			documents = DocumentFileParser.parse(fileChooser.getSelectedFile().getAbsolutePath());
+		if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+			documents = DocumentFileParser.parse(fileChooser.getSelectedFile()
+					.getAbsolutePath());
 			documentPresentationDialog.update(documents);
-			
-			if (keywords != null)
-			{
+
+			if (keywords != null) {
 				idf = new IDF(documents, keywords);
-				
-				for (Document document : documents)
-				{
+
+				for (Document document : documents) {
 					document.applyKeywordSet(keywords);
 					document.applyIDF(idf);
 				}
-				
-				textFieldQuery.setText("<---type your query here--->");		
+
+				textFieldQuery.setText("<---type your query here--->");
 				textFieldQuery.setEnabled(true);
 				btnSearch.setEnabled(true);
-			}
-			else
-			{
+			} else {
 				textFieldQuery.setText("<---load keywords file first--->");
 			}
 		}
 	}
-	
-	private void loadKeywords(){
+
+	private void loadKeywords() {
 		fileChooser.setSelectedFile(new File(""));
-		if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION){
-			keywords = KeywordFileParser.parse(fileChooser.getSelectedFile().getAbsolutePath());
+		if (fileChooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+			keywords = KeywordFileParser.parse(fileChooser.getSelectedFile()
+					.getAbsolutePath());
 			keywordPresentationDialog.update(keywords);
-			
-			if (documents != null)
-			{
+
+			if (documents != null) {
 				idf = new IDF(documents, keywords);
-				
-				for (Document document : documents)
-				{
+
+				for (Document document : documents) {
 					document.applyKeywordSet(keywords);
 					document.applyIDF(idf);
 				}
-				
+
 				textFieldQuery.setText("<---type your query here--->");
 				textFieldQuery.setEnabled(true);
 				btnSearch.setEnabled(true);
-			}
-			else
-			{
+			} else {
 				textFieldQuery.setText("<---load documents file first--->");
 			}
 		}
 	}
-	
-	private void showStemmedDocuments(){
+
+	private void showStemmedDocuments() {
 		documentPresentationDialog.setVisible(true);
 	}
-	
-	private void showOriginalKeywords(){
+
+	private void showOriginalKeywords() {
 		keywordPresentationDialog.setVisible(true);
 	}
-	
-	private void showResults(){
-//		list = new JList(documents.toArray());
+
+	private void showResults() {
+		// list = new JList(documents.toArray());
 		list.setListData(documents.toArray());
 		scrollPane.setVisible(true);
 	}
-	
-	
+
 	/**
 	 * Launch the application.
 	 */
