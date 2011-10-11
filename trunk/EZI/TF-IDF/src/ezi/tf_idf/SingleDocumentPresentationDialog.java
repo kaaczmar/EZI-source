@@ -78,6 +78,8 @@ public class SingleDocumentPresentationDialog extends JDialog {
 
 		rdbtnOriginal.setEnabled(true);
 		rdbtnStemmed.setEnabled(true);
+
+		rdbtClick();
 	}
 
 	private void rdbtClick() {
