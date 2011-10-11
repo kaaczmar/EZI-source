@@ -1,6 +1,7 @@
 package ezi.tf_idf.data;
 
 import java.util.ArrayList;
+
 import ezi.tf_idf.algorithm.IDF;
 
 /**
@@ -30,5 +31,11 @@ public class Query extends Document {
 		title = "Query";
 		applyKeywordSet(keywords);
 		applyIDF(idf);
+	}
+
+	public Boolean getIsQueryValid() {
+		if (tfidf.getVectorLength() > 0)
+			return true;
+		return false;
 	}
 }

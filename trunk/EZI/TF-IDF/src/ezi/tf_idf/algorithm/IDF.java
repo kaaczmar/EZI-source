@@ -32,25 +32,24 @@ public class IDF {
 	public IDF(ArrayList<Document> documents, ArrayList<Keyword> keywords) {
 		idfValues = new HashMap<String, Double>();
 		for (Keyword word : keywords) {
-			if (word.getIsDoubled()) continue;
+			if (word.getIsDoubled())
+				continue;
 			Double count = 0.0;
 			for (Document document : documents) {
 				if (document.contains(word.getStemmedKeyword()))
 					count += 1;
 			}
-			if (count == 0)
-			{
+			if (count == 0) {
 				idfValues.put(word.getStemmedKeyword(), count);
-				
-//				System.out.println("Hey, documents don't have this word! " + word.getStemmedKeyword());
-			}
-			else
-			{
+
+				// System.out.println("Hey, documents don't have this word! " +
+				// word.getStemmedKeyword());
+			} else {
 				count = documents.size() / count;
 				count = Math.log10(count);
 				idfValues.put(word.getStemmedKeyword(), count);
-	
-//				System.out.println(word.getStemmedKeyword() + ": " + count);
+
+				// System.out.println(word.getStemmedKeyword() + ": " + count);
 			}
 		}
 	}

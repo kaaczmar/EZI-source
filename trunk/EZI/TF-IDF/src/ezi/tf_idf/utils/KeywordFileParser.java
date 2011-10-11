@@ -17,7 +17,7 @@ import ezi.tf_idf.data.Keyword;
  */
 public class KeywordFileParser {
 	public static ArrayList<Keyword> parse(String filename) {
-//		System.out.println("Parsing: " + filename);
+		// System.out.println("Parsing: " + filename);
 
 		ArrayList<Keyword> keywords = new ArrayList<Keyword>();
 
@@ -28,13 +28,13 @@ public class KeywordFileParser {
 				if (!str.equals("")) {
 					Keyword keyword = new Keyword(str);
 					if (!keywords.contains(keyword)) {
-//						System.out.println("Keyword "
-//								+ keyword.getOriginalKeyword() + " as "
-//								+ keyword.getStemmedKeyword());
+						// System.out.println("Keyword "
+						// + keyword.getOriginalKeyword() + " as "
+						// + keyword.getStemmedKeyword());
 						keywords.add(keyword);
-					} else
-					{
-						//set the property isDoubled for keyword and add to the list
+					} else {
+						// set the property isDoubled for keyword and add to the
+						// list
 						keyword.setIsDoubled(true);
 						keywords.add(keyword);
 						System.out

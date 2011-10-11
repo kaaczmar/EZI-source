@@ -10,7 +10,7 @@ import ezi.tf_idf.data.Document;
 
 public class DocumentFileParser {
 	public static ArrayList<Document> parse(String filename) {
-//		System.out.println("Parsing: " + filename);
+		// System.out.println("Parsing: " + filename);
 
 		ArrayList<Document> documents = new ArrayList<Document>();
 		String title = null;
@@ -22,20 +22,20 @@ public class DocumentFileParser {
 			while ((str = in.readLine()) != null) {
 				if (title == null) {
 					title = new String(str);
-//					System.out.println("Document " + title);
+					// System.out.println("Document " + title);
 					content = new String();
 				} else if (str.equalsIgnoreCase("")) {
 					documents.add(new Document(title, content));
-//					System.out.println("Content: " + content);
+					// System.out.println("Content: " + content);
 					title = null;
 					content = null;
 				} else {
-					content += str;
+					content += str + "\n";
 				}
 			}
 			if (!content.equals(null)) {
 				documents.add(new Document(title, content));
-//				System.out.println("Content: " + content);
+				// System.out.println("Content: " + content);
 			}
 			in.close();
 		} catch (FileNotFoundException e) {
