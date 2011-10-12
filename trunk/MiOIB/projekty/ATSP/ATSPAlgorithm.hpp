@@ -19,6 +19,7 @@ private:
 public:
 	ATSPAlgorithm(ATSPData *data, ATSPInstance *instance);
 	void showInstance();
+	int calculateObjectiveFunction();
 };
 
 #endif /* ATSPALGORITHM_HPP_ */

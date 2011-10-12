@@ -19,6 +19,8 @@ public:
 	ATSPInstance(unsigned int length);
 	void show();
 	void randomize();
+	unsigned int getLength() { return length; }
+	unsigned int getElement(unsigned int position);
 };
 
 #endif /* INSTANCE_HPP_ */

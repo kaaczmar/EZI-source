@@ -7,6 +7,7 @@
 
 #include <boost/foreach.hpp>
 #include <iostream>
+#include <assert.h>
 
 #include <ATSPInstance.hpp>
 
@@ -38,4 +39,9 @@ void ATSPInstance::randomize(){
 		unsigned int position = rand()%(length - i) + i;
 		swap(i,position);
 	}
+}
+
+unsigned int ATSPInstance::getElement(unsigned int position) {
+	assert(position < length);
+	return instance[position];
 }
