@@ -8,6 +8,14 @@
 #ifndef MAINFILE_HPP_
 #define MAINFILE_HPP_
 
+#include <iostream>
+#include <getopt.h>
+#include <string>
+
 #include <Parser.hpp>
+
+#include <ATSPInstance.hpp>
+#include <ATSPAlgorithm.hpp>
+#include <ATSPData.hpp>
 
 #endif /* MAINFILE_HPP_ */
