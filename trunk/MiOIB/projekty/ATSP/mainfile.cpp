@@ -5,12 +5,8 @@
  *      Author: jawora
  */
 
-#include <iostream>
-#include <getopt.h>
-#include <string>
-
 #include <mainfile.hpp>
-#include <ATSPInstance.hpp>
+
 
 using namespace std;
 
@@ -55,4 +51,5 @@ int main(int argc, char **argv) {
 	instance.randomize();
 	instance.show();
 
+	ATSPAlgorithm algorithm(&data, &instance);
 }
