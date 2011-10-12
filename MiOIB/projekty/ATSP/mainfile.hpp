@@ -18,4 +18,6 @@
 #include <ATSPAlgorithm.hpp>
 #include <ATSPData.hpp>
 
+#include <ATSPAlgorithmRandom.hpp>
+
 #endif /* MAINFILE_HPP_ */

@@ -10,16 +10,24 @@
 
 #include <ATSPData.hpp>
 #include <ATSPInstance.hpp>
+#include <boost/timer.hpp>
 
 class ATSPAlgorithm{
-private:
+protected:
 	ATSPData *data;
 	ATSPInstance *instance;
+	boost::timer timer;
+	double timeout;
+
+	ATSPInstance bestSequence;
+	int bestSequenceValue;
 
 public:
-	ATSPAlgorithm(ATSPData *data, ATSPInstance *instance);
+	ATSPAlgorithm();
+	ATSPAlgorithm(ATSPData *data, ATSPInstance *instance, double timeout = 0);
 	void showInstance();
 	int calculateObjectiveFunction();
+	virtual void optimize() = 0;
 };
 
 #endif /* ATSPALGORITHM_HPP_ */
