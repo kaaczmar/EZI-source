@@ -12,14 +12,15 @@
 
 class ATSPData{
 private:
-	int dimension;
+	unsigned int dimension;
 
 public:
 	boost::multi_array<int,2> data;
 
 	ATSPData();
-	void setDimension(int dimension);
-	int getDimension();
+	void setDimension(unsigned int dimension);
+	unsigned int getDimension();
+	int getDistance(int from, int to);
 	void print();
 };
 

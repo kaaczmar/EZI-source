@@ -46,10 +46,13 @@ int main(int argc, char **argv) {
 		cerr << "File load error - aborting execution" << endl;
 	}
 
-	ATSPInstance instance(10);
+	data.print();
+
+	ATSPInstance instance(data.getDimension());
 	instance.show();
 	instance.randomize();
 	instance.show();
 
 	ATSPAlgorithm algorithm(&data, &instance);
+	cout << algorithm.calculateObjectiveFunction() << endl;
 }
