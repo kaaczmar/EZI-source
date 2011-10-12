@@ -1,5 +1,5 @@
 /*
- * ATSP.cpp
+ * mainfile.cpp
  *
  *  Created on: 2011-09-26
  *      Author: jawora
@@ -9,7 +9,7 @@
 #include <getopt.h>
 #include <string>
 
-#include <ATSP.hpp>
+#include <mainfile.hpp>
 #include <ATSPInstance.hpp>
 
 using namespace std;
