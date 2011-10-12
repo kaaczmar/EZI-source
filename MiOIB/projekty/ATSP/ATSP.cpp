@@ -10,13 +10,14 @@
 #include <string>
 
 #include <ATSP.hpp>
+#include <ATSPInstance.hpp>
 
 using namespace std;
 
 int main(int argc, char **argv) {
 	string filename;
 
-	/* ARGUMENTS */
+	/***ARGUMENTS***/
 	{
 		const char *optString = "f:";
 		const struct option longOpts[] = {
@@ -40,7 +41,7 @@ int main(int argc, char **argv) {
 			return 1;
 		}
 	}
-	/* END ARGUMENTS */
+	/***END ARGUMENTS***/
 
 	ATSPData data;
 
@@ -48,4 +49,10 @@ int main(int argc, char **argv) {
 	if (!parser.load(data)){
 		cerr << "File load error - aborting execution" << endl;
 	}
+
+	ATSPInstance instance(10);
+	instance.show();
+	instance.randomize();
+	instance.show();
+
 }
