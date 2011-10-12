@@ -16,7 +16,8 @@ private:
 	void swap(unsigned int x, unsigned int y);
 
 public:
-	ATSPInstance(unsigned int length);
+	ATSPInstance(unsigned int length = 0);
+	ATSPInstance(ATSPInstance &instance);
 	void show();
 	void randomize();
 	unsigned int getLength() { return length; }

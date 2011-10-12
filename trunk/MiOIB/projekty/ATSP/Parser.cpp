@@ -56,12 +56,12 @@ bool Parser::load(ATSPData &data) {
 		}
 
 		if (tokens[0] == "EDGE_WEIGHT_SECTION") {
-			cout << "Reading wheights" << endl;
+//			cout << "Reading wheights" << endl;
 			break;
 		}
 	}
 
-	int x = 0, y = 0;
+	unsigned int x = 0, y = 0;
 
 	while (file.good()) {
 		getline(file, line);
@@ -73,7 +73,7 @@ bool Parser::load(ATSPData &data) {
 		split(tokens, line, boost::is_any_of("\t\n "));
 
 		if (tokens[0] == "EOF") {
-			cout << "End" << endl;
+//			cout << "End" << endl;
 			break;
 		}
 
