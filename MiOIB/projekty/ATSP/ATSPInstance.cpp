@@ -56,3 +56,27 @@ unsigned int ATSPInstance::getElement(unsigned int position) {
 	return instance[position];
 }
 
+void ATSPInstance::reinitializeNeighbourhood(){
+	swapX = 0;
+	swapY = 1;
+	firstNeighbour = true;
+}
+
+bool ATSPInstance::nextNeighbour(){
+	if (!firstNeighbour){
+		//Zmiana powrotna
+		swap(swapX,swapY);
+		//Nowe indeksy do zamiany
+		if (++swapY == length)
+			swapY = ++swapX + 1;
+	}
+
+	if (swapX == length - 1)
+		return false;
+
+	firstNeighbour = false;
+	swap(swapX, swapY);
+
+	return true;
+}
+

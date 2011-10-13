@@ -13,6 +13,9 @@ private:
 	unsigned int length;
 	unsigned int *instance;
 
+	unsigned int swapX, swapY;
+	bool firstNeighbour;
+
 	void swap(unsigned int x, unsigned int y);
 
 public:
@@ -22,6 +25,8 @@ public:
 	void randomize();
 	unsigned int getLength() { return length; }
 	unsigned int getElement(unsigned int position);
+	void reinitializeNeighbourhood();
+	bool nextNeighbour();
 };
 
 #endif /* INSTANCE_HPP_ */
