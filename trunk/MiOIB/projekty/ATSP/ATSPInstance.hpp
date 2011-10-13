@@ -16,17 +16,20 @@ private:
 	unsigned int swapX, swapY;
 	bool firstNeighbour;
 
-	void swap(unsigned int x, unsigned int y);
-
 public:
 	ATSPInstance(unsigned int length = 0);
 	ATSPInstance(ATSPInstance &instance);
+
 	void show();
-	void randomize();
 	unsigned int getLength() { return length; }
 	unsigned int getElement(unsigned int position);
+
+	void randomize();
+	void swap(unsigned int x, unsigned int y);
+
 	void reinitializeNeighbourhood();
 	bool nextNeighbour();
+	void resetInstanceToBase();
 };
 
 #endif /* INSTANCE_HPP_ */
