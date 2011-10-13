@@ -46,16 +46,16 @@ int main(int argc, char **argv) {
 		cerr << "File load error - aborting execution" << endl;
 	}
 
-//	ATSPInstance instance(5);
-//	instance.reinitializeNeighbourhood();
-//	instance.show();
-//	while (instance.nextNeighbour()){
-//		instance.show();
-//	}
+	ATSPInstance instance(5);
+	instance.reinitializeNeighbourhood();
+	instance.show();
+	while (instance.nextNeighbour()){
 
-	ATSPInstance instance(data.getDimension());
+	}
 
+//	ATSPInstance instance(data.getDimension());
+//
 //	ATSPAlgorithm *algorithm = new ATSPAlgorithmRandom(&data, &instance, 10);
-	ATSPAlgorithm *algorithm = new ATSPAlgorithmGreedy(&data, &instance, 10);
-	algorithm->optimize();
+//	ATSPAlgorithm *algorithm = new ATSPAlgorithmGreedy(&data, &instance, 10);
+//	algorithm->optimize();
 }

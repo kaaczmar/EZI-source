@@ -12,15 +12,19 @@ class ATSPInstance{
 private:
 	unsigned int length;
 	unsigned int *instance;
+	unsigned int *neighbour;
 
 	unsigned int swapX, swapY;
 	bool firstNeighbour;
+
+	void swapNeighbour(unsigned int x, unsigned int y);
 
 public:
 	ATSPInstance(unsigned int length = 0);
 	ATSPInstance(ATSPInstance &instance);
 
 	void show();
+	void showNeighbour();
 	unsigned int getLength() { return length; }
 	unsigned int getElement(unsigned int position);
 
@@ -29,7 +33,7 @@ public:
 
 	void reinitializeNeighbourhood();
 	bool nextNeighbour();
-	void resetInstanceToBase();
+	unsigned int *getCurrentNeighbour();
 };
 
 #endif /* INSTANCE_HPP_ */
