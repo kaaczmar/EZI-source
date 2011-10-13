@@ -80,3 +80,9 @@ bool ATSPInstance::nextNeighbour(){
 	return true;
 }
 
+void ATSPInstance::resetInstanceToBase(){
+	if (firstNeighbour)
+		return;
+
+	swap(swapX,swapY);
+}

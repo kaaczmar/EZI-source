@@ -55,6 +55,7 @@ int main(int argc, char **argv) {
 
 	ATSPInstance instance(data.getDimension());
 
-	ATSPAlgorithm *algorithm = new ATSPAlgorithmRandom(&data, &instance, 10);
+//	ATSPAlgorithm *algorithm = new ATSPAlgorithmRandom(&data, &instance, 10);
+	ATSPAlgorithm *algorithm = new ATSPAlgorithmGreedy(&data, &instance, 10);
 	algorithm->optimize();
 }

@@ -19,5 +19,8 @@
 #include <ATSPData.hpp>
 
 #include <ATSPAlgorithmRandom.hpp>
+#include <ATSPAlgorithmGreedy.hpp>
+#include <ATSPAlgorithmLSGreedy.hpp>
+#include <ATSPAlgorithmLSSteepest.hpp>
 
 #endif /* MAINFILE_HPP_ */
