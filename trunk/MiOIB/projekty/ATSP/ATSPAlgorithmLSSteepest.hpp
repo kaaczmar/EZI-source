@@ -11,7 +11,9 @@
 #include <ATSPAlgorithm.hpp>
 
 class ATSPAlgorithmLSSteepest : public ATSPAlgorithm {
-
+public:
+	ATSPAlgorithmLSSteepest(ATSPData *data, ATSPInstance *instance, double timeout = 0);
+	void optimize();
 };
 
 #endif /* ATSPALGORITHMLSSTEEPEST_HPP_ */

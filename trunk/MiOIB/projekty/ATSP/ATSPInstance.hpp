@@ -33,7 +33,10 @@ public:
 
 	void reinitializeNeighbourhood();
 	bool nextNeighbour();
+	unsigned int *getInstanceArray();
 	unsigned int *getCurrentNeighbour();
+
+	void initialize(unsigned int *position);
 };
 
 #endif /* INSTANCE_HPP_ */

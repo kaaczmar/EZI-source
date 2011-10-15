@@ -22,7 +22,7 @@ void ATSPAlgorithmRandom::optimize() {
 	timer.restart();
 
 	instance->randomize();
-	bestSequenceValue = calculateObjectiveFunction();
+	bestSequenceValue = calculateObjectiveFunction(instance->getInstanceArray(), instance->getLength());
 	bestSequence = ATSPInstance(*instance);
 
 	long tries = 0;
@@ -30,7 +30,7 @@ void ATSPAlgorithmRandom::optimize() {
 	while (timer.elapsed() < timeout) {
 		for (unsigned int _tmp = 0; _tmp < 200; _tmp++){
 			instance->randomize();
-			tmpValue = calculateObjectiveFunction();
+			tmpValue = calculateObjectiveFunction(instance->getInstanceArray(), instance->getLength());
 			if (tmpValue < bestSequenceValue) {
 				bestSequenceValue = tmpValue;
 				bestSequence = ATSPInstance(*instance);
