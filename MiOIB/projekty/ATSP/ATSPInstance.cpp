@@ -8,6 +8,8 @@
 #include <boost/foreach.hpp>
 #include <iostream>
 #include <assert.h>
+#include <stdlib.h>
+#include <time.h>
 
 #include <ATSPInstance.hpp>
 
@@ -98,6 +100,15 @@ bool ATSPInstance::nextNeighbour(){
 	return true;
 }
 
+unsigned int *ATSPInstance::getInstanceArray(){
+	return instance;
+}
+
 unsigned int *ATSPInstance::getCurrentNeighbour(){
 	return neighbour;
+}
+
+void ATSPInstance::initialize(unsigned int * array){
+	instance = array;
+	reinitializeNeighbourhood();
 }

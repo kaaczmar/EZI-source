@@ -20,13 +20,13 @@ protected:
 	double timeout;
 
 	ATSPInstance bestSequence;
-	int bestSequenceValue;
+	unsigned int bestSequenceValue;
 
 public:
 	ATSPAlgorithm();
 	ATSPAlgorithm(ATSPData *data, ATSPInstance *instance, double timeout = 0);
 	void showInstance();
-	int calculateObjectiveFunction();
+	unsigned int calculateObjectiveFunction(unsigned int * instanceArray, unsigned int length);
 	virtual void optimize() = 0;
 };
 

@@ -27,11 +27,11 @@ void ATSPAlgorithm::showInstance(){
 	instance->show();
 }
 
-int ATSPAlgorithm::calculateObjectiveFunction(){
+unsigned int ATSPAlgorithm::calculateObjectiveFunction(unsigned int * instanceArray, unsigned int length){
 	int value = 0;
 
-	for (unsigned int i = 0; i < instance->getLength(); i++){
-		value += data->getDistance(instance->getElement(i),instance->getElement((i+1)%instance->getLength()));
+	for (unsigned int i = 0; i < length; i++){
+		value += data->getDistance(instanceArray[i], instanceArray[((i+1)%(length))]);
 	}
 
 	return value;
