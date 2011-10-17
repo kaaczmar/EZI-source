@@ -13,7 +13,7 @@
 class ATSPAlgorithmLSSteepest : public ATSPAlgorithm {
 public:
 	ATSPAlgorithmLSSteepest(ATSPData *data, ATSPInstance *instance, double timeout = 0);
-	void optimize();
+	void optimize(bool showResult = true);
 };
 
 #endif /* ATSPALGORITHMLSSTEEPEST_HPP_ */

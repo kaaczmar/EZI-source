@@ -17,7 +17,7 @@ class Parser{
 private:
 	boost::filesystem::path filePath;
 public:
-	Parser(std::string filename);
+	Parser(std::string filename = "");
 	bool load(ATSPData &data);
 };
 

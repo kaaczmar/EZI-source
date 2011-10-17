@@ -13,7 +13,7 @@
 class ATSPAlgorithmLSGreedy : public ATSPAlgorithm {
 public:
 	ATSPAlgorithmLSGreedy(ATSPData *data, ATSPInstance *instance, double timeout = 0);
-	void optimize();
+	void optimize(bool showResult = true);
 };
 
 

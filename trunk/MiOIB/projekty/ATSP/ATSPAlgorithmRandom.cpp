@@ -16,16 +16,15 @@ ATSPAlgorithmRandom::ATSPAlgorithmRandom(ATSPData *data,
 
 }
 
-void ATSPAlgorithmRandom::optimize() {
+void ATSPAlgorithmRandom::optimize(bool showResult) {
 	double tmpValue;
 
 	timer.restart();
 
-	instance->randomize();
 	bestSequenceValue = calculateObjectiveFunction(instance->getInstanceArray(), instance->getLength());
 	bestSequence = ATSPInstance(*instance);
 
-	long tries = 0;
+	unsigned long long tries = 0;
 
 	while (timer.elapsed() < timeout) {
 		for (unsigned int _tmp = 0; _tmp < 200; _tmp++){
@@ -39,8 +38,8 @@ void ATSPAlgorithmRandom::optimize() {
 		}
 	}
 
-	cout << "Best sequence: ";
-	bestSequence.show();
-	cout << "Best sequence value: " << bestSequenceValue << endl;
-	cout << "Number of tries: " << tries << endl;
+	if (showResult){
+		bestSequence.show();
+		cout << "\t" << bestSequenceValue << "\t" << tries << "\t";
+	}
 }

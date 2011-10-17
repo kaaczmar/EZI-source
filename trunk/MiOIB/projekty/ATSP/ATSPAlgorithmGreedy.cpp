@@ -39,12 +39,8 @@ void ATSPAlgorithmGreedy::calculateNextBestStep() {
 
 }
 
-void ATSPAlgorithmGreedy::optimize() {
-	instance->randomize();
-
+void ATSPAlgorithmGreedy::optimize(bool showResult) {
 	step = 0;
-
-	instance->show();
 
 	while (step < instance->getLength() - 2){
 		calculateNextBestStep();
@@ -57,7 +53,11 @@ void ATSPAlgorithmGreedy::optimize() {
 	bestSequence = ATSPInstance(*instance);
 	bestSequenceValue = calculateObjectiveFunction(instance->getInstanceArray(), instance->getLength());
 
-	cout << "Best sequence: ";
-	bestSequence.show();
-	cout << "Best sequence value: " << bestSequenceValue << endl;
+	if (showResult){
+		bestSequence.show();
+		cout << "\t" << bestSequenceValue << "\t";
+	}
+
+
+
 }

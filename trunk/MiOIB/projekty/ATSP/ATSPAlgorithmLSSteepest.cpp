@@ -16,19 +16,16 @@ ATSPAlgorithmLSSteepest::ATSPAlgorithmLSSteepest(ATSPData *data,
 
 }
 
-void ATSPAlgorithmLSSteepest::optimize() {
-	cout << "Local search - STEPPEST" << endl;
+void ATSPAlgorithmLSSteepest::optimize(bool showResult) {
 	bestSequenceValue = calculateObjectiveFunction(instance->getInstanceArray(), instance->getLength());
 	bestSequence = ATSPInstance(*instance);
-	cout << "Starting sequence: ";
-	bestSequence.show();
-	cout << "Starting sequence value: " << bestSequenceValue << endl;
 
 	unsigned int hops = 0;
 	unsigned int distance = 0;
 	unsigned int previousBestValue = bestSequenceValue;
 	unsigned int *currentBest = new unsigned int[instance->getLength()];
-	for (int i = 0; i < instance->getLength(); i++)
+
+	for (unsigned int i = 0; i < instance->getLength(); i++)
 	{
 		currentBest[i] = instance->getInstanceArray()[i];
 	}
@@ -43,7 +40,7 @@ void ATSPAlgorithmLSSteepest::optimize() {
 			if (distance < bestSequenceValue)
 			{
 				bestSequenceValue = distance;
-				for (int i = 0; i < instance->getLength(); i++)
+				for (unsigned int i = 0; i < instance->getLength(); i++)
 				{
 					currentBest[i] = instance->getCurrentNeighbour()[i];
 				}
@@ -64,7 +61,8 @@ void ATSPAlgorithmLSSteepest::optimize() {
 		}
 	}
 
-	cout << "Best sequence after " << hops << " jumps: ";
-	bestSequence.show();
-	cout << "Best sequence value: " << bestSequenceValue << endl;
+	if (showResult){
+		bestSequence.show();
+		cout << "\t" << bestSequenceValue << "\t" << hops << "\t";
+	}
 }

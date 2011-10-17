@@ -9,15 +9,24 @@
 
 
 using namespace std;
+using namespace boost;
 
 int main(int argc, char **argv) {
 	string filename;
+	string algorithmName("");
+	ATSPData data;
+	ATSPInstance instance;
+	ATSPAlgorithm *algorithm = NULL;
+	Parser parser;
+	double timeout = -1;
 
 	/***ARGUMENTS***/
 	{
-		const char *optString = "f:";
+		const char *optString = "f:a:t:";
 		const struct option longOpts[] = {
 			{ "file", 1, NULL, 'f' },
+			{ "algorithm", 1, NULL, 'a' },
+			{ "timeout", 1, NULL, 't' },
 			{ NULL, 0, NULL, 0 }
 		};
 
@@ -27,7 +36,28 @@ int main(int argc, char **argv) {
 			switch( opt ) {
 				case 'f':
 					filename = optarg;
-					cout << "File: " << filename << endl;
+//					cout << "File: " << filename << endl;
+					parser = Parser(filename);
+					if (!parser.load(data)){
+						cerr << "File load error - aborting execution" << endl;
+						return 2;
+					}
+					instance = ATSPInstance(data.getDimension());
+					break;
+				case 'a':
+					algorithmName = optarg;
+					break;
+				case 't':
+					try {
+						timeout = lexical_cast<double> (optarg);
+					} catch (bad_lexical_cast &) {
+						cerr << "Bad timeout" << endl;
+						return false;
+					}
+					if (timeout < 0){
+						cerr << "Timeout must be positive number" << endl;
+						return false;
+					}
 					break;
 			}
 		}
@@ -36,35 +66,46 @@ int main(int argc, char **argv) {
 			cerr << "Must specify filename with -f" << endl;
 			return 1;
 		}
+
+		if (algorithmName.length() == 0){
+			cerr << "Must specify algorithm with -a" << endl;
+			return 1;
+		}
+
+		if (algorithmName.compare("random") == 0) {
+			if (timeout == -1){
+				cerr << "Timeout must be specified using -t when using random algorithm" << endl;
+				return 1;
+			}
+			algorithm = new ATSPAlgorithmRandom(&data, &instance, timeout);
+			instance.randomize();
+			cout << "R\t";
+		} else if (algorithmName.compare("heuristic") == 0) {
+			algorithm = new ATSPAlgorithmGreedy(&data, &instance);
+			instance.randomizeHeuristic();
+			cout << "H\t";
+		} else if (algorithmName.compare("greedy") == 0) {
+			algorithm = new ATSPAlgorithmLSGreedy(&data, &instance);
+			instance.randomize();
+			cout << "G\t";
+		} else if (algorithmName.compare("steepest") == 0){
+			algorithm = new ATSPAlgorithmLSSteepest(&data, &instance);
+			instance.randomize();
+			cout << "S\t";
+		} else {
+			cerr << "Unknown algorithm: " << algorithmName << endl;
+			return 1;
+		}
 	}
 	/***END ARGUMENTS***/
 
-	ATSPData data;
-
-	Parser parser(filename);
-	if (!parser.load(data)){
-		cerr << "File load error - aborting execution" << endl;
-	}
-
-	ATSPInstance instance(data.getDimension());
-	instance.randomize();
 	instance.reinitializeNeighbourhood();
-	ATSPInstance instance2(data.getDimension());
-	instance2.initialize(instance.getInstanceArray());
-	ATSPAlgorithm *algorithm = new ATSPAlgorithmLSGreedy(&data, &instance);
-	algorithm->optimize();
-	algorithm = new ATSPAlgorithmLSSteepest(&data, &instance2);
-	algorithm->optimize();
 
+	instance.show();
+	cout << "\t" << algorithm->calculateObjectiveFunction(instance.getInstanceArray(), instance.getLength()) << "\t";
 
-	//instance.reinitializeNeighbourhood();
-	//instance.show();
-	//while (instance.nextNeighbour()){
-	//}
+	algorithm->optimize(true);
 
-//	ATSPInstance instance(data.getDimension());
-//
-//	ATSPAlgorithm *algorithm = new ATSPAlgorithmRandom(&data, &instance, 10);
-//	ATSPAlgorithm *algorithm = new ATSPAlgorithmGreedy(&data, &instance, 10);
-//	algorithm->optimize();
+	cout << "czas" << endl;
+
 }

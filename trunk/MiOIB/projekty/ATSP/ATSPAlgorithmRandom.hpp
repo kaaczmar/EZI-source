@@ -13,7 +13,7 @@
 class ATSPAlgorithmRandom : public ATSPAlgorithm {
 public:
 	ATSPAlgorithmRandom(ATSPData *data, ATSPInstance *instance, double timeout = 0);
-	void optimize();
+	void optimize(bool showResult = true);
 };
 
 #endif /* ATSPALGORITHMRANDOM_HPP_ */
