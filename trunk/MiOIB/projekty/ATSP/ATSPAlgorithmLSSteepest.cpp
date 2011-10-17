@@ -20,7 +20,8 @@ void ATSPAlgorithmLSSteepest::optimize(bool showResult) {
 	bestSequenceValue = calculateObjectiveFunction(instance->getInstanceArray(), instance->getLength());
 	bestSequence = ATSPInstance(*instance);
 
-	unsigned int hops = 0;
+	unsigned long long hops = 0;
+	unsigned long long neigh = 0;
 	unsigned int distance = 0;
 	unsigned int previousBestValue = bestSequenceValue;
 	unsigned int *currentBest = new unsigned int[instance->getLength()];
@@ -33,9 +34,9 @@ void ATSPAlgorithmLSSteepest::optimize(bool showResult) {
 	while (true)
 	{
 		instance->initialize(currentBest);
-		int neigh = 0;
 		while (instance->nextNeighbour())
 		{
+			neigh++;
 			distance = calculateObjectiveFunction(instance->getCurrentNeighbour(), instance->getLength());
 			if (distance < bestSequenceValue)
 			{
@@ -47,7 +48,6 @@ void ATSPAlgorithmLSSteepest::optimize(bool showResult) {
 				//if you uncomment this break than this will become Greedy
 				//break;
 			}
-			neigh++;
 		}
 		//cout << "Neighbours visited: " << neigh << endl;
 		if (bestSequenceValue < previousBestValue)
@@ -63,6 +63,6 @@ void ATSPAlgorithmLSSteepest::optimize(bool showResult) {
 
 	if (showResult){
 		bestSequence.show();
-		cout << "\t" << bestSequenceValue << "\t" << hops << "\t";
+		cout << "\t" << bestSequenceValue << "\t" << hops << "\t" << neigh << "\t";
 	}
 }
