@@ -18,13 +18,15 @@ ATSPAlgorithmLSGreedy::ATSPAlgorithmLSGreedy(ATSPData *data,
 
 void ATSPAlgorithmLSGreedy::optimize(bool showResult) {
 	unsigned int distance = 0;
-	unsigned int hops = 0;
+	unsigned long long hops = 0;
+	unsigned long long neigh = 0;
 
 	bestSequenceValue = calculateObjectiveFunction(instance->getInstanceArray(), instance->getLength());
 
 	while (instance->nextNeighbour())
 	{
 		distance = calculateObjectiveFunction(instance->getCurrentNeighbour(), instance->getLength());
+		neigh++;
 		if (distance < bestSequenceValue)
 		{
 			bestSequenceValue = distance;
@@ -36,6 +38,6 @@ void ATSPAlgorithmLSGreedy::optimize(bool showResult) {
 
 	if (showResult){
 		bestSequence.show();
-		cout << "\t" << bestSequenceValue << "\t" << hops << "\t";
+		cout << "\t" << bestSequenceValue << "\t" << hops << "\t" << neigh << "\t";
 	}
 }

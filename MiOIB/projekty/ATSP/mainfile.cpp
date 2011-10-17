@@ -106,6 +106,6 @@ int main(int argc, char **argv) {
 
 	algorithm->optimize(true);
 
-	cout << "czas" << endl;
+	cout << "czas" << "\t" << "czas/jakosc" << endl;
 
 }
