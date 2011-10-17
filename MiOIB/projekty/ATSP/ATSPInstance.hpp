@@ -29,6 +29,7 @@ public:
 	unsigned int getElement(unsigned int position);
 
 	void randomize();
+	void randomizeHeuristic();
 	void swap(unsigned int x, unsigned int y);
 
 	void reinitializeNeighbourhood();

@@ -50,7 +50,7 @@ void ATSPInstance::show() {
 	for (unsigned int i = 0; i < length - 1; i++) {
 		cout << instance[i] << "-";
 	}
-	cout << instance[length - 1] << endl;
+	cout << instance[length - 1];
 }
 
 void ATSPInstance::showNeighbour() {
@@ -66,6 +66,16 @@ void ATSPInstance::randomize() {
 		unsigned int position = rand() % (length - i) + i;
 		swap(i, position);
 	}
+}
+
+void ATSPInstance::randomizeHeuristic() {
+	srand(time(NULL));
+	for (unsigned int i = 0; i < length; i++) {
+		instance[i] = i;
+	}
+	unsigned int position = rand()%length;
+	if (position != 0)
+		swap(0,position);
 }
 
 unsigned int ATSPInstance::getElement(unsigned int position) {

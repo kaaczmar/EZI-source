@@ -27,7 +27,10 @@ public:
 	ATSPAlgorithm(ATSPData *data, ATSPInstance *instance, double timeout = 0);
 	void showInstance();
 	unsigned int calculateObjectiveFunction(unsigned int * instanceArray, unsigned int length);
-	virtual void optimize() = 0;
+	virtual void optimize(bool showResult = true) = 0;
+
+	ATSPInstance getBestSequence() { return bestSequence; };
+	unsigned int getBestSequenceValue() { return bestSequenceValue; };
 };
 
 #endif /* ATSPALGORITHM_HPP_ */
