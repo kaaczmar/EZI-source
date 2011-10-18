@@ -25,7 +25,7 @@ ATSPInstance::ATSPInstance(unsigned int length) :
 	}
 }
 
-ATSPInstance::ATSPInstance(ATSPInstance &instance){
+ATSPInstance::ATSPInstance(const ATSPInstance &instance){
 	this->length = instance.length;
 
 	this->instance = new unsigned int[this->length];
@@ -120,5 +120,11 @@ unsigned int *ATSPInstance::getCurrentNeighbour(){
 
 void ATSPInstance::initialize(unsigned int * array){
 	instance = array;
+	reinitializeNeighbourhood();
+}
+
+void ATSPInstance::reinitializeWithCopy(unsigned int * array){
+	for (unsigned int i = 0; i < length; i++)
+		instance[i] = array[i];
 	reinitializeNeighbourhood();
 }

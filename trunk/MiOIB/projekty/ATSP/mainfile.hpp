@@ -23,6 +23,10 @@
 #include <ATSPAlgorithmLSGreedy.hpp>
 #include <ATSPAlgorithmLSSteepest.hpp>
 
+#include <TimeMeasure.hpp>
+
 #include <boost/lexical_cast.hpp>
+
+#include <sstream>
 
 #endif /* MAINFILE_HPP_ */

@@ -104,8 +104,16 @@ int main(int argc, char **argv) {
 	instance.show();
 	cout << "\t" << algorithm->calculateObjectiveFunction(instance.getInstanceArray(), instance.getLength()) << "\t";
 
-	algorithm->optimize(true);
+	TimeMeasure timeMeasure(0.5);
+	timeMeasure.setAlgorithm(algorithm);
 
-	cout << "czas" << "\t" << "czas/jakosc" << endl;
+	double time = timeMeasure.execute();
+
+//	algorithm->optimize(true);
+
+	stringstream stream;
+	stream << std::fixed << time;
+
+	cout << stream.str() << "\t" << "czas/jakosc" << endl;
 
 }
