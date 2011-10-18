@@ -21,7 +21,7 @@ private:
 
 public:
 	ATSPInstance(unsigned int length = 0);
-	ATSPInstance(ATSPInstance &instance);
+	ATSPInstance(const ATSPInstance &instance);
 
 	void show();
 	void showNeighbour();
@@ -38,6 +38,7 @@ public:
 	unsigned int *getCurrentNeighbour();
 
 	void initialize(unsigned int *position);
+	void reinitializeWithCopy(unsigned int *array);
 };
 
 #endif /* INSTANCE_HPP_ */
