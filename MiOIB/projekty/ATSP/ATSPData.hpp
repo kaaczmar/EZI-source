@@ -13,13 +13,19 @@
 class ATSPData{
 private:
 	unsigned int dimension;
+	unsigned int optimalSolution;
 
 public:
 	boost::multi_array<int,2> data;
 
 	ATSPData();
+
 	void setDimension(unsigned int dimension);
+	void setOptimalSolution(unsigned int oprimalSolution);
+
 	unsigned int getDimension();
+	unsigned int getOptimalSolution();
+
 	int getDistance(int from, int to);
 	void print();
 };

@@ -10,6 +10,7 @@
 #include <assert.h>
 #include <stdlib.h>
 #include <time.h>
+#include <math.h>
 
 #include <ATSPInstance.hpp>
 
@@ -127,4 +128,30 @@ void ATSPInstance::reinitializeWithCopy(unsigned int * array){
 	for (unsigned int i = 0; i < length; i++)
 		instance[i] = array[i];
 	reinitializeNeighbourhood();
+}
+
+double ATSPInstance::compareWith(const ATSPInstance &instance){
+	assert (this->length == instance.length);
+
+	unsigned int same = 0;
+	unsigned int currentBase;
+	unsigned int currentSuccessor;
+
+	for (unsigned int i = 0; i < length; i++){
+		currentBase = this->instance[i];
+		currentSuccessor = this->instance[(i+1)%length];
+
+		unsigned int baseIndex = 0;
+		for(;baseIndex < length; baseIndex++){
+			if (instance.instance[baseIndex] == currentBase)
+				break;
+		}
+
+		if (instance.instance[baseIndex] == currentBase && instance.instance[(baseIndex+1)%length] == currentSuccessor)
+			same++;
+	}
+
+	double similarity = round((double) (same * 100) / length) / 100;
+
+	return similarity;
 }

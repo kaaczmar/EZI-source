@@ -60,6 +60,7 @@ void ATSPAlgorithmLSSteepest::optimize(bool showResult) {
 			break;
 		}
 	}
+	bestSequence = ATSPInstance(*instance);
 
 	if (showResult){
 		bestSequence.show();

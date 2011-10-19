@@ -23,7 +23,7 @@
 #include <ATSPAlgorithmLSGreedy.hpp>
 #include <ATSPAlgorithmLSSteepest.hpp>
 
-#include <TimeMeasure.hpp>
+#include <Executor.hpp>
 
 #include <boost/lexical_cast.hpp>
 

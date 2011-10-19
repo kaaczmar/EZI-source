@@ -39,6 +39,8 @@ public:
 
 	void initialize(unsigned int *position);
 	void reinitializeWithCopy(unsigned int *array);
+
+	double compareWith(const ATSPInstance &instance);
 };
 
 #endif /* INSTANCE_HPP_ */
