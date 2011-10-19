@@ -33,6 +33,7 @@ public:
 	unsigned int getBestSequenceValue() { return bestSequenceValue; };
 
 	ATSPInstance *getInstance() { return instance; }
+	ATSPData *getData() { return data; }
 };
 
 #endif /* ATSPALGORITHM_HPP_ */

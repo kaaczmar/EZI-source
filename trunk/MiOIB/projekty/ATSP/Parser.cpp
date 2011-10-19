@@ -55,6 +55,15 @@ bool Parser::load(ATSPData &data) {
 			}
 		}
 
+		if (tokens[0] == "OPTIMAL:") {
+			try {
+				data.setOptimalSolution(lexical_cast<int> (tokens[1]));
+			} catch (bad_lexical_cast &) {
+				cerr << "Bad optimal solution" << endl;
+				return false;
+			}
+		}
+
 		if (tokens[0] == "EDGE_WEIGHT_SECTION") {
 //			cout << "Reading wheights" << endl;
 			break;

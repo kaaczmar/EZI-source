@@ -20,8 +20,16 @@ void ATSPData::setDimension(unsigned int dimension){
 	data.resize(extents[dimension][dimension]);
 }
 
+void ATSPData::setOptimalSolution(unsigned int optimalSolution){
+	this->optimalSolution = optimalSolution;
+}
+
 unsigned int ATSPData::getDimension(){
 	return dimension;
+}
+
+unsigned int ATSPData::getOptimalSolution(){
+	return optimalSolution;
 }
 
 void ATSPData::print(){
