@@ -8,6 +8,7 @@
 #include <Executor.hpp>
 #include <assert.h>
 #include <sstream>
+#include <iostream>
 
 using namespace std;
 
@@ -49,13 +50,13 @@ void Executor::print(){
 //	stringstream stream;
 //	stream << std::fixed << executionTime;
 
-	double resultQuality = (double) (result - algorithm->getData()->getOptimalSolution()) / (algorithm->getData()->getOptimalSolution()) * 100;
+	double resultQuality = (double) (result) / (algorithm->getData()->getOptimalSolution()) * 100;
 	resultQuality = round(resultQuality*100) / 100.0;
 
 	unsigned int baseInstanceValue = algorithm->calculateObjectiveFunction(baseInstance.getInstanceArray(), baseInstance.getLength());
 
-	double baseQuality = (double) (baseInstanceValue - algorithm->getData()->getOptimalSolution()) / (algorithm->getData()->getOptimalSolution()) * 100;
+	double baseQuality = (double) (baseInstanceValue) / (algorithm->getData()->getOptimalSolution()) * 100;
 	baseQuality = round(baseQuality*100) / 100.0;
 
-	cout << executionTime << "\t" << "czas/jakosc" << "\t" << baseQuality << "\t" << resultQuality << "\t" << (baseQuality - resultQuality) << "\t" << algorithm->getBestSequence().compareWith(baseInstance) << endl;
+	cout << executionTime << "\t" << baseQuality << "\t" << resultQuality << "\t" << (baseQuality - resultQuality) << "\t" << algorithm->getBestSequence().compareWith(baseInstance) << endl;
 }
