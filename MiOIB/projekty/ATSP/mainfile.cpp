@@ -72,6 +72,8 @@ int main(int argc, char **argv) {
 			return 1;
 		}
 
+		cout << filename << "\t";
+
 		if (algorithmName.compare("random") == 0) {
 			if (timeout == -1){
 				cerr << "Timeout must be specified using -t when using random algorithm" << endl;
