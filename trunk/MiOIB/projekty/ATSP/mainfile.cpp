@@ -101,18 +101,19 @@ int main(int argc, char **argv) {
 	}
 	/***END ARGUMENTS***/
 
-	instance.reinitializeNeighbourhood();
-
-	instance.show();
-	cout << "\t" << algorithm->calculateObjectiveFunction(instance.getInstanceArray(), instance.getLength()) << "\t";
-
 	Executor executor(0.5);
 	executor.setAlgorithm(algorithm);
 
-	executor.execute();
+	for (unsigned int i = 0; i < 200; i++){
+		instance.randomize();
+		instance.reinitializeNeighbourhood();
+		instance.show();
+		cout << "\t" << algorithm->calculateObjectiveFunction(instance.getInstanceArray(), instance.getLength()) << "\t";
+		executor.execute();
+		executor.print();
+		cout << "\t\t";
+	}
 
 //	algorithm->optimize(true);
-
-	executor.print();
 
 }
