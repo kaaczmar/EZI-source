@@ -46,26 +46,28 @@ Do pomiaru czasu skorzystano z timera udostępnionego razem z biblioteką \emph{
 \caption{Czas działania poszczególnych algorytmów dla przypadku średniego. Na niebiesko czas działania heurystyki, na czerwono algorytmu Greedy, na zielono algorytmu Steepest, a na fioletowo czas działania algorytmu losowego.}\label{rys:czas_avg}
 \end{figure}
 
-Rysunek \ref{rys:czas_avg} przedstawia wyniki badania czasu działania poszczególnych algorytmów dla przypadku średniego. Ponownie, najlepiej spisała się heurytyka, która działa w czasie $O(n^2)$, co nawet dla największej badanej instancji daje wynik nieprzekraczający $0,01$s. Na drugim miejscu znalazł się algorytm greedy, który szybciej niż algorytm steepest odwiedza kolejnych sąsiadów. Ten drugi algorytm spisał się najgorzej, gdyż przed przejściem do kolejnego sąsiada musi przejrzeć wszystkich swoich sąsiadów ($\frac{n(n-1)}{2}$).
+Rysunek \ref{rys:czas_avg} przedstawia wyniki badania czasu działania poszczególnych algorytmów dla przypadku średniego. Ponownie, najlepiej spisała się heurytyka, która posiada złożoność $O(n^2)$, co nawet dla największej badanej instancji daje wynik nieprzekraczający $0,01$s. Na drugim miejscu znalazł się algorytm greedy, który szybciej niż algorytm steepest odwiedza kolejnych sąsiadów. Ten drugi algorytm spisał się najgorzej, gdyż przed przejściem do kolejnego sąsiada musi przejrzeć wszystkich swoich sąsiadów ($\frac{n(n-1)}{2}$).
 
 Algorytm losowy nie kończy się w sposób naturalny. W celu zachowania równych szans, timeout dla tego algorytmu został określony na poziomie średniej arytmetycznej czasu działania algorytmów greedy i steepest. Jako, że czas działania został ustalony w sposób sztuczny, analizowanie go byłoby bezpodstawne.
 
 \subsection{Współczynnik czas/jakość}
 Wybierając algorytm nie zawsze interesuje nas to, by algorytm zwracał za wszelką cenę rozwiązanie jak najbardziej zbliżone do optymalnego. Czasami jesteśmy skłonni poświęcić odrobinę jakości kosztem krótszego czasu działania, szczególnie w systemach czasu rzeczywistego. Dlatego też konieczne jest wyznaczenie wartości, która uwzględniałaby oba te czynniki naraz.
 
-Jako pierwszy krok, z wyników przeprowadzonych testów (również na innych instancjach niż te omawiane w poniższym sprawozdaniu) wybrano najlepsze i najgorsze wartości dla czasu i jakości. Wyniosły one odpowiednio $0,001$s i $754,89$s oraz $100\%$ i $542,76\%$. Następnie, średnie wyniki czasu działania i jakości badanych algorytmów znormalizowano do wartości z przedziału $<0,1>$ - $0$ dla rozwiązania najgorszego, $1$ dla najlepszego. Korzystając z tych znormalizowanych wartości przystąpiono do wyznaczenia współczynnika cena/jakość zgodnie ze wzorem:
+Jako pierwszy krok, z wyników przeprowadzonych testów (również na innych instancjach niż te omawiane w poniższym sprawozdaniu) wybrano najlepsze i najgorsze wartości dla czasu i jakości. Wyniosły one odpowiednio $0,001$s i $754,89$s oraz $100\%$ i $542,76\%$. Następnie, średnie wyniki czasu działania i jakości badanych algorytmów znormalizowano do wartości z przedziału $<0,1>$ - $0$ dla rozwiązania najgorszego, $1$ dla najlepszego. Korzystając z tych znormalizowanych wartości przystąpiono do wyznaczenia współczynnika cena/jakość zgodnie ze wzorem na ważoną średnią harmoniczną:
 \begin{equation*}
-price\_fitness = \frac{1}{\frac{1}{time_{norm}} + \frac{1}{fitness_{norm}} }
+price\_fitness = \frac{2}{\frac{1}{time_{norm} + \epsilon} + \frac{1}{fitness_{norm} + \epsilon} }
 \end{equation*}
 
-Algorytm działający w najkrótszym czasie, zwracający najlepszy wynik, otrzyma współczynnik cena/jakość równy $0,5$, najgorszy - $0$. Słaba wartość któregokolwiek ze znormalizowanych czynników natychmiast obniża wartość współczynnika, dobra wartość z kolei mocno winduje go do góry.
+Do wartości znormalizowanych współczynników czasu i jakości dodajemy nieskończenie małą wartość $\epsilon$ w celu uniknięcia dzielenia przez 0. Wówczas jeśli którykolwiek z tych współczynników wyniesie $0$ dla danego algorytmu, to we wzorze na współczynnik ceny do jakości uzyskamy $\frac{2}{\frac{1}{time_{norm} + \epsilon} + \frac{1}{0 + \epsilon}}$, co oznacza, że mamy $\frac{2}{1 + \infty}$, czyli ostatecznie $0$.
+
+Algorytm działający w najkrótszym czasie, zwracający najlepszy wynik, otrzyma współczynnik cena/jakość równy $1$, najgorszy - $0$. Słaba wartość któregokolwiek ze znormalizowanych czynników natychmiast obniża wartość współczynnika. Jednak przykładowo algorytm zwracający najlepsze rozwiązania, ale działający najwolniej otrzyma wartość współczynnika równą 0.
 
 \begin{figure}[!h]
 \centering\includegraphics[width=12cm]{img/jakosc-czas}
 \caption{Współczynnik czas/jakość dla poszczególnych instancji i poszczególnych algorytmów dla przypadku średniego. Na niebiesko czas działania heurystyki, na czerwono algorytmu Greedy, na zielono algorytmu Steepest, a na fioletowo czas działania algorytmu losowego.}\label{rys:czas_jakosc}
 \end{figure}
 
-Jako, że heurystyka spisała się najlepiej zarówno pod względem czasu jak i jakości zwracanych wyników, jej współczynnik czas/jakość niemalże sięga wartości $0.5$. Na drugim miejscu znalazł się algorytm greedy, który wygrał z algorytmem steepest głównie na gruncie czasu działania. Algorytm random po raz kolejny zachowuje się nieprzewidywalnie, wraz ze wzrostem instancji wartość jego współczynnika czas/jakość spada, głównie za sprawą zdecydowanego spadku w jakości zwracanych rozwiązań.
+Jako, że heurystyka spisała się najlepiej zarówno pod względem czasu jak i jakości zwracanych wyników, jej współczynnik czas/jakość niemalże sięga wartości $1$. Na drugim miejscu znalazł się algorytm greedy, który wygrał z algorytmem steepest głównie na gruncie czasu działania. Algorytm random po raz kolejny zachowuje się nieprzewidywalnie, wraz ze wzrostem instancji wartość jego współczynnika czas/jakość spada, głównie za sprawą zdecydowanego spadku w jakości zwracanych rozwiązań.
 
 \subsection{Średnia liczba kroków oraz ocenionych rozwiązań algorytmów przeszukiwania lokalnego}
 Algorytmy steepest i greedy działają w odmienny sposób. Steepest, zanim przejdzie do któregoś z sąsiadów, przegląda wszystkich swoich sąsiadów w celu znalezienia tego najlepszego. Greedy natomiast po trafieniu na pierwszego lepszego od siebie sąsiada natychmiast do niego przechodzi. Oznacza to, że steepest powinien docierać do wyniku w mniejszej liczbie kroków (każdy krok wiąże się z probabilistycznie wyższą różnicą funkcji celu), jednak przeglądając większą liczbę rozwiązań.
@@ -80,4 +82,4 @@ Algorytmy steepest i greedy działają w odmienny sposób. Steepest, zanim przej
 \caption{Średnia liczba przejrzanych rozwiązań w dojściu do optimum lokalnego. Na czerwono wartości dla algorytmu Steepest, na niebiesko wartości dla algorytmu Greedy.}\label{rys:loc_sasiedzi}
 \end{figure}
 
-Rysunki \ref{rys:loc_skoki} i \ref{rys:loc_sasiedzi} dokładnie wpisują się przedstawione wcześniej hipotezy. Algorytm greedy faktycznie dochodzi do lokalnego optimum wykonując więcej mniejszych skoków, natomiast algorytm steepest przegląda większą liczbę rozwiązań sąsiednich.
+Rysunki \ref{rys:loc_skoki} i \ref{rys:loc_sasiedzi} dokładnie wpisują się w przedstawione wcześniej hipotezy. Algorytm greedy faktycznie dochodzi do lokalnego optimum wykonując więcej mniejszych skoków, natomiast algorytm steepest przegląda większą liczbę rozwiązań sąsiednich.
