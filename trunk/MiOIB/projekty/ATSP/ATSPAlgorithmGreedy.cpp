@@ -54,7 +54,7 @@ void ATSPAlgorithmGreedy::optimize(bool showResult) {
 	bestSequenceValue = calculateObjectiveFunction(instance->getInstanceArray(), instance->getLength());
 
 	if (showResult){
-		bestSequence.show();
+//		bestSequence.show();
 		cout << "\t" << bestSequenceValue << "\t";
 	}
 

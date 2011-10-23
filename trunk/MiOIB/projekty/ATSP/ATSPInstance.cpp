@@ -29,6 +29,7 @@ ATSPInstance::ATSPInstance(unsigned int length) :
 ATSPInstance::ATSPInstance(const ATSPInstance &instance){
 	this->length = instance.length;
 
+	neighbour = new unsigned int[length];
 	this->instance = new unsigned int[this->length];
 	for (unsigned int i = 0; i < this->length; i++)
 		this->instance[i] = instance.instance[i];
