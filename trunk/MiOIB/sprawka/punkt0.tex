@@ -2,7 +2,7 @@
 \subsection{Definicja problemu}
 Problem komiwojażera można zdefiniować na wiele sposobów, w poniższym sprawozdaniu zostanie przytoczona definicja oparta o teorię grafów. W ogólności problem polega na znalezieniu optymalnej (tu - najkrótszej) trasy, która umożliwi odwiedzenie wszystkich docelowych miast dokładnie jeden raz. Problem ten jest problemem silnie NP trudnym.
 
-Definicja brzmi następująco: Niech $G(V,A)$ oznacza dowolny graf skierowany, taki, że wierzchołki $V$ reprezentują zbiór wszystkich docelowych miast oraz istnieje łuk $A_{ij}$ z wierzchołka $i$ do wierzchołka $j$ jeśli istnieje połączenie z miasta $i$ do miasta $j$ i posiada on długość odpowiadającą odległości między tymi miastami. W tak zdefiniowanym grafie poszukujemy cyklu hamiltona o najmniejszej długości, który stanowi najkrótszą trasę umożliwiającą odwiedzenie wszystkich tras.
+Definicja brzmi następująco: Niech $G(V,A)$ oznacza dowolny graf skierowany, taki, że wierzchołki $V$ reprezentują zbiór wszystkich docelowych miast oraz istnieje łuk $A_{ij}$ z wierzchołka $i$ do wierzchołka $j$ wtedy i tylko wtedy gdy istnieje połączenie z miasta $i$ do miasta $j$ i posiada on długość odpowiadającą odległości między tymi miastami w przemieszczając się od miasta $i$ do miasta $j$. W tak zdefiniowanym grafie poszukujemy cyklu hamiltona o najmniejszej długości, który stanowi najkrótszą trasę umożliwiającą odwiedzenie wszystkich miast.
 
 Z tej definicji mogą wyniknąć dwa problemy - brak połączenia między daną parą miast lub w ogólności brak cyklu hamiltona. Obydwa problemy można rozwiązać dodając na miejsce nieistniejących połączeń połączenia o bardzo dużej długości znacznie przewyższającej pozostałe długości łuków.
 
