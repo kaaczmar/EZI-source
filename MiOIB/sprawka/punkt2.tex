@@ -24,12 +24,12 @@ gdzie:
 
 \begin{figure}[!h]
 \centering\includegraphics[width=12cm]{img/jakosc_avg}
-\caption{Jakość działania poszczególnych algorytmów dla przypadku średniego.}\label{rys:jakosc_avg}
+\caption{Jakość działania poszczególnych algorytmów dla przypadku średniego. Na niebiesko czas działania heurystyki, na czerwono algorytmu Greedy, na zielono algorytmu Steepest, a na fioletowo czas działania algorytmu losowego.}\label{rys:jakosc_avg}
 \end{figure}
 
 \begin{figure}[!h]
 \centering\includegraphics[width=12cm]{img/jakosc_best}
-\caption{Jakość działania poszczególnych algorytmów dla przypadku najlepszego.}\label{rys:jakosc_best}
+\caption{Jakość działania poszczególnych algorytmów dla przypadku najlepszego. Na niebiesko czas działania heurystyki, na czerwono algorytmu Greedy, na zielono algorytmu Steepest, a na fioletowo czas działania algorytmu losowego.}\label{rys:jakosc_best}
 \end{figure}
 
 Rysunki \ref{rys:jakosc_avg} oraz \ref{rys:jakosc_best} przedstawiają wyniki testów jakości odpowiednio dla przypadku średniego i najlepszego. Najlepsze wyniki zostają zwracane przez heurystykę. Jakość działania algorytmów przeszukiwania lokalnego jest bardzo zbliżona. Najgorzej wypada algorytm losowy -- przy mniejszych instancjach zwracane przez niego wyniki nie odbiegają jeszcze tak bardzo jakościowo od pozostałych algorytmów, wraz z liniowym wzrostem rozmiaru instancji rozmiar przestrzeni rozwiązań dopuszczalnych rośnie jednak wykładniczo, przez co proste strzelanie w wynik staje się probabilistycznie dużo mniej opłacalne.
@@ -43,7 +43,7 @@ Do pomiaru czasu skorzystano z timera udostępnionego razem z biblioteką \emph{
 
 \begin{figure}[!h]
 \centering\includegraphics[width=12cm]{img/czas_avg}
-\caption{Czas działania poszczególnych algorytmów dla przypadku średniego.}\label{rys:czas_avg}
+\caption{Czas działania poszczególnych algorytmów dla przypadku średniego. Na niebiesko czas działania heurystyki, na czerwono algorytmu Greedy, na zielono algorytmu Steepest, a na fioletowo czas działania algorytmu losowego.}\label{rys:czas_avg}
 \end{figure}
 
 Rysunek \ref{rys:czas_avg} przedstawia wyniki badania czasu działania poszczególnych algorytmów dla przypadku średniego. Ponownie, najlepiej spisała się heurytyka, która działa w czasie $O(n^2)$, co nawet dla największej badanej instancji daje wynik nieprzekraczający $0,01$s. Na drugim miejscu znalazł się algorytm greedy, który szybciej niż algorytm steepest odwiedza kolejnych sąsiadów. Ten drugi algorytm spisał się najgorzej, gdyż przed przejściem do kolejnego sąsiada musi przejrzeć wszystkich swoich sąsiadów ($\frac{n(n-1)}{2}$).
@@ -62,7 +62,7 @@ Algorytm działający w najkrótszym czasie, zwracający najlepszy wynik, otrzym
 
 \begin{figure}[!h]
 \centering\includegraphics[width=12cm]{img/jakosc-czas}
-\caption{Współczynnik czas/jakość dla poszczególnych instancji i poszczególnych algorytmów dla przypadku średniego.}\label{rys:czas_jakosc}
+\caption{Współczynnik czas/jakość dla poszczególnych instancji i poszczególnych algorytmów dla przypadku średniego. Na niebiesko czas działania heurystyki, na czerwono algorytmu Greedy, na zielono algorytmu Steepest, a na fioletowo czas działania algorytmu losowego.}\label{rys:czas_jakosc}
 \end{figure}
 
 Jako, że heurystyka spisała się najlepiej zarówno pod względem czasu jak i jakości zwracanych wyników, jej współczynnik czas/jakość niemalże sięga wartości $0.5$. Na drugim miejscu znalazł się algorytm greedy, który wygrał z algorytmem steepest głównie na gruncie czasu działania. Algorytm random po raz kolejny zachowuje się nieprzewidywalnie, wraz ze wzrostem instancji wartość jego współczynnika czas/jakość spada, głównie za sprawą zdecydowanego spadku w jakości zwracanych rozwiązań.
@@ -72,12 +72,12 @@ Algorytmy steepest i greedy działają w odmienny sposób. Steepest, zanim przej
 
 \begin{figure}[!h]
 \centering\includegraphics[width=12cm]{img/loc_skoki}
-\caption{Średnia liczba kroków w dojściu do optimum lokalnego.}\label{rys:loc_skoki}
+\caption{Średnia liczba kroków w dojściu do optimum lokalnego. Na czerwono wartości dla algorytmu Steepest, na niebiesko wartości dla algorytmu Greedy.}\label{rys:loc_skoki}
 \end{figure}
 
 \begin{figure}[!h]
 \centering\includegraphics[width=12cm]{img/loc_sasiedzi}
-\caption{Średnia liczba przejrzanych rozwiązań w dojściu do optimum lokalnego.}\label{rys:loc_sasiedzi}
+\caption{Średnia liczba przejrzanych rozwiązań w dojściu do optimum lokalnego. Na czerwono wartości dla algorytmu Steepest, na niebiesko wartości dla algorytmu Greedy.}\label{rys:loc_sasiedzi}
 \end{figure}
 
 Rysunki \ref{rys:loc_skoki} i \ref{rys:loc_sasiedzi} dokładnie wpisują się przedstawione wcześniej hipotezy. Algorytm greedy faktycznie dochodzi do lokalnego optimum wykonując więcej mniejszych skoków, natomiast algorytm steepest przegląda większą liczbę rozwiązań sąsiednich.
