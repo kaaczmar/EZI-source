@@ -72,7 +72,7 @@ int main(int argc, char **argv) {
 			return 1;
 		}
 
-		cout << filename << "\t";
+//		cout << filename << "\t";
 
 		if (algorithmName.compare("random") == 0) {
 			if (timeout == -1){
@@ -81,19 +81,19 @@ int main(int argc, char **argv) {
 			}
 			algorithm = new ATSPAlgorithmRandom(&data, &instance, timeout);
 			instance.randomize();
-			cout << "R\t";
+//			cout << "R\t";
 		} else if (algorithmName.compare("heuristic") == 0) {
 			algorithm = new ATSPAlgorithmGreedy(&data, &instance);
 			instance.randomizeHeuristic();
-			cout << "H\t";
+//			cout << "H\t";
 		} else if (algorithmName.compare("greedy") == 0) {
 			algorithm = new ATSPAlgorithmLSGreedy(&data, &instance);
 			instance.randomize();
-			cout << "G\t";
+//			cout << "G\t";
 		} else if (algorithmName.compare("steepest") == 0){
 			algorithm = new ATSPAlgorithmLSSteepest(&data, &instance);
 			instance.randomize();
-			cout << "S\t";
+//			cout << "S\t";
 		} else {
 			cerr << "Unknown algorithm: " << algorithmName << endl;
 			return 1;
@@ -106,11 +106,43 @@ int main(int argc, char **argv) {
 
 //	for (unsigned int i = 0; i < 200; i++){
 //		instance.randomize();
+	ATSPInstance baseInstance;
+	ATSPAlgorithm *alg1 = new ATSPAlgorithmLSGreedy(&data,&instance);
+	ATSPAlgorithm *alg2 = new ATSPAlgorithmLSSteepest(&data,&instance);
+
+	ATSPInstance results[20];
+
+	for (int i = 0; i < 10; i++){
+		instance.randomize();
 		instance.reinitializeNeighbourhood();
-		instance.show();
-		cout << "\t" << algorithm->calculateObjectiveFunction(instance.getInstanceArray(), instance.getLength()) << "\t";
-		executor.execute();
-		executor.print();
+		baseInstance = ATSPInstance(instance);
+//		cout << filename << "\tG\t";
+//		instance.show();
+//		cout << "\t" << algorithm->calculateObjectiveFunction(instance.getInstanceArray(), instance.getLength()) << "\t";
+		alg1->optimize(false);
+//		cout << "\n";
+		results[i] = ATSPInstance(instance);
+//		cout << "!!!" << results[i].getLength() << "!!!" << endl;
+
+		instance = ATSPInstance(baseInstance);
+		instance.reinitializeNeighbourhood();
+//		cout << filename << "\tS\t";
+//		instance.show();
+//		cout << "\t" << algorithm->calculateObjectiveFunction(instance.getInstanceArray(), instance.getLength()) << "\t";
+		alg2->optimize(false);
+//		cout << "\n";
+		results[10+i] = ATSPInstance(instance);
+//		cout << "!!!" << results[10+i].getLength() << "!!!" << endl;
+
+	}
+
+	for (int i = 0; i < 10; i++){
+		for (int j = 10; j < 20; j++){
+			cout << results[i].compareWith(results[j]) << "\t";
+		}
+		cout << "\n";
+	}
+
 //		cout << "\t\t";
 //	}
 
