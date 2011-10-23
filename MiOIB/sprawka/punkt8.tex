@@ -5,4 +5,26 @@ Można by pokusić się o napisanie prostych funkcji uaktualniających wartość
 
 Wydaje się, że wybór języka programowania $C++$ był podyktowany m.in. szybkością działania kompilowanego kodu (brak kodu pośredniego, który jest wykonywany przez wirtualną maszynę, tylko kod natywny pod dany system operacyjny), jednak ponownie wydaje się, że ta kwestia ma równorzędny wpływ na uzyskane wyniki każdego z algorytmów.
 
-Na koniec istotne wydaje się odpowiednie dobieranie punktu startowego dla algorytmów lokalnego przeszukiwania zgodnie z zasadą ''dobre rozwiązania powinny znajdować się stosunkowo blisko lepszych rozwiązań'', czyli odpalenie na początek heurystyki znajdującej właśnie dobre rozwiązanie, które będzie stanowiło podstawę do działania dla algorytmów przeszukiwania. Wówczas istnieje szansa, że trafimy na lepsze rozwiązanie z większym prawdopodobieństwem aniżeli startowanie z losowych rozwiązań (być może słabych jeśli chodzi o wartość). Wniosek ten jest prawdziwy/nieprawdziwy, co można zaobserwować w tabeli (ref do tabeli).
+Na koniec istotne wydaje się odpowiednie dobieranie punktu startowego dla algorytmów lokalnego przeszukiwania zgodnie z zasadą ''dobre rozwiązania powinny znajdować się stosunkowo blisko lepszych rozwiązań'', czyli odpalenie na początek heurystyki znajdującej właśnie dobre rozwiązanie, które będzie stanowiło podstawę do działania dla algorytmów przeszukiwania. Wówczas istnieje szansa, że trafimy na lepsze rozwiązanie z większym prawdopodobieństwem aniżeli startowanie z losowych rozwiązań (być może słabych jeśli chodzi o wartość). Wniosek ten jest prawdziwy, co można zaobserwować w tabeli \ref{tab:heur_local}. Dla porównania, algorytmy steepest i greedy uruchamiane 10-krotnie z losowych punktów startowych uzyskały dla badanej instancji flv55.atsp wyniki odpowiednio 153,7 i 142,6.
+
+\begin{table}[h!]
+	\centering
+       \begin{tabular}{|l|l|l|}
+        \hline
+		Heurystyka & Heurystyka + Steepest & Heurystyka + Greedy \\
+		\hline
+		139.74 & 126.12 & 126.12 \\
+		143.97 & 124.38 & 124.38 \\
+		132.52 & 128.61 & 130.16 \\
+		125.81 & 118.84 & 118.84 \\
+		137.38 & 126 & 127.55 \\
+		139.12 & 123.82 & 130.53 \\
+		143.97 & 124.38 & 124.38 \\
+		139.74 & 126.12 & 126.12 \\
+		132.52 & 128.61 & 130.16 \\
+		139.18 & 137.69 & 137.69 \\
+		\hline
+		\end{tabular}
+		\caption{Jakość uzyskiwanych rozwiązań przy wykorzystaniu algorytmów przeszukiwania lokalnego startujących z punktu wyznaczonego przez heurystykę dla instancji flv55.atsp.}
+		\label{tab:heur_local}
+\end{table}
