@@ -1,1 +1,83 @@
 \section{Porównanie działania algorytmów}
+Testy algorytmów zostały przeprowadzone na grupie 10 instancji testowych o różnym rozmiarze: od 33 do 403 miast. Na każdej z instancji każdy z algorytmów został uruchomiony dziesięciokrotnie w celu ustalenia zarówno wartości średniej jak i rozproszenia poszczególnych mierzonych parametrów. Testy przeprowadzono na maszynie wyposażonej w procesor Intel Core i7-620M oraz 4GB pamięci RAM. 
+
+Zaimplementowane algorytmy to algorytm losowy, dwa algorytmy przeszukiwania lokalnego -- greedy oraz steepest, a także prosta heurystyka. W jej formie użyto algorytmu zachłannego, który po wylosowaniu punktu startowego przechodzi do najbliższego z sąsiadów, który nie został jeszcze odwiedzony.
+
+Wyniki zostaną obecnie zaprezentowane w poszczególnych punktach.
+
+\subsection{Jakość działania}
+Optymalne wartości funkcji celu dla każdej instancji były znane a priori, dlatego też jako miarę jakości działania algorytmów wykorzystano następującą zależność:
+\begin{equation*}
+fitness = \frac{f_{alg}(\Pi_i)}{f_{OPT}(\Pi_i)}*100\%
+\end{equation*}
+gdzie:
+
+\begin{table}[h!]
+       \begin{tabular}{lll}
+       	$fitness$ & - & jakość algorytmu\\ 
+        $f_{alg}(\Pi_{i})$ & - & wartość funkcji celu rozwiązania zwracanego przez badany \\
+        &&algorytm dla instancji $\Pi_i$\\ 
+		$f_{OPT}(\Pi_{i})$ & - & wartość funkcji celu rozwiązania optymalnego dla instancji $\Pi_i$
+		\end{tabular}
+\end{table}
+\noindent Jeżeli algorytm zwróci rozwiązanie optymalne, miara jakości wyniesie 100\%. Wraz z pogarszaniem się zwracanego wyniku miara jakości będzie rosła, wyznaczając stosunkowy stopień oddalenia od wartości optymalnej.
+
+\begin{figure}[!h]
+\centering\includegraphics[width=12cm]{img/jakosc_avg}
+\caption{Jakość działania poszczególnych algorytmów dla przypadku średniego.}\label{rys:jakosc_avg}
+\end{figure}
+
+\begin{figure}[!h]
+\centering\includegraphics[width=12cm]{img/jakosc_best}
+\caption{Jakość działania poszczególnych algorytmów dla przypadku najlepszego.}\label{rys:jakosc_best}
+\end{figure}
+
+Rysunki \ref{rys:jakosc_avg} oraz \ref{rys:jakosc_best} przedstawiają wyniki testów jakości odpowiednio dla przypadku średniego i najlepszego. Najlepsze wyniki zostają zwracane przez heurystykę. Jakość działania algorytmów przeszukiwania lokalnego jest bardzo zbliżona. Najgorzej wypada algorytm losowy -- przy mniejszych instancjach zwracane przez niego wyniki nie odbiegają jeszcze tak bardzo jakościowo od pozostałych algorytmów, wraz z liniowym wzrostem rozmiaru instancji rozmiar przestrzeni rozwiązań dopuszczalnych rośnie jednak wykładniczo, przez co proste strzelanie w wynik staje się probabilistycznie dużo mniej opłacalne.
+
+Jeżeli chodzi o rozproszenie jakości zwracanych rozwiązań, wyniki zwracane przez heurystykę są bardzo zbliżone. Algorytmy lokalny zwracają wyniki nieznacznie bardziej rozrzucone wokół wartości średniej. Algorytm losowy zachowuje się natomiast całkowicie losowo -- widzimy tu przypadki od praktycznie zerowego rozrzucenia, przez to porównywalne do algorytmów lokalnych, kończąc na kilkukrotnie od nich wyższym.
+
+Porównując wykresy dla przypadku średniego i najlepszego zauważyć można wyraźnie, że tendencja jest zachowana, jedynie wykresy znajdują się o kilka punktów procentowych niżej.
+
+\subsection{Czas}
+Do pomiaru czasu skorzystano z timera udostępnionego razem z biblioteką \emph{boost}. Zwraca on wynik w postaci wartości podwójnej precyzji (\texttt{double}), rozpoczynając od $0,001$s. W celu dokładniejszego wyznaczenia czasu wywołań algorytmów dla najmniejszych instancji, powtarzano uruchamianie z tego samego punktu startowego minimalnie przez $0,5$s, po czym otrzymany czas dzielono przez liczbę wykonań algorytmu.
+
+\begin{figure}[!h]
+\centering\includegraphics[width=12cm]{img/czas_avg}
+\caption{Czas działania poszczególnych algorytmów dla przypadku średniego.}\label{rys:czas_avg}
+\end{figure}
+
+Rysunek \ref{rys:czas_avg} przedstawia wyniki badania czasu działania poszczególnych algorytmów dla przypadku średniego. Ponownie, najlepiej spisała się heurytyka, która działa w czasie $O(n^2)$, co nawet dla największej badanej instancji daje wynik nieprzekraczający $0,01$s. Na drugim miejscu znalazł się algorytm greedy, który szybciej niż algorytm steepest odwiedza kolejnych sąsiadów. Ten drugi algorytm spisał się najgorzej, gdyż przed przejściem do kolejnego sąsiada musi przejrzeć wszystkich swoich sąsiadów ($\frac{n(n-1)}{2}$).
+
+Algorytm losowy nie kończy się w sposób naturalny. W celu zachowania równych szans, timeout dla tego algorytmu został określony na poziomie średniej arytmetycznej czasu działania algorytmów greedy i steepest. Jako, że czas działania został ustalony w sposób sztuczny, analizowanie go byłoby bezpodstawne.
+
+\subsection{Współczynnik czas/jakość}
+Wybierając algorytm nie zawsze interesuje nas to, by algorytm zwracał za wszelką cenę rozwiązanie jak najbardziej zbliżone do optymalnego. Czasami jesteśmy skłonni poświęcić odrobinę jakości kosztem krótszego czasu działania, szczególnie w systemach czasu rzeczywistego. Dlatego też konieczne jest wyznaczenie wartości, która uwzględniałaby oba te czynniki naraz.
+
+Jako pierwszy krok, z wyników przeprowadzonych testów (również na innych instancjach niż te omawiane w poniższym sprawozdaniu) wybrano najlepsze i najgorsze wartości dla czasu i jakości. Wyniosły one odpowiednio $0,001$s i $754,89$s oraz $100\%$ i $542,76\%$. Następnie, średnie wyniki czasu działania i jakości badanych algorytmów znormalizowano do wartości z przedziału $<0,1>$ - $0$ dla rozwiązania najgorszego, $1$ dla najlepszego. Korzystając z tych znormalizowanych wartości przystąpiono do wyznaczenia współczynnika cena/jakość zgodnie ze wzorem:
+\begin{equation*}
+price\_fitness = \frac{1}{\frac{1}{time_{norm}} + \frac{1}{fitness_{norm}} }
+\end{equation*}
+
+Algorytm działający w najkrótszym czasie, zwracający najlepszy wynik, otrzyma współczynnik cena/jakość równy $0,5$, najgorszy - $0$. Słaba wartość któregokolwiek ze znormalizowanych czynników natychmiast obniża wartość współczynnika, dobra wartość z kolei mocno winduje go do góry.
+
+\begin{figure}[!h]
+\centering\includegraphics[width=12cm]{img/jakosc-czas}
+\caption{Współczynnik czas/jakość dla poszczególnych instancji i poszczególnych algorytmów dla przypadku średniego.}\label{rys:czas_jakosc}
+\end{figure}
+
+Jako, że heurystyka spisała się najlepiej zarówno pod względem czasu jak i jakości zwracanych wyników, jej współczynnik czas/jakość niemalże sięga wartości $0.5$. Na drugim miejscu znalazł się algorytm greedy, który wygrał z algorytmem steepest głównie na gruncie czasu działania. Algorytm random po raz kolejny zachowuje się nieprzewidywalnie, wraz ze wzrostem instancji wartość jego współczynnika czas/jakość spada, głównie za sprawą zdecydowanego spadku w jakości zwracanych rozwiązań.
+
+\subsection{Średnia liczba kroków oraz ocenionych rozwiązań algorytmów przeszukiwania lokalnego}
+Algorytmy steepest i greedy działają w odmienny sposób. Steepest, zanim przejdzie do któregoś z sąsiadów, przegląda wszystkich swoich sąsiadów w celu znalezienia tego najlepszego. Greedy natomiast po trafieniu na pierwszego lepszego od siebie sąsiada natychmiast do niego przechodzi. Oznacza to, że steepest powinien docierać do wyniku w mniejszej liczbie kroków (każdy krok wiąże się z probabilistycznie wyższą różnicą funkcji celu), jednak przeglądając większą liczbę rozwiązań.
+
+\begin{figure}[!h]
+\centering\includegraphics[width=12cm]{img/loc_skoki}
+\caption{Średnia liczba kroków w dojściu do optimum lokalnego.}\label{rys:loc_skoki}
+\end{figure}
+
+\begin{figure}[!h]
+\centering\includegraphics[width=12cm]{img/loc_sasiedzi}
+\caption{Średnia liczba przejrzanych rozwiązań w dojściu do optimum lokalnego.}\label{rys:loc_sasiedzi}
+\end{figure}
+
+Rysunki \ref{rys:loc_skoki} i \ref{rys:loc_sasiedzi} dokładnie wpisują się przedstawione wcześniej hipotezy. Algorytm greedy faktycznie dochodzi do lokalnego optimum wykonując więcej mniejszych skoków, natomiast algorytm steepest przegląda większą liczbę rozwiązań sąsiednich.
