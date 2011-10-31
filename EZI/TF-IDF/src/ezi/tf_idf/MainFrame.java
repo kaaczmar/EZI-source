@@ -11,6 +11,7 @@ import java.awt.event.MouseEvent;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.StringTokenizer;
 
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
@@ -33,6 +34,7 @@ import ezi.tf_idf.data.Keyword;
 import ezi.tf_idf.data.Query;
 import ezi.tf_idf.utils.DocumentFileParser;
 import ezi.tf_idf.utils.KeywordFileParser;
+import ezi.tf_idf.utils.WordnetAPI;
 
 public class MainFrame extends JFrame {
 
@@ -62,6 +64,7 @@ public class MainFrame extends JFrame {
 
 	private JList list;
 	private JScrollPane scrollPane;
+	private JButton expandButton;
 
 	/**
 	 * Create the frame.
@@ -124,13 +127,38 @@ public class MainFrame extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 
+		expandButton = new JButton("Expand query");
+		expandButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				expandQuery();
+			}
+		});
+		expandButton.setEnabled(true);
+		expandButton.setBounds(511, 43, 130, 25);
+		contentPane.add(expandButton);
+
 		textFieldQuery = new JTextField();
 		textFieldQuery.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER)
 					computeTFIDF();
+				if (textFieldQuery.isEnabled()
+						&& textFieldQuery.getText().length() > 0)
+					expandButton.setEnabled(true);
+				else
+					expandButton.setEnabled(false);
 			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				if (textFieldQuery.isEnabled()
+						&& textFieldQuery.getText().length() > 0)
+					expandButton.setEnabled(true);
+				else
+					expandButton.setEnabled(false);
+			}
+
 		});
 		textFieldQuery.setFont(new Font("Dialog", Font.PLAIN, 16));
 		textFieldQuery
@@ -261,6 +289,24 @@ public class MainFrame extends JFrame {
 		// list = new JList(documents.toArray());
 		list.setListData(documents.toArray());
 		scrollPane.setVisible(true);
+	}
+
+	private void expandQuery() {
+		WordnetAPI wordnet = new WordnetAPI();
+		ArrayList<String> synonims = new ArrayList<String>();
+
+		StringTokenizer st = new StringTokenizer(textFieldQuery.getText());
+		while (st.hasMoreTokens()) {
+			wordnet.findSynonims(st.nextToken(), synonims);
+		}
+
+		for (String s : synonims)
+			System.out.println(s);
+		
+		QueryExpansionDialog dialog = new QueryExpansionDialog();
+		dialog.initTable(synonims);
+		
+		dialog.setVisible(true);
 	}
 
 	/**
