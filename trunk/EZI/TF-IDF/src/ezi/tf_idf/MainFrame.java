@@ -133,7 +133,7 @@ public class MainFrame extends JFrame {
 				expandQuery();
 			}
 		});
-		expandButton.setEnabled(true);
+		expandButton.setEnabled(false);
 		expandButton.setBounds(511, 43, 130, 25);
 		contentPane.add(expandButton);
 
@@ -295,18 +295,32 @@ public class MainFrame extends JFrame {
 		WordnetAPI wordnet = new WordnetAPI();
 		ArrayList<String> synonims = new ArrayList<String>();
 
+		ArrayList<String> query = new ArrayList<String>();
+		
 		StringTokenizer st = new StringTokenizer(textFieldQuery.getText());
 		while (st.hasMoreTokens()) {
-			wordnet.findSynonims(st.nextToken(), synonims);
+			query.add(st.nextToken());
 		}
-
+		
+		for (String word : query){
+			wordnet.findSynonims(word, synonims, keywords, query);
+		}
+		
 		for (String s : synonims)
 			System.out.println(s);
 		
-		QueryExpansionDialog dialog = new QueryExpansionDialog();
+		QueryExpansionDialog dialog = new QueryExpansionDialog(this);
 		dialog.initTable(synonims);
 		
 		dialog.setVisible(true);
+		
+		if (dialog.getResult()){
+			System.out.println("Search");
+			System.out.println(dialog.getExtensions().size());
+		} else {
+			System.out.println("Cancel");
+		}
+		
 	}
 
 	/**
