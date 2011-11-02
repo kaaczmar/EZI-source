@@ -21,6 +21,7 @@ import ezi.tf_idf.utils.Stemmer;
 public class Document implements Comparable<Document> {
 	protected String title;
 	private String content;
+	private String documentClass;
 	private String stemmedDocument;
 	private BagOfWords bag;
 	protected BagOfWords original;
@@ -50,9 +51,10 @@ public class Document implements Comparable<Document> {
 		return false;
 	}
 
-	public Document(String title, String content) {
+	public Document(String title, String documentClass, String content) {
 		this.title = title.trim();
 		this.content = content.trim();
+		this.documentClass = documentClass;
 		stemmedDocument = "";
 
 		Stemmer s = new Stemmer();
@@ -125,5 +127,13 @@ public class Document implements Comparable<Document> {
 		if (o.getSimiliarity() < getSimiliarity())
 			return -1;
 		return 0;
+	}
+
+	public String getDocumentClass() {
+		return documentClass;
+	}
+
+	public void setDocumentClass(String documentClass) {
+		this.documentClass = documentClass;
 	}
 }

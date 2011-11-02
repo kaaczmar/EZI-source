@@ -28,7 +28,7 @@ public class Query extends Document {
 	 *            {@link IDF} instance for given set of keywords
 	 */
 	public Query(String queryText, ArrayList<Keyword> keywords, IDF idf) {
-		super("", queryText);
+		super("", "", queryText);
 		title = "Query";
 		applyKeywordSet(keywords);
 		applyIDF(idf);
