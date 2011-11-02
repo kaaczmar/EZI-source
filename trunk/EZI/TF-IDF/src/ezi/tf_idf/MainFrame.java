@@ -1,5 +1,6 @@
 package ezi.tf_idf;
 
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -16,6 +17,7 @@ import java.util.StringTokenizer;
 import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -53,6 +55,7 @@ public class MainFrame extends JFrame {
 
 	private JFileChooser fileChooser;
 	private JTextField textFieldQuery;
+	private JLabel extendedQueryInformation;
 	private JButton btnSearch;
 	private JMenu mnView;
 	private JMenuItem mntmDocuments;
@@ -137,6 +140,14 @@ public class MainFrame extends JFrame {
 		expandButton.setBounds(511, 43, 130, 25);
 		contentPane.add(expandButton);
 
+		extendedQueryInformation = new JLabel();
+		extendedQueryInformation.setText("The query was expanded");
+		extendedQueryInformation.setForeground(Color.RED);
+		extendedQueryInformation.setFont(new Font("Dialog", Font.PLAIN, 16));
+		extendedQueryInformation.setBounds(12, 43, 400, 25);
+		extendedQueryInformation.setVisible(false);
+		contentPane.add(extendedQueryInformation);
+		
 		textFieldQuery = new JTextField();
 		textFieldQuery.addKeyListener(new KeyAdapter() {
 			@Override
@@ -202,6 +213,7 @@ public class MainFrame extends JFrame {
 	}
 
 	private void computeTFIDF() {
+		extendedQueryInformation.setVisible(false);
 		Query query = new Query(textFieldQuery.getText(), keywords, idf);
 
 		if (!query.getIsQueryValid()) {
@@ -329,6 +341,8 @@ public class MainFrame extends JFrame {
 			}
 			Collections.sort(documents);
 			showResults();
+			textFieldQuery.setText(dialog.getQuery().getContent());
+			extendedQueryInformation.setVisible(true);
 		} else {
 			System.out.println("Cancel");
 		}
