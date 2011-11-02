@@ -40,6 +40,10 @@ public class TF {
 				maxCount = value;
 		}
 
+		updateVectorLength(keywords);
+	}
+
+	public void updateVectorLength(ArrayList<Keyword> keywords) {
 		vectorLength = 0.0;
 		for (Keyword word : keywords) {
 			if (word.getIsDoubled())
@@ -48,7 +52,7 @@ public class TF {
 		}
 		vectorLength = Math.sqrt(vectorLength);
 	}
-
+	
 	/**
 	 * This constructor is used by {@link TFIDF} representation, as it doesn't
 	 * use list of keywords - it bases on TF vector.
