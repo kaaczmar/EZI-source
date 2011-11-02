@@ -1,6 +1,7 @@
 package ezi.tf_idf.data;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 import ezi.tf_idf.algorithm.IDF;
 
@@ -37,5 +38,24 @@ public class Query extends Document {
 		if (tfidf.getVectorLength() > 0)
 			return true;
 		return false;
+	}
+
+	/**
+	 * This method is used to get the corresponding value of word in IDF
+	 * measure.
+	 * 
+	 * @param word
+	 * @return
+	 */
+	public double getWordValue(String word) {
+		return tfidf.getWordValue(word);
+	}
+
+	public Set<String> getWords() {
+		return original.getWords();
+	}
+
+	public void setWordValue(String word, Double value) {
+		tfidf.setWordValue(word, value);
 	}
 }

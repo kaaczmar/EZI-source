@@ -23,6 +23,7 @@ public class Document implements Comparable<Document> {
 	private String content;
 	private String stemmedDocument;
 	private BagOfWords bag;
+	protected BagOfWords original;
 	private TF tf;
 	protected TFIDF tfidf;
 	private Double similiarity;
@@ -70,6 +71,7 @@ public class Document implements Comparable<Document> {
 		stemmedDocument += s.toString();
 		stemmedDocument = stemmedDocument.replaceAll("[ \t\n]+", " ").trim();
 		bag = new BagOfWords(stemmedDocument);
+		original = new BagOfWords(temp);
 	}
 
 	public Document() {

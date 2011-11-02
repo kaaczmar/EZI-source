@@ -310,13 +310,25 @@ public class MainFrame extends JFrame {
 			System.out.println(s);
 		
 		QueryExpansionDialog dialog = new QueryExpansionDialog(this);
-		dialog.initTable(synonims);
+		String expandedQueryString = textFieldQuery.getText();
+		for (String s : synonims){
+			expandedQueryString += " " + s;
+		}
+		
+		dialog.initTable(expandedQueryString, idf, keywords);
 		
 		dialog.setVisible(true);
 		
 		if (dialog.getResult()){
 			System.out.println("Search");
-			System.out.println(dialog.getExtensions().size());
+			for (Document document : documents) {
+				// document.calculateTFSimiliarity(query);
+				// System.out.println(document.getTitle() + " TF: " +
+				// document.getSimiliarity());
+				document.calculateTFIDFSimiliarity(dialog.getQuery());
+			}
+			Collections.sort(documents);
+			showResults();
 		} else {
 			System.out.println("Cancel");
 		}

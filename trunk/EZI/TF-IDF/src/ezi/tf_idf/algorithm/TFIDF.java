@@ -34,4 +34,8 @@ public class TFIDF extends TF {
 		}
 		vectorLength = Math.sqrt(vectorLength);
 	}
+
+	public void setWordValue(String word, Double value) {
+		values.put(word, value);
+	}
 }

@@ -1,19 +1,19 @@
 package ezi.tf_idf;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
+import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.table.*;
-import javax.swing.JButton;
+import javax.swing.table.DefaultTableModel;
 
-import ezi.tf_idf.data.Extension;
+import ezi.tf_idf.algorithm.IDF;
 import ezi.tf_idf.data.Keyword;
-
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import ezi.tf_idf.data.Query;
 
 public class QueryExpansionDialog extends JDialog {
 	/**
@@ -25,8 +25,10 @@ public class QueryExpansionDialog extends JDialog {
 	private JButton btnSearch;
 	private JButton btnCancel;
 	private boolean result = false;
-	
-	private ArrayList<Extension> extensions;
+
+	private Query query;
+	private ArrayList<Keyword> keywords;
+	private IDF idf;
 
 	/**
 	 * Launch the application.
@@ -41,23 +43,23 @@ public class QueryExpansionDialog extends JDialog {
 	// }
 	// }
 
-	public QueryExpansionDialog(JFrame owner){
+	public QueryExpansionDialog(JFrame owner) {
 		super(owner);
 		initGUI();
 	}
-	
+
 	/**
 	 * Create the dialog.
 	 */
 	public QueryExpansionDialog() {
 		initGUI();
 	}
-	
-	private void initGUI(){
+
+	private void initGUI() {
 		setTitle("Query expansion");
 		setBounds(100, 100, 500, 600);
 		getContentPane().setLayout(null);
-		
+
 		setModal(true);
 
 		table = new JTable();
@@ -70,18 +72,18 @@ public class QueryExpansionDialog extends JDialog {
 			public boolean isCellEditable(int row, int column) {
 				return columnEditables[column];
 			}
-			
-			Class[] columnTypes = new Class[] {
-				String.class, Double.class, Boolean.class
-			};
+
+			Class[] columnTypes = new Class[] { String.class, Double.class,
+					Boolean.class };
+
 			public Class getColumnClass(int columnIndex) {
 				return columnTypes[columnIndex];
 			}
-			
+
 		};
 
 		table.setModel(tableModel);
-		
+
 		table.getColumnModel().getColumn(0).setResizable(false);
 		table.getColumnModel().getColumn(0).setPreferredWidth(255);
 		table.getColumnModel().getColumn(0).setMinWidth(255);
@@ -96,7 +98,7 @@ public class QueryExpansionDialog extends JDialog {
 		table.getColumnModel().getColumn(2).setMaxWidth(100);
 
 		table.setRowHeight(40);
-		
+
 		table.getTableHeader().setReorderingAllowed(false);
 		table.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
 
@@ -106,7 +108,7 @@ public class QueryExpansionDialog extends JDialog {
 				.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
 
 		getContentPane().add(scrollPane);
-		
+
 		btnSearch = new JButton("Search");
 		btnSearch.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
@@ -117,7 +119,7 @@ public class QueryExpansionDialog extends JDialog {
 		});
 		btnSearch.setBounds(326, 530, 117, 25);
 		getContentPane().add(btnSearch);
-		
+
 		btnCancel = new JButton("Cancel");
 		btnCancel.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -129,26 +131,53 @@ public class QueryExpansionDialog extends JDialog {
 		getContentPane().add(btnCancel);
 	}
 
-	public void initTable(ArrayList<String> words) {
+	public void initTable(String queryString, IDF idf,
+			ArrayList<Keyword> keywords) {
+		this.query = new Query(queryString, keywords, idf);
+		this.idf = idf;
+		this.keywords = keywords;
+
+		// THIS COULD BE DONE BETTER IF BAG OF WORDS WOULD ACT ON KEYWORDS
+		// INSTEAD OF STRINGS
+		// BUT BECAUSE I'M LAZY IT STAYS AS IT IS ;)
+		ArrayList<Keyword> usedWords = new ArrayList<Keyword>();
+
 		tableModel.setRowCount(0);
 
-		for (String s : words)
-			tableModel.addRow(new Object[] { s, 0.0, new Boolean(false) });
+		for (String word : query.getWords()) {
+			if (word.isEmpty())
+				continue;
+			Keyword s = new Keyword(word);
+			if (usedWords.contains(s))
+				continue;
+			usedWords.add(s);
+			tableModel.addRow(new Object[] { s.getOriginalKeyword(),
+					query.getWordValue(s.getStemmedKeyword()),
+					new Boolean(false) });
+		}
 	}
-	
-	public boolean getResult(){
+
+	public boolean getResult() {
 		return result;
 	}
-	
-	public ArrayList<Extension> getExtensions(){
-		return extensions;
+
+	public Query getQuery() {
+		return query;
 	}
-	
-	private void collectResults(){
-		extensions = new ArrayList<Extension>();
-		for (int i = 0; i < tableModel.getRowCount(); i++){
-			if ((Boolean)table.getValueAt(i, 2))
-				extensions.add(new Extension(new Keyword((String)table.getValueAt(i, 0)), (Double) table.getValueAt(i, 1)));
+
+	private void collectResults() {
+		String newQuery = "";
+		for (int i = 0; i < tableModel.getRowCount(); i++) {
+			if ((Boolean) table.getValueAt(i, 2))
+				newQuery += (String) table.getValueAt(i, 0) + " ";
+		}
+		query = new Query(newQuery, keywords, idf);
+		for (int i = 0; i < tableModel.getRowCount(); i++) {
+			if ((Boolean) table.getValueAt(i, 2)) {
+				Keyword key = new Keyword((String) table.getValueAt(i, 0));
+				query.setWordValue(key.getStemmedKeyword(),
+						(Double) table.getValueAt(i, 1));
+			}
 		}
 	}
 }
