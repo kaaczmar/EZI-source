@@ -179,5 +179,6 @@ public class QueryExpansionDialog extends JDialog {
 						(Double) table.getValueAt(i, 1));
 			}
 		}
+		query.updateVectorLength(keywords);
 	}
 }

@@ -58,4 +58,8 @@ public class Query extends Document {
 	public void setWordValue(String word, Double value) {
 		tfidf.setWordValue(word, value);
 	}
+	
+	public void updateVectorLength(ArrayList<Keyword> keywords) {
+		tfidf.updateVectorLength(keywords);
+	}
 }
