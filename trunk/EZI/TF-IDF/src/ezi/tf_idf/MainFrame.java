@@ -322,12 +322,13 @@ public class MainFrame extends JFrame {
 			System.out.println(s);
 		
 		QueryExpansionDialog dialog = new QueryExpansionDialog(this);
-		String expandedQueryString = textFieldQuery.getText();
-		for (String s : synonims){
-			expandedQueryString += " " + s;
-		}
+		String queryString = textFieldQuery.getText();
+//		String synonimsString = new String();
+//		for (String s : synonims){
+//			synonimsString += " " + s;
+//		}
 		
-		dialog.initTable(expandedQueryString, idf, keywords);
+		dialog.initTable(queryString, synonims, idf, keywords);
 		
 		dialog.setVisible(true);
 		

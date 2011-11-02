@@ -14,27 +14,34 @@ public class DocumentFileParser {
 
 		ArrayList<Document> documents = new ArrayList<Document>();
 		String title = null;
+		String documentClass = null;
 		String content = null;
 
 		try {
 			BufferedReader in = new BufferedReader(new FileReader(filename));
 			String str;
 			while ((str = in.readLine()) != null) {
-				if (title == null) {
-					title = new String(str);
+				if (documentClass == null) {
+					documentClass = new String(str);
 					// System.out.println("Document " + title);
 					content = new String();
+				} else if (title == null) {
+					title = new String(str);
+					// System.out.println("Document " + title);
+					System.out.println(title);
+//					content = new String();
 				} else if (str.equalsIgnoreCase("")) {
-					documents.add(new Document(title, content));
+					documents.add(new Document(title, documentClass, content));
 					// System.out.println("Content: " + content);
 					title = null;
+					documentClass = null;
 					content = null;
 				} else {
 					content += str + "\n";
 				}
 			}
 			if (!content.equals(null)) {
-				documents.add(new Document(title, content));
+				documents.add(new Document(title, documentClass, content));
 				// System.out.println("Content: " + content);
 			}
 			in.close();

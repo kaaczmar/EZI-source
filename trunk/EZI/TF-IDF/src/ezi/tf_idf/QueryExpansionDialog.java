@@ -131,7 +131,7 @@ public class QueryExpansionDialog extends JDialog {
 		getContentPane().add(btnCancel);
 	}
 
-	public void initTable(String queryString, IDF idf,
+	public void initTable(String queryString, ArrayList<String> synonims, IDF idf,
 			ArrayList<Keyword> keywords) {
 		this.query = new Query(queryString, keywords, idf);
 		this.idf = idf;
@@ -153,6 +153,18 @@ public class QueryExpansionDialog extends JDialog {
 			usedWords.add(s);
 			tableModel.addRow(new Object[] { s.getOriginalKeyword(),
 					query.getWordValue(s.getStemmedKeyword()),
+					new Boolean(true) });
+		}
+		
+		for (String word : synonims) {
+			if (word.isEmpty())
+				continue;
+			Keyword s = new Keyword(word);
+			if (usedWords.contains(s))
+				continue;
+			usedWords.add(s);
+			tableModel.addRow(new Object[] { s.getOriginalKeyword(),
+					idf.getWordValue(s.getStemmedKeyword()),
 					new Boolean(false) });
 		}
 	}

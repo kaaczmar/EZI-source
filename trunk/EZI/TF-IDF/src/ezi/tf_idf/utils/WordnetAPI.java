@@ -2,7 +2,9 @@ package ezi.tf_idf.utils;
 
 import java.util.ArrayList;
 
+import edu.smu.tspell.wordnet.NounSynset;
 import edu.smu.tspell.wordnet.Synset;
+import edu.smu.tspell.wordnet.SynsetType;
 import edu.smu.tspell.wordnet.WordNetDatabase;
 import ezi.tf_idf.data.Keyword;
 
@@ -21,6 +23,17 @@ public class WordnetAPI {
 		return false;
 	}
 	
+	private boolean queryContains(ArrayList<String> query, String keyword){
+		Keyword checkedKeyword = new Keyword(keyword);		
+		
+		for (String word : query){
+			Keyword queryKeyword = new Keyword(word);
+			if (queryKeyword.getStemmedKeyword().equalsIgnoreCase(checkedKeyword.getStemmedKeyword()))
+				return true;
+		}
+		return false;
+	}
+	
 	public void findSynonims(String word, ArrayList<String> synonims, ArrayList<Keyword> keywords, ArrayList<String> query){
 		WordNetDatabase database = WordNetDatabase.getFileInstance(); 
 		
@@ -30,9 +43,26 @@ public class WordnetAPI {
 			if (!synonims.contains((String)syn.getWordForms()[0]) 
 					&& !syn.getWordForms()[0].equalsIgnoreCase(word) 
 					&& keywordContains(keywords, (String)syn.getWordForms()[0]) 
-					&& !query.contains((String)syn.getWordForms()[0])){
+					&& !queryContains(query, (String)syn.getWordForms()[0])){
 				synonims.add(syn.getWordForms()[0]);
 			}
+		}
+		
+		synsets = database.getSynsets(word, SynsetType.NOUN);
+		
+		for (Synset syn : synsets) { 
+		    NounSynset nounSynset = (NounSynset)(syn); 
+		    NounSynset[] hypernyms = nounSynset.getHypernyms();
+//		    System.out.println(nounSynset.getWordForms()[0] + 
+//		            ": " + nounSynset.getDefinition() + ") has " + hyponyms.length + " hyponyms");
+		    for (NounSynset syn2 : hypernyms){
+		    	if (!synonims.contains((String)syn2.getWordForms()[0]) 
+					&& !syn2.getWordForms()[0].equalsIgnoreCase(word) 
+					&& keywordContains(keywords, (String)syn2.getWordForms()[0]) 
+					&& !queryContains(query, (String)syn2.getWordForms()[0])){
+				synonims.add(syn2.getWordForms()[0]);
+		    	}
+		    }
 		}
 	}
 	

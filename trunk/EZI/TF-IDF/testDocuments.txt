@@ -1,13 +1,15 @@
 anaconda
-Anaconda! Nashville Zoo at Grassmere welcomes your visit to our Official 
-      Website. As the Zoo grows and develops, we hope you will stop by often and 
-      see all the ...
+Anaconda! 
+Nashville Zoo at Grassmere welcomes your visit to our Official Website. As the Zoo grows and develops, we hope you will stop by often and see all the ...
 
 anaconda
+Anaconda 2
 Biggest Snake The dimensions that have earned the anaconda the title of 
       king is its total body mass or ... The other snake that competes with the 
       anaconda is the Asiatic ...
+
 anaconda
+Anaconda 3
       The UnMuseum - Big Snakes The largest-known snake in the world is the 
       Anaconda, or Eunectes murinus, ... The Anaconda is also foot per foot a 
       much bigger snake than the Python, ...
@@ -61,17 +63,19 @@ The Anaconda is also foot per foot a much bigger snake than the Python, ...
 This is probably because the anaconda, a water snake, does not have to be ...
 
 animal planet
-Animal Planet :: Home Page... Jane Goodall, K9 Karma, Miami Animal Police, 
+Animal Planet :: Home Page...
+ Jane Goodall, K9 Karma, Miami Animal Police, 
       Mutual of Omaha's Wild Kingdom, New Breed Vets, Planet's Funniest Animals, 
       The Crocodile Hunter, Whoa! ...
 
 animal planet
-Desert Animals & Wildlife Lots of links to our many exciting and 
+Desert Animals & Wildlife 
+Lots of links to our many exciting and 
       informative pages about the North American deserts and its animals.
 
 animal planet
-People for the Ethical Treatment of Animals (PETA): The animal ...Operates 
-      under the principle that animals are not ours to eat, wear, experiment on, 
+People for the Ethical Treatment of Animals (PETA): The animal ...
+Operates under the principle that animals are not ours to eat, wear, experiment on, 
       or use for entertainment. Includes information on campaigns, ...
 
 animal planet
@@ -80,21 +84,24 @@ SeaWorld/Busch Gardens ANIMALS - HOME SeaWorld/Busch Gardens ANIMALS -
       conserve. Connect through our camps, courses, ...
 
 animal planet
-Animal Diversity Web General information about all genres of the animal 
+Animal Diversity Web 
+General information about all genres of the animal 
       kingdom, from mammals to reptiles.
 
 animal planet
-NetVet Veterinary Resources / Electronic Zoo Animal Species... Fish, 
-      Horses, Invertebrates, Marine, Pigs, Primates, Rabbits, Reptiles, Rodents, 
+NetVet Veterinary Resources / Electronic Zoo Animal Species... 
+Fish, Horses, Invertebrates, Marine, Pigs, Primates, Rabbits, Reptiles, Rodents, 
       Small Ruminants, Wildlife, Zoo Animals, Fictional, Images, Sounds ...
 
 animal planet
-Orthopedic Foundation for Animals OFA is a non-profit organization that 
+Orthopedic Foundation for Animals 
+OFA is a non-profit organization that 
       collates and disseminates information concerning orthopedic and genetic 
       disease of animals.
 
 animal planet
-Animal Coloring/Info Pages: Aa-Af - AllAboutNature.com Printouts of many 
+Animal Coloring/Info Pages: 
+Aa-Af - AllAboutNature.com Printouts of many 
       African animals. Africa is the second-largest continent ... In addition to 
       printing the animals, you can copy a printout (click here for ...
 
@@ -185,18 +192,19 @@ Java Technology Sun's home for Java. Offers Windows, Solaris, and Linux
       information.
 
 javaprogramming
-  Code Conventions for the Java Programming Language This Code Conventions 
-        for the Java Programming Language document contains the standard 
+  Code Conventions for the Java Programming Language 
+This Code Conventions for the Java Programming Language document contains the standard 
         conventions that we at Sun follow and recommend that others follow.
 
 javaprogramming
-Java programming language - Wikipedia, the free encyclopedia Java can be 
-      considered a less pure object-oriented programming language than for 
+Java programming language - Wikipedia, the free encyclopedia 
+Java can be considered a less pure object-oriented programming language than for 
       instance Ruby or Smalltalk because it makes certain compromises (such as 
       ...
 
 javaprogramming
-Concurrent Programming Using the Java Language This is an introduction to 
+Concurrent Programming Using the Java Language 
+This is an introduction to 
       using the Java programming language in concurrent or multithreaded 
       applications. The context is the process synchronization ...
 
@@ -210,17 +218,18 @@ javaprogramming
         by Ken Arnold,James Gosling,David Holmes.
 
 javaprogramming
-Programmingtutorials.com - Free Online Programming Tutorials Programming 
-      tutorials online .NET, Java, C++, Visual Basic, and More ... You will find 
+Programmingtutorials.com - Free Online Programming Tutorials 
+Programming tutorials online .NET, Java, C++, Visual Basic, and More ... You will find 
       over 300 programming language tutorials, lessons, and how-to's. ...
 
 javaprogramming
-What is Java? - A Word Definition From the Webopedia Computer ...Java is a 
-      general purpose programming language with a number of features that ... 
+What is Java? - A Word Definition From the Webopedia Computer ...
+Java is a general purpose programming language with a number of features that ... 
       Covers the fundamentals of programming in the Java language as well as ...
 
 javaprogramming
-Compiling the Java Programming Language Issues related to compiling Java 
+Compiling the Java Programming Language 
+Issues related to compiling Java 
       into native (object) code. Treats why, compiler architecture, links (Java 
       compiling, compiling generally), frontend and ...
 
@@ -338,18 +347,20 @@ Python Programming Language Home page for Python, an interpreted,
       an extraordinary combination of clarity and ...
 
 python
-Dive Into Python This book lives at . If you're reading it somewhere else, 
-      you may not have the latest version.
+Dive Into Python This book lives at . 
+If you're reading it somewhere else, you may not have the latest version.
 
 python
-Pythonline Offers news, forum, newsletter, and chat.
+Pythonline 
+Offers news, forum, newsletter, and chat.
 
 python
-Daily Python-URL Contains links to assorted resources from the Python 
-      universe, compiled by PythonWare.
+Daily Python-URL 
+Contains links to assorted resources from the Python universe, compiled by PythonWare.
 
 python
-  Python Imaging Library (PIL)Provides image processing functionality and 
+  Python Imaging Library (PIL)
+Provides image processing functionality and 
         supports many file formats. [Open Source, BSD-like]
 
 python
@@ -358,20 +369,24 @@ ActiveState O'Reilly Python cookbook code samples ratings
       contributions; collection of recipes.
 
 python
-Numerical Python Numerical Python adds a fast, compact multidimensional 
+Numerical Python Numerical 
+Python adds a fast, compact multidimensional 
       array language facility to Python. [Open Source, Python license]
 
 python
-Why Python? | Linux Journal Article by Eric Raymond where he explains the 
+Why Python?
+ | Linux Journal Article by Eric Raymond where he explains the 
       reasons that led him to switch from Perl to Python.
 
 python
-pygame - python game development I believe both of them are pygame / python 
+pygame - 
+python game development I believe both of them are pygame / python 
       specific. ... Invites all Python programmers to write a game in one week 
       from scratch either as an individual or ...
 
 python
-Unofficial Planet Python Blogs of the Python community.
+Unofficial Planet 
+Python Blogs of the Python community.
 
 pythonsnake
 African Rock Python Printout- EnchantedLearning.com
@@ -429,7 +444,8 @@ learn
 ... African Rock Python. African Rock Python. Range: Sub-Saharan Africa ...
 
 pythonsnake
-Python Snake Python. ... Other well-known pythons are the Indian python, a 
+Python Snake Python. ... 
+Other well-known pythons are the Indian python, a 
       favorite of snake handlers; African rock python; ball or royal python of 
       equatorial Africa, ...
 
@@ -438,13 +454,14 @@ pythonsnake
       Snakes - Some Facts - Protection from Snakes
 
 pythonsnake
-MSN Encarta - Python (snake)Great books about your topic, Python (snake), 
+MSN Encarta - Python (snake)
+Great books about your topic, Python (snake), 
       selected by Encarta editors ... Python (snake), common name for any member 
       of a family of nonvenomous snakes ...
 
 pythonsnake
-National Geographic News Photo Gallery: Invasive Species in the ...Picture 
-      of Burmese Python Snake in Florida Everglades (National Geographic). 
+National Geographic News Photo Gallery: Invasive Species in the ...
+Picture of Burmese Python Snake in Florida Everglades (National Geographic). 
       Picture of Everglades Staff With Burmese Python Snake (National 
       Geographic) ...
 
@@ -455,27 +472,29 @@ Snake Stuffed Animal Plush and Snake Theme Gifts at Animal WorldÂŽThis
       information ...
 
 pythonsnake
-Awesome One of a Kind Plush Stuffed Python Snake Absolutely Adorable Plush 
+Awesome One of a Kind Plush Stuffed Python Snake 
+Absolutely Adorable Plush 
       Stuffed Python Snake You Will Fall In Love With.
 
 pythonsnake
-The UnMuseum - Big Snakes The Anaconda is also foot per foot a much bigger 
+The UnMuseum - Big Snakes 
+The Anaconda is also foot per foot a much bigger 
       snake than the Python, being both heavier ... Do large snakes like the 
       python and the anaconda eat people? ...
 
 pythonsnake
-Python Snake Skin Journal > Snake Skin > Gifts For Animal Lovers ...Gifts 
-      For Animal Lovers: Python Snake Skin Journal: Watercolor image of 
+Python Snake Skin Journal > Snake Skin > Gifts For Animal Lovers ...
+Gifts For Animal Lovers: Python Snake Skin Journal: Watercolor image of 
       amelanistic burmese python snake skin.
 
 pythonsnake
-Oregon Zoo Animals: African Rock Python Snake All about the African Rock 
-      Python. ... largest snake species in Africa; when it arrived in October of 
+Oregon Zoo Animals: African Rock Python Snake 
+All about the African Rock Python. ... largest snake species in Africa; when it arrived in October of 
       1990, was 10'+ and 91 lbs. adaptations/coloration ...
 
 pythonsnake
-python hook, Python Hook, PYTHON HOOK, snake hooks, boa hook ...PRODUCT 
-      NAME: Python Snake Hook. PRODUCT DESCRIPTION: Heavy hook made to carry the 
+python hook, Python Hook, PYTHON HOOK, snake hooks, boa hook ...
+PRODUCT NAME: Python Snake Hook. PRODUCT DESCRIPTION: Heavy hook made to carry the 
       heaviest of snakes like boa's and pythons. It is 4.5 feet long
       and made
 
