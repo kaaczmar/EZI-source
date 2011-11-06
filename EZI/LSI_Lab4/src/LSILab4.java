@@ -76,7 +76,7 @@ public class LSILab4 {
         Q_prim = Q_prim.times(K);
         Q_prim = Q_prim.times(S.inverse());
         
-        System.out.print("QS: ");
+        System.out.print("QS: "+dim(Q_prim));
         Q_prim.print(3,2);
             
         // compute similaraty of the query and each of the documents, using cosine measure
