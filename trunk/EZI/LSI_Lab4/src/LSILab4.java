@@ -43,16 +43,62 @@ public class LSILab4 {
 
         SingularValueDecomposition svd = new SingularValueDecomposition(M);
         // get K, S, and D
-
+        Matrix K = svd.getU();
+        Matrix S = svd.getS();
+        Matrix D = svd.getV();
+        D = D.transpose();
+        
+        System.out.println("\nK: " + dim(K) + "\nS: " + dim(S) + "\nD: " + dim(D));
+       
         // set number of largest singular values to be considered
-        int s = 4;
+        //int s = 4;
+        int s = 2;
+        
+        System.out.println("\ns = " + s);
 
         // cut off appropriate columns and rows from K, S, and D
-
-        // transform the query vector
+        K = K.getMatrix(0, K.getRowDimension() - 1, 0, s - 1);
+        S = S.getMatrix(0, s - 1, 0, s - 1);
+        D = D.getMatrix(0, s - 1, 0, D.getColumnDimension() - 1);
         
+        System.out.print("\nKS: " + dim(K));
+        K.print(3, 2);
+        
+        System.out.print("\nSS: " + dim(S));
+        S.print(3, 2);
+        
+        System.out.print("\nDST: " + dim(D));
+        D.print(3, 2);
+        
+        // transform the query vector
+        Matrix Q_prim = Q.transpose();
+        
+        Q_prim = Q_prim.times(K);
+        Q_prim = Q_prim.times(S.inverse());
+        
+        System.out.print("QS: ");
+        Q_prim.print(3,2);
+            
         // compute similaraty of the query and each of the documents, using cosine measure
+        double q_norm2 = Q_prim.norm2();
+        D = D.transpose();
+        for (int i = 0; i < D.getRowDimension(); i++){
+        	Matrix document = D.getMatrix(i, i, 0, D.getColumnDimension() - 1);
+        	double document_norm2 = document.norm2();
+        	double document_sum = sumMatrix(document.arrayTimes(Q_prim));
+        	System.out.println("Doc "+(i+1)+": " + document_sum/(q_norm2*document_norm2) );
+        }
 
+    }
+    
+    private double sumMatrix(Matrix mat){
+    	double sum = 0;
+    	for (int x = 0; x < mat.getColumnDimension(); x++){
+    		for (int y = 0; y < mat.getRowDimension(); y++){
+    			sum += mat.get(y, x);
+    		}
+    	}
+    	return sum;
     }
 
 
