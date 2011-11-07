@@ -36,12 +36,12 @@ void Executor::execute(){
 
 	result = algorithm->getBestSequenceValue();
 
-//	while (elapsed < minTime) {
-//		executionCounter++;
-//		algorithm->getInstance()->reinitializeWithCopy(baseInstance.getInstanceArray());
-//		algorithm->optimize(false);
-//		elapsed = timer.elapsed();
-//	}
+	while (elapsed < minTime) {
+		executionCounter++;
+		algorithm->getInstance()->reinitializeWithCopy(baseInstance.getInstanceArray());
+		algorithm->optimize(false);
+		elapsed = timer.elapsed();
+	}
 
 	executionTime = round(1000 * elapsed / executionCounter)/1000.0;
 }
