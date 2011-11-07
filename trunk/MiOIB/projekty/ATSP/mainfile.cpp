@@ -72,7 +72,7 @@ int main(int argc, char **argv) {
 			return 1;
 		}
 
-//		cout << filename << "\t";
+		cout << filename << "\t";
 
 		if (algorithmName.compare("random") == 0) {
 			if (timeout == -1){
@@ -81,19 +81,19 @@ int main(int argc, char **argv) {
 			}
 			algorithm = new ATSPAlgorithmRandom(&data, &instance, timeout);
 			instance.randomize();
-//			cout << "R\t";
+			cout << "R\t";
 		} else if (algorithmName.compare("heuristic") == 0) {
 			algorithm = new ATSPAlgorithmGreedy(&data, &instance);
 			instance.randomizeHeuristic();
-//			cout << "H\t";
+			cout << "H\t";
 		} else if (algorithmName.compare("greedy") == 0) {
 			algorithm = new ATSPAlgorithmLSGreedy(&data, &instance);
 			instance.randomize();
-//			cout << "G\t";
+			cout << "G\t";
 		} else if (algorithmName.compare("steepest") == 0){
 			algorithm = new ATSPAlgorithmLSSteepest(&data, &instance);
 			instance.randomize();
-//			cout << "S\t";
+			cout << "S\t";
 		} else {
 			cerr << "Unknown algorithm: " << algorithmName << endl;
 			return 1;
@@ -104,59 +104,11 @@ int main(int argc, char **argv) {
 	Executor executor(0.5);
 	executor.setAlgorithm(algorithm);
 
-//	for (unsigned int i = 0; i < 200; i++){
-//		instance.randomize();
-	ATSPInstance baseInstance;
-	ATSPAlgorithm *alg1 = new ATSPAlgorithmGreedy(&data,&instance);
-	ATSPAlgorithm *alg2 = new ATSPAlgorithmLSSteepest(&data,&instance);
-	ATSPAlgorithm *alg3 = new ATSPAlgorithmLSGreedy(&data,&instance);
-
-	for (int i = 0; i < 10; i++){
-		instance.randomizeHeuristic();
-		instance.reinitializeNeighbourhood();
-
-//		cout << filename << "\tG\t";
-//		instance.show();
-//		cout << filename << "\tH\t";
-//		cout << "\t" << algorithm->calculateObjectiveFunction(instance.getInstanceArray(), instance.getLength()) << "\t";
-		alg1->optimize(false);
-		double resultQuality = (double) (alg1->getBestSequenceValue()) / (algorithm->getData()->getOptimalSolution()) * 100;
-		resultQuality = round(resultQuality*100) / 100.0;
-		cout << resultQuality<< " & ";
-
-		baseInstance = ATSPInstance(instance);
-		instance.reinitializeNeighbourhood();
-//		cout << filename << "\tS\t";
-//		instance.show();
-//		cout << "\t" << algorithm->calculateObjectiveFunction(instance.getInstanceArray(), instance.getLength()) << "\t";
-//		cout << filename << "\tS\t";
-//		cout << "\t" << algorithm->calculateObjectiveFunction(instance.getInstanceArray(), instance.getLength()) << "\t";
-		alg2->optimize(false);
-		resultQuality = (double) (alg2->getBestSequenceValue()) / (algorithm->getData()->getOptimalSolution()) * 100;
-		resultQuality = round(resultQuality*100) / 100.0;
-		cout << resultQuality<< " & ";
-
-
-		instance = ATSPInstance(baseInstance);
-
-		instance.reinitializeNeighbourhood();
-
-//		cout << filename << "\tS\t";
-//		instance.show();
-//		cout << "\t" << algorithm->calculateObjectiveFunction(instance.getInstanceArray(), instance.getLength()) << "\t";
-//		cout << filename << "\tG\t";
-//		cout << "\t" << algorithm->calculateObjectiveFunction(instance.getInstanceArray(), instance.getLength()) << "\t";
-		alg3->optimize(false);
-		resultQuality = (double) (alg3->getBestSequenceValue()) / (algorithm->getData()->getOptimalSolution()) * 100;
-		resultQuality = round(resultQuality*100) / 100.0;
-		cout << resultQuality<< endl;
-
-		sleep(1);
-	}
-
-//		cout << "\t\t";
-//	}
-
-//	algorithm->optimize(true);
+	instance.reinitializeNeighbourhood();
+	instance.show();
+	cout << "\t" << algorithm->calculateObjectiveFunction(instance.getInstanceArray(), instance.getLength()) << "\t";
+	executor.execute();
+	executor.print();
+	sleep(1);
 
 }

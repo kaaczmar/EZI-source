@@ -63,7 +63,7 @@ void ATSPAlgorithmLSSteepest::optimize(bool showResult) {
 	bestSequence = ATSPInstance(*instance);
 
 	if (showResult){
-//		bestSequence.show();
+		bestSequence.show();
 		cout << "\t" << bestSequenceValue << "\t" << hops << "\t" << neigh << "\t";
 	}
 }
