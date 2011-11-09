@@ -7,7 +7,6 @@
 
 #include <mainfile.hpp>
 
-
 using namespace std;
 using namespace boost;
 
@@ -94,6 +93,10 @@ int main(int argc, char **argv) {
 			algorithm = new ATSPAlgorithmLSSteepest(&data, &instance);
 			instance.randomize();
 			cout << "S\t";
+		}else if (algorithmName.compare("annealing") == 0){
+			algorithm = new ATSPAlgorithmSimulatedAnnealing(&data, &instance);
+			instance.randomize();
+			cout << "A\t";
 		} else {
 			cerr << "Unknown algorithm: " << algorithmName << endl;
 			return 1;

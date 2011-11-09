@@ -17,6 +17,9 @@ private:
 	unsigned int swapX, swapY;
 	bool firstNeighbour;
 
+	unsigned int checkedNeighbours;
+	unsigned int neighboursCount;
+
 	void swapNeighbour(unsigned int x, unsigned int y);
 
 public:
@@ -39,6 +42,9 @@ public:
 
 	void initialize(unsigned int *position);
 	void reinitializeWithCopy(unsigned int *array);
+
+	void initializeAnnealing(unsigned int *position);
+	bool nextNeighbourAnnealing();
 
 	double compareWith(const ATSPInstance &instance);
 };
