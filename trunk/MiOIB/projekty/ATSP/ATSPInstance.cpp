@@ -20,6 +20,9 @@ ATSPInstance::ATSPInstance(unsigned int length) :
 	length(length) {
 	instance = new unsigned int[length];
 	neighbour = new unsigned int[length];
+
+	neighboursCount = length * (length-1)/2;
+
 	for (unsigned int i = 0; i < length; i++) {
 		instance[i] = i;
 		neighbour[i] = i;
@@ -112,6 +115,31 @@ bool ATSPInstance::nextNeighbour(){
 	return true;
 }
 
+bool ATSPInstance::nextNeighbourAnnealing(){
+	if (!firstNeighbour){
+		//Zmiana powrotna
+		swapNeighbour(swapX,swapY);
+		//Nowe indeksy do zamiany
+		if (++swapY == length)
+			swapY = ++swapX + 1;
+	}
+
+	if (checkedNeighbours == neighboursCount)
+		return false;
+
+	if (swapX == length - 1){
+		swapX = 0;
+		swapY = 1;
+	}
+
+	checkedNeighbours++;
+
+	firstNeighbour = false;
+	swapNeighbour(swapX, swapY);
+
+	return true;
+}
+
 unsigned int *ATSPInstance::getInstanceArray(){
 	return instance;
 }
@@ -123,6 +151,14 @@ unsigned int *ATSPInstance::getCurrentNeighbour(){
 void ATSPInstance::initialize(unsigned int * array){
 	instance = array;
 	reinitializeNeighbourhood();
+}
+
+void ATSPInstance::initializeAnnealing(unsigned int * array){
+	for (unsigned int i = 0; i < length; i++)
+			neighbour[i] = instance[i];
+
+	instance = array;
+	checkedNeighbours = 0;
 }
 
 void ATSPInstance::reinitializeWithCopy(unsigned int * array){
