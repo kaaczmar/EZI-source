@@ -10,6 +10,7 @@
 
 #include <ATSPAlgorithm.hpp>
 #include <list>
+#include <boost/multi_array.hpp>
 
 class TabuPair {
 public:
@@ -17,9 +18,6 @@ public:
 	int b;
 	int objectiveFunctionChange;
 	bool isTabu;
-
-	std::list<TabuPair>::iterator tabuPosition;
-
 
 	TabuPair(int a = 0, int b = 0, int objectiveFunctionChange = 0, bool isTabu = false) :
 			a(a),
@@ -32,16 +30,25 @@ public:
 	void print();
 };
 
+
+
+
 class ATSPAlgorithmTabuSearch: public ATSPAlgorithm {
 private:
 	unsigned int neighbourhoodSize;
+	unsigned long steps;
 
-	std::list<TabuPair> tabuList;
+//	std::list<TabuPair> tabuList;
+
+	boost::multi_array<unsigned long,2> tabuArray;;
+
 	unsigned int tabuListLength;
 	unsigned int candidatesNumber;
 
 	bool isOnList(const TabuPair &pair, const std::list<TabuPair> &list);
-	bool isOnTabuList(TabuPair &pair);
+	bool isOnTabuList(const TabuPair &pair);
+	unsigned int getTabu(const TabuPair &pair);
+	void addToTabu(const TabuPair &pair);
 	std::list<TabuPair> generateCandidates();
 
 public:
