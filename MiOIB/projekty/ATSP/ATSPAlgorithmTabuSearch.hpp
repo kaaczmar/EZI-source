@@ -17,7 +17,11 @@ public:
 	int b;
 	int objectiveFunctionChange;
 	bool isTabu;
-	TabuPair(int a, int b, int objectiveFunctionChange = 0, bool isTabu = false) :
+
+	std::list<TabuPair>::iterator tabuPosition;
+
+
+	TabuPair(int a = 0, int b = 0, int objectiveFunctionChange = 0, bool isTabu = false) :
 			a(a),
 			b(b),
 			objectiveFunctionChange(objectiveFunctionChange),
@@ -36,7 +40,8 @@ private:
 	unsigned int tabuListLength;
 	unsigned int candidatesNumber;
 
-	bool isOnTabuList(const TabuPair &pair, const std::list<TabuPair> &list);
+	bool isOnList(const TabuPair &pair, const std::list<TabuPair> &list);
+	bool isOnTabuList(TabuPair &pair);
 	std::list<TabuPair> generateCandidates();
 
 public:
