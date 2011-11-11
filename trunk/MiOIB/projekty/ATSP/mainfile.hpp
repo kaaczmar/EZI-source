@@ -23,6 +23,7 @@
 #include <ATSPAlgorithmLSGreedy.hpp>
 #include <ATSPAlgorithmLSSteepest.hpp>
 #include <ATSPAlgorithmSimulatedAnnealing.hpp>
+#include <ATSPAlgorithmTabuSearch.hpp>
 
 #include <Executor.hpp>
 

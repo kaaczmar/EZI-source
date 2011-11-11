@@ -93,10 +93,14 @@ int main(int argc, char **argv) {
 			algorithm = new ATSPAlgorithmLSSteepest(&data, &instance);
 			instance.randomize();
 			cout << "S\t";
-		}else if (algorithmName.compare("annealing") == 0){
+		} else if (algorithmName.compare("annealing") == 0){
 			algorithm = new ATSPAlgorithmSimulatedAnnealing(&data, &instance);
 			instance.randomize();
 			cout << "A\t";
+		} else if (algorithmName.compare("tabu") == 0){
+			algorithm = new ATSPAlgorithmTabuSearch(&data, &instance);
+			instance.randomize();
+			cout << "T\t";
 		} else {
 			cerr << "Unknown algorithm: " << algorithmName << endl;
 			return 1;
