@@ -55,6 +55,7 @@ void ATSPAlgorithmSimulatedAnnealing::optimize(bool showResult) {
 
 			if (distance < bestSequenceValue) {
 				bestSequenceValue = distance;
+				bestSequence = ATSPInstance(*instance);
 				instance->initialize(instance->getCurrentNeighbour());
 				hopsBetter++;
 			}
@@ -68,7 +69,6 @@ void ATSPAlgorithmSimulatedAnnealing::optimize(bool showResult) {
 		temperature *= coolingRate;
 		steps++;
 	}
-	bestSequence = ATSPInstance(*instance);
 
 	if (showResult) {
 		bestSequence.show();
