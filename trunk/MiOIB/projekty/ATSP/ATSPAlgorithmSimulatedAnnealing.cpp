@@ -24,19 +24,30 @@ void ATSPAlgorithmSimulatedAnnealing::optimize(bool showResult) {
 	bestSequenceValue = calculateObjectiveFunction(instance->getInstanceArray(),
 			instance->getLength());
 
+	ATSPInstance tmpInstance(*instance);
+	tmpInstance.reinitializeNeighbourhood();
 
+	double sum = 0;
+	unsigned int count = 0;
 
-	//TODO dobrac base value zaleznie od sredniej zmiany jakosci
-	double temperature = 10;
-	const double coolingRate = 0.99;
+	double myValue = calculateObjectiveFunction(tmpInstance.getInstanceArray(), tmpInstance.getLength());
+	while (tmpInstance.nextNeighbour()){
+		sum += abs(myValue - calculateObjectiveFunction(tmpInstance.getCurrentNeighbour(), tmpInstance.getLength()));
+		count++;
+	}
+
+	double temperature = sum/(count*4.0);
+
+	double baseTemeprature = temperature;
+
+	const double coolingRate = 0.8;
 	//TODO dobrac zaleznie od dlugosci instancji (rozmiaru sasiedztwa)
 	const unsigned int markovLength = instance->getLength()*(instance->getLength()-1)/2;
 //	const unsigned int markovLength = 5;
 
 	//TODO warunki STOPu
-	bool changed = true;
-	while (temperature > 0.1) {
-		changed = false;
+	int steps = 0;
+	while (steps < 10) {
 		for (unsigned int i = 0; i < markovLength; i++) {
 			distance = calculateObjectiveFunction(
 					instance->getCurrentNeighbour(), instance->getLength());
@@ -44,28 +55,24 @@ void ATSPAlgorithmSimulatedAnnealing::optimize(bool showResult) {
 
 			if (distance < bestSequenceValue) {
 				bestSequenceValue = distance;
-				instance->initializeAnnealing(instance->getCurrentNeighbour());
+				instance->initialize(instance->getCurrentNeighbour());
 				hopsBetter++;
-				changed = true;
-				instance->show();
-				cout << "\t" << bestSequenceValue << endl;
 			}
 			else if (exp((double)-1*(distance-bestSequenceValue)/temperature) > (double)rand()/RAND_MAX) {
-				instance->initializeAnnealing(instance->getCurrentNeighbour());
+				instance->initialize(instance->getCurrentNeighbour());
 				hopsWorse++;
-//				cout << exp((double)-1*(distance-bestSequenceValue)/temperature) << "\t" << (distance-bestSequenceValue) << "\t" << temperature << endl;
-				//TODO petle -> powinien rozpoczynac przeszukiwanie od nastepnego od ktorego przyszedl
 			}
-			if (!instance->nextNeighbourAnnealing())
-				break;
+			if (!instance->nextNeighbour())
+				instance->reinitializeNeighbourhood();
 		}
 		temperature *= coolingRate;
+		steps++;
 	}
 	bestSequence = ATSPInstance(*instance);
 
 	if (showResult) {
 		bestSequence.show();
-		cout << "\t" << bestSequenceValue << "\t" << hopsBetter << "\t" << hopsWorse << "\t" << neigh
+		cout << "\t" << bestSequenceValue << "\t" << baseTemeprature << "\t" << hopsBetter << "\t" << hopsWorse << "\t" << (hopsBetter+hopsWorse) << "\t" << neigh
 				<< "\t";
 	}
 }
