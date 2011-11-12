@@ -49,7 +49,7 @@ private:
 	bool isOnTabuList(const TabuPair &pair);
 	unsigned int getTabu(const TabuPair &pair);
 	void addToTabu(const TabuPair &pair);
-	std::list<TabuPair> generateCandidates();
+	void generateCandidates(std::list<TabuPair> &candidates);
 
 public:
 	ATSPAlgorithmTabuSearch(ATSPData *data, ATSPInstance *instance,

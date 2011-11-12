@@ -58,33 +58,33 @@ bool ATSPAlgorithmTabuSearch::isOnTabuList(const TabuPair &pair) {
 		return false;
 }
 
-std::list<TabuPair> ATSPAlgorithmTabuSearch::generateCandidates() {
-	list<TabuPair> candidates;
+void ATSPAlgorithmTabuSearch::generateCandidates(std::list<TabuPair> &candidates) {
+	candidates.clear();
 
 	int a, b;
 	unsigned int currentDistance = calculateObjectiveFunction(
 			instance->getInstanceArray(), instance->getLength());
 
 	for (unsigned i = 0; i < candidatesNumber; i++) {
-		ATSPInstance tmpInstance(*instance);
 		do {
 			a = rand() % instance->getLength();
 			b = rand() % instance->getLength();
 		} while (a == b || isOnList(TabuPair(a, b), candidates));
 
-		tmpInstance.swap(a, b);
+		instance->swap(a, b);
 		unsigned int newDistance = calculateObjectiveFunction(
-				tmpInstance.getInstanceArray(), tmpInstance.getLength());
+				instance->getInstanceArray(), instance->getLength());
 
 		TabuPair pair(a, b, (newDistance - currentDistance));
 		pair.isTabu = isOnTabuList(pair);
 
 		candidates.push_back(pair);
+
+		instance->swap(a,b);
 	}
 
 	candidates.sort();
 
-	return candidates;
 }
 
 void ATSPAlgorithmTabuSearch::optimize(bool showResult) {
@@ -92,17 +92,20 @@ void ATSPAlgorithmTabuSearch::optimize(bool showResult) {
 
 	bestSequenceValue = calculateObjectiveFunction(instance->getInstanceArray(),
 			instance->getLength());
+	bestSequence = ATSPInstance(*instance);
+
 	unsigned int currentSequenceValue = bestSequenceValue;
+
+	TabuPair pairToChange;
+	TabuPair leastTabuCandidate;
+	unsigned int leastTabuValue = steps;
 
 	steps = 1;
 	unsigned long lastStepImprove = 1;
-	while (steps - lastStepImprove < 5 * instance->getLength()) {
-		candidates = generateCandidates();
+	while (steps - lastStepImprove < 2 * instance->getLength()) {
+		generateCandidates(candidates);
 
-		TabuPair pairToChange;
-		TabuPair leastTabuCandidate;
-		unsigned int leastTabuValue = steps;
-
+		leastTabuValue = steps;
 
 		list<TabuPair>::iterator it = candidates.begin();
 		for (; it != candidates.end(); it++) {

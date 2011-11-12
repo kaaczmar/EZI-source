@@ -40,14 +40,14 @@ void ATSPAlgorithmSimulatedAnnealing::optimize(bool showResult) {
 
 	double baseTemeprature = temperature;
 
-	const double coolingRate = 0.8;
+	const double coolingRate = 0.9;
 	//TODO dobrac zaleznie od dlugosci instancji (rozmiaru sasiedztwa)
 	const unsigned int markovLength = instance->getLength()*(instance->getLength()-1)/2;
 //	const unsigned int markovLength = 5;
 
 	//TODO warunki STOPu
-	int steps = 0;
-	while (steps < 10) {
+	unsigned int steps = 0;
+	while (steps < instance->getLength() / 2) {
 		for (unsigned int i = 0; i < markovLength; i++) {
 			distance = calculateObjectiveFunction(
 					instance->getCurrentNeighbour(), instance->getLength());
