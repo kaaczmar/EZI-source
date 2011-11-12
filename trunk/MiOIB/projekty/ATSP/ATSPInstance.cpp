@@ -154,11 +154,13 @@ void ATSPInstance::initialize(unsigned int * array){
 }
 
 void ATSPInstance::initializeAnnealing(unsigned int * array){
-	for (unsigned int i = 0; i < length; i++)
-			neighbour[i] = instance[i];
-
 	instance = array;
-	checkedNeighbours = 0;
+	reinitializeNeighbourhood();
+	do{
+		swapX = rand()%length;
+		swapY = rand()%length;
+	} while (swapX == swapY);
+
 }
 
 void ATSPInstance::reinitializeWithCopy(unsigned int * array){
