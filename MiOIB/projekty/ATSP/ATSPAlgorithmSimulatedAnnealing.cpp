@@ -23,6 +23,8 @@ void ATSPAlgorithmSimulatedAnnealing::optimize(bool showResult) {
 
 	bestSequenceValue = calculateObjectiveFunction(instance->getInstanceArray(),
 			instance->getLength());
+	bestSequence = ATSPInstance(*instance);
+	unsigned int currentSequenceValue = bestSequenceValue;
 
 	ATSPInstance tmpInstance(*instance);
 	tmpInstance.reinitializeNeighbourhood();
@@ -40,31 +42,35 @@ void ATSPAlgorithmSimulatedAnnealing::optimize(bool showResult) {
 
 	double baseTemeprature = temperature;
 
-	const double coolingRate = 0.9;
-	//TODO dobrac zaleznie od dlugosci instancji (rozmiaru sasiedztwa)
+	const double coolingRate = 0.8;
 	const unsigned int markovLength = instance->getLength()*(instance->getLength()-1)/2;
-//	const unsigned int markovLength = 5;
 
-	//TODO warunki STOPu
 	unsigned int steps = 0;
-	while (steps < instance->getLength() / 2) {
+	unsigned int lastStepImprove = 0;
+
+	while (steps < 20) {
 		for (unsigned int i = 0; i < markovLength; i++) {
 			distance = calculateObjectiveFunction(
 					instance->getCurrentNeighbour(), instance->getLength());
 			neigh++;
 
-			if (distance < bestSequenceValue) {
-				bestSequenceValue = distance;
-				bestSequence = ATSPInstance(*instance);
-				instance->initialize(instance->getCurrentNeighbour());
+			if (distance <= currentSequenceValue) {
+				if (distance < bestSequenceValue){
+					bestSequenceValue = distance;
+					bestSequence = ATSPInstance(*instance);
+				}
+				instance->initializeAnnealing(instance->getCurrentNeighbour());
 				hopsBetter++;
-			}
-			else if (exp((double)-1*(distance-bestSequenceValue)/temperature) > (double)rand()/RAND_MAX) {
-				instance->initialize(instance->getCurrentNeighbour());
+				lastStepImprove = steps;
+				currentSequenceValue = calculateObjectiveFunction(instance->getInstanceArray(), instance->getLength());
+			} else if (exp((double)((double)currentSequenceValue - distance)/temperature) > (double)rand()/RAND_MAX) {
+				instance->initializeAnnealing(instance->getCurrentNeighbour());
+				currentSequenceValue = calculateObjectiveFunction(instance->getInstanceArray(), instance->getLength());
 				hopsWorse++;
 			}
-			if (!instance->nextNeighbour())
+			if (!instance->nextNeighbour()){
 				instance->reinitializeNeighbourhood();
+			}
 		}
 		temperature *= coolingRate;
 		steps++;
