@@ -47,6 +47,7 @@ public:
 	bool nextNeighbourAnnealing();
 
 	double compareWith(const ATSPInstance &instance);
+
 };
 
 #endif /* INSTANCE_HPP_ */
