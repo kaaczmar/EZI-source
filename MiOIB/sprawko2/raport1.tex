@@ -1,0 +1,54 @@
+\documentclass[polish,a4paper,oneside,11pt]{article}
+%\documentclass[polish,a4paper,twoside,11pt]{report}
+
+
+%====PACKAGES
+\usepackage[OT4]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[polish]{babel}
+\usepackage{graphicx}
+\usepackage{indentfirst}
+\usepackage[a4paper,inner=3cm,outer=3cm,top=2.5cm,bottom=2.5cm,pdftex]{geometry}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{textcomp}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{subfigure}
+\usepackage{appendix}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{longtable}
+\usepackage{url}
+\usepackage{array}
+\usepackage{algorithm}
+
+\floatname{algorithm}{Listing}
+
+\linespread{1.3}
+
+%//CAPTIONS FOR TABLE
+\addto\captionspolish{%
+  \renewcommand{\tablename}%
+    {Tabela}%
+}
+
+\begin{document}
+
+\input{tytulowa.tex}
+\tableofcontents 
+\cleardoublepage
+\input{punkt0.tex}
+\input{punkt1.tex}
+\input{punkt2.tex}
+\input{punkt3.tex}
+\input{punkt4.tex}
+\input{punkt5.tex}
+\input{punkt6.tex}
+\input{punkt7.tex}
+\input{punkt8.tex}
+
+% Bibliography (books, articles) starts here.
+%\bibliographystyle{plain}
+%\bibliography{bibliografia}
+\end{document}

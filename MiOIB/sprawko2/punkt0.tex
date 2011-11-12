@@ -1,0 +1,12 @@
+\section{O problemie}
+\subsection{Definicja problemu}
+Problem komiwojażera można zdefiniować na wiele sposobów, w poniższym sprawozdaniu zostanie przytoczona definicja oparta o teorię grafów. W ogólności problem polega na znalezieniu optymalnej (tu - najkrótszej) trasy, która umożliwi odwiedzenie wszystkich docelowych miast dokładnie jeden raz. Problem ten jest problemem silnie NP trudnym.
+
+Definicja brzmi następująco: Niech $G(V,A)$ oznacza dowolny graf skierowany, taki, że wierzchołki $V$ reprezentują zbiór wszystkich docelowych miast oraz istnieje łuk $A_{ij}$ z wierzchołka $i$ do wierzchołka $j$ wtedy i tylko wtedy gdy istnieje połączenie z miasta $i$ do miasta $j$ i posiada on długość odpowiadającą odległości między tymi miastami w przemieszczając się od miasta $i$ do miasta $j$. W tak zdefiniowanym grafie poszukujemy cyklu hamiltona o najmniejszej długości, który stanowi najkrótszą trasę umożliwiającą odwiedzenie wszystkich miast.
+
+Z tej definicji mogą wyniknąć dwa problemy - brak połączenia między daną parą miast lub w ogólności brak cyklu hamiltona. Obydwa problemy można rozwiązać dodając na miejsce nieistniejących połączeń połączenia o bardzo dużej długości znacznie przewyższającej pozostałe długości łuków.
+
+\subsection{Zastosowania i wariacje oryginalnego problemu}
+Potencjalne zastosowania to próba zamodelowania i odnalezienia najszybszej trasy w mieście z uwzględnieniem czasów przejazdu daną ulicą jako długości łuków (wówczas ulice zakorkowane byłyby bardzo długie i można je próbować ominąć). Nawet uwzględniając tylko faktyczną długość ulicy można zastosować ten problem do znalezienia najlepszej trasy od punktu A do punktu B w aplikacji nawigującej. Oczywiście modyfikuje to nieco funkcję celu (nie doliczamy drogi powrotnej), ale jest to nadal ten sam problem.
+
+Ponadto często rezygnuje się z kilku założeń problemu, np. zakazu odwiedzania dwukrotnie tego samego miasta czy przyjmuje się, że odległości między miastami spełniają nierówność trójkąta. Są to przypadki szczególne dla ogólnego sformułowania problemu komiwojażera i często okazuje się, że przy tych dodatkowych założeniach można zastosować heurystyki wykorzystające je w celu znajdowania lepszych rozwiązań w krótszym czasie. My jednak skupimy się na oryginalnym sformułowaniu i wszystkie doświadczenia przeprowadzane będą dla oryginalnego problemu.
