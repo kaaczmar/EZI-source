@@ -1,7 +1,7 @@
 \section{Ocena podobieństwa znajdowanych rozwiązań lokalnie optymalnych dla wybranych instancji}
-W celu porównania podobieństwa rozwiązań zwracanych przez algorytmy optymalizacji lokalnej zaproponowano następującą miarę podobieństwa. Kolejne miasta w jednym z rozwiązań są po kolei sprawdzane z drugim rozwiązaniem. Jeżeli w jednym i drugim rozwiązaniu miasto następująco po aktualnie sprawdzanym mieście (uwzględniając połączenie miasta ostatniego z miastem pierwszym w rozwiązaniu) jest takie samo, inkrementowany jest licznik podobieństw. Na koniec, licznik podobieństw jest dzielony przez długość rozwiązania, przez co otrzymujemy znormalizowaną wartość z zakresu $<0-1>$.
+W celu porównania podobieństwa rozwiązań zwracanych przez algorytmy optymalizacji lokalnej zaproponowano następującą miarę podobieństwa. Kolejne miasta w jednym z rozwiązań są po kolei sprawdzane z drugim rozwiązaniem. Jeżeli w jednym i drugim rozwiązaniu miasto następująco po aktualnie sprawdzanym mieście (uwzględniając połączenie miasta ostatniego z miastem pierwszym w rozwiązaniu) jest takie samo, inkrementowany jest licznik podobieństw. Na koniec, licznik podobieństw jest dzielony przez długość rozwiązania, przez co otrzymujemy znormalizowaną wartość z zakresu $<0;1>$.
 
-Przedstawmy obecnie działanie zaproponowanej miary na przykładzie. Dane są dwie instancje - $3-1-2-4-0$ oraz $2-4-1-0-3$. Kolejne kroki algorytmu przedstawione są w poniższej tabeli.
+Przedstawmy obecnie działanie zaproponowanej miary na przykładzie. Dane są dwie instancje: $3-1-2-4-0$ oraz $2-4-1-0-3$. Kolejne kroki algorytmu przedstawione są w poniższej tabeli.
 
 \begin{tabular}{|l|l|l|}
 		\hline
@@ -18,7 +18,7 @@ Przedstawmy obecnie działanie zaproponowanej miary na przykładzie. Dane są dw
 
 \noindent Uzyskany licznik podobieństw należy jeszcze podzielić przez długość rozwiązania ($5$), przez co otrzymujemy współczynnik podobieństwa instancji wynoszący $0,4$.
 
-Obecnie przedstawione zostaną wyniki porównania rozwiązań zwracanych dla algorytmu steepest i greedy. Przeprowadzono testy polegające na 10-krotnym uruchomieniu algorytmów z tego samego losowego punktu startowego dla dwóch instancji: flv33.atsp oraz ftv55.atsp. Następnie obliczono miary podobieństwa wyników zwróconych przez tak uruchomione algorytmy. Wyniki przedstawione zostały w tabelach \ref{tab:sim_33} i \ref{tab:sim_55}. W kolumnach ustawione są kolejne uruchomienia algorytmu steepest, natomiast w wierszach algorytmu greedy. Elementy na głównej przekątnej informują o tym jak podobne rozwiązania zwracają algorytmy gdy startują z tego samego punktu, czy trafiają w to samo optimum lokalne, natomiast wartości poza główną przekątną mogą mówić więcej o istnieniu małej liczby lub nawet tylko jednego optimum lokalnego - mimo startu z różnych miejsc algorytmy ''staczają się'' w to samo miejsce.
+Obecnie przedstawione zostaną wyniki porównania rozwiązań zwracanych dla algorytmu Steepest i Greedy. Przeprowadzono testy polegające na 10-krotnym uruchomieniu algorytmów z tego samego losowego punktu startowego dla dwóch instancji: flv33.atsp oraz ftv55.atsp. Następnie obliczono miary podobieństwa wyników zwróconych przez tak uruchomione algorytmy. Wyniki przedstawione zostały w tabelach \ref{tab:sim_33} i \ref{tab:sim_55}. W kolumnach ustawione są kolejne uruchomienia algorytmu Steepest, natomiast w wierszach -- algorytmu Greedy. Elementy na głównej przekątnej informują o tym jak podobne rozwiązania zwracają algorytmy gdy startują z tego samego punktu, czy trafiają w to samo optimum lokalne, natomiast wartości poza główną przekątną mogą mówić więcej o istnieniu małej liczby lub nawet tylko jednego optimum lokalnego -- mimo startu z różnych miejsc algorytmy ,,staczają się'' w to samo miejsce.
 
 \begin{table}[h!]
 	\centering
@@ -38,7 +38,7 @@ Obecnie przedstawione zostaną wyniki porównania rozwiązań zwracanych dla alg
 		10 & 0.35 & 0.12 & 0.26 & 0.29 & 0.24 & 0.18 & 0.21 & 0.32 & 0.18 & \textbf{0.24} \\
 		\hline
 		\end{tabular}
-		\caption{Podobieństwo zwracanych rozwiązań dla instancji ftv33.atsp. W kolumnach algorytm steepest, w wierszach algorytm greedy, wytłuszczone elementy to podobieństwo wyników zwracanych dla tego samego punktu startowego.}
+		\caption{Podobieństwo zwracanych rozwiązań dla instancji ftv33.atsp. W kolumnach algorytm Steepest, w wierszach algorytm Greedy, wytłuszczone elementy to podobieństwo wyników zwracanych dla tego samego punktu startowego.}
 		\label{tab:sim_33}
 \end{table}
 
@@ -60,7 +60,7 @@ Obecnie przedstawione zostaną wyniki porównania rozwiązań zwracanych dla alg
 		10 & 0.29 & 0.2 & 0.18 & 0.29 & 0.2 & 0.29 & 0.29 & 0.16 & 0.25 & \textbf{0.21} \\
 		\hline
 		\end{tabular}
-		\caption{Podobieństwo zwracanych rozwiązań dla instancji ftv55.atsp. W kolumnach algorytm steepest, w wierszach algorytm greedy, wytłuszczone elementy to podobieństwo wyników zwracanych dla tego samego punktu startowego.}
+		\caption{Podobieństwo zwracanych rozwiązań dla instancji ftv55.atsp. W kolumnach algorytm Steepest, w wierszach algorytm Greedy, wytłuszczone elementy to podobieństwo wyników zwracanych dla tego samego punktu startowego.}
 		\label{tab:sim_55}
 \end{table}
 
