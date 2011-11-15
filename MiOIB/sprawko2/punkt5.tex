@@ -1,4 +1,4 @@
-\section{Ocena podobieństwa znajdowanych rozwiązań lokalnie optymalnych dla wybranych instancji}
+\section{Ocena podobieństwa znajdowanych rozwiązań lokalnie optymalnych dla wybranych instancji dla algorytmów Greedy oraz Steepest}
 W celu porównania podobieństwa rozwiązań zwracanych przez algorytmy optymalizacji lokalnej zaproponowano następującą miarę podobieństwa. Kolejne miasta w jednym z rozwiązań są po kolei sprawdzane z drugim rozwiązaniem. Jeżeli w jednym i drugim rozwiązaniu miasto następująco po aktualnie sprawdzanym mieście (uwzględniając połączenie miasta ostatniego z miastem pierwszym w rozwiązaniu) jest takie samo, inkrementowany jest licznik podobieństw. Na koniec, licznik podobieństw jest dzielony przez długość rozwiązania, przez co otrzymujemy znormalizowaną wartość z zakresu $<0;1>$.
 
 Przedstawmy obecnie działanie zaproponowanej miary na przykładzie. Dane są dwie instancje: $3-1-2-4-0$ oraz $2-4-1-0-3$. Kolejne kroki algorytmu przedstawione są w poniższej tabeli.

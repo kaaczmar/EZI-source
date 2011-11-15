@@ -7,3 +7,7 @@ Stąd rozwiązanie to po prostu tablica jednowymiarowa o długości $n$ zawieraj
 \subsection{Operator 2-OPT}
 
 Wykorzystaliśmy najprostszy z operatorów sąsiedztwa, jakim jest 2-OPT. Jego zasada generowania sąsiadów jest bardzo prosta -- wybieramy dwa losowe punkty w rozwiązaniu i zamieniamy ze sobą miejscami. W ten sposób uzyskujemy nowe rozwiązanie (być może lepsze, być może gorsze). Bardzo łatwo można wykazać, że dla danego rozwiązania można wygenerować $\frac{n(n-1)}{2}$ sąsiadów. Wynika to z tego, że wpierw wybieramy 1 z $n$ pozycji rozwiązania, następnie 1 z $n-1$ pozostałych miejsc i je zamieniamy. Ponieważ przykładowo zamiana miejsca 3 z miejscem 8 da takiego samego sąsiada jak zamiana miejsca 8 z miejscem 3, to dzielimy uzyskaną liczbę przez 2.
+
+\subsection{Operator 2-OPT dla TS i SA}
+
+Dla algorytmów Tabu Search i Simulated Annealing przygotowaliśmy osobny operator 2-OPT, który umożliwia generowanie sąsiedztwa zgodnie z zasadą oryginalnego operatora poprzez zamianę miejscami dwóch pozycji w rozwiązaniu. Różnica polega na tym, że zamiany nie są deterministyczne -- pozycje są wybierane losowo. Dzięki temu zabiegowi wygenerowanie każdego sąsiada jest równie prawdopodobne; unikamy więc ukierunkowania w jedną ,,stronę'' generowanych sąsiadów.
