@@ -1,0 +1,62 @@
+Indexing documents in tmpdir
+Indexed 65 documents with 471 unique terms.
+Now able to process queries. When done, enter an empty query to exit.
+
+Enter query:  anaconda
+
+Top 10 matching Documents from most to least relevant:
+
+1.  P003.html            Score: 0.6634
+2.  P015.html            Score: 0.59314
+3.  P002.html            Score: 0.5632
+4.  P032.html            Score: 0.55896
+5.  P022.html            Score: 0.49987
+6.  P020.html            Score: 0.48546
+7.  P007.html            Score: 0.47033
+8.  P021.html            Score: 0.45603
+9.  P028.html            Score: 0.41674
+10. P046.html            Score: 0.36953
+
+Enter `m' to see more, a number to show the nth document, nothing to exit.
+
+ Enter command:  
+
+Enter query:  programming
+
+Top 10 matching Documents from most to least relevant:
+
+1.  P049.html            Score: 0.46908
+2.  P054.html            Score: 0.41822
+3.  P055.html            Score: 0.40134
+4.  P059.html            Score: 0.39937
+5.  P061.html            Score: 0.38761
+6.  P042.html            Score: 0.36983
+7.  P063.html            Score: 0.35218
+8.  P045.html            Score: 0.31427
+9.  P043.html            Score: 0.30318
+10. P062.html            Score: 0.27837
+
+Enter `m' to see more, a number to show the nth document, nothing to exit.
+
+ Enter command:  
+
+Enter query:  python
+
+Top 10 matching Documents from most to least relevant:
+
+1.  P029.html            Score: 0.33757
+2.  P026.html            Score: 0.32464
+3.  P010.html            Score: 0.28876
+4.  P034.html            Score: 0.28763
+5.  P031.html            Score: 0.24869
+6.  P009.html            Score: 0.2452
+7.  P036.html            Score: 0.24458
+8.  P006.html            Score: 0.23926
+9.  P041.html            Score: 0.23088
+10. P016.html            Score: 0.22683
+
+Enter `m' to see more, a number to show the nth document, nothing to exit.
+
+ Enter command:  
+
+Enter query: 
