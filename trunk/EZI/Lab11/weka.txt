@@ -1,0 +1,87 @@
+=== Run information ===
+
+Scheme:weka.clusterers.SimpleKMeans -N 7 -A "weka.core.EuclideanDistance -R first-last" -I 500 -S 10
+Relation:     sessions
+Instances:    100
+Attributes:   8
+              Home
+              Products
+              Search
+              Prod_A
+              Prod_B
+              Prod_C
+              Cart
+              Purchase
+Test mode:evaluate on training data
+
+=== Model and evaluation on training set ===
+
+
+kMeans
+======
+
+Number of iterations: 4
+Within cluster sum of squared errors: 93.79009103641458
+Missing values globally replaced with mean/mode
+
+Cluster centroids:
+                         Cluster#
+Attribute    Full Data          0          1          2          3          4          5          6
+                 (100)       (21)       (16)        (4)        (7)       (28)        (7)       (17)
+===================================================================================================
+Home               0.6     0.9048          1          1          1          0          0     0.8235
+Products          0.72     0.9048     0.9375          0     0.2857          1     0.1429     0.4118
+Search            0.43     0.7143      0.125          1          1     0.3214     0.1429     0.2941
+Prod_A            0.53     0.7619      0.875          1     0.1429          0          1     0.6471
+Prod_B            0.55      0.381     0.4375          1          0          1     0.2857     0.3529
+Prod_C            0.45     0.9048      0.125       0.75     0.2857     0.6786          0          0
+Cart              0.61     0.6667          1       0.75          1        0.5          1          0
+Purchase          0.39     0.1905     0.8125        0.5     0.7143     0.3214     0.8571          0
+
+
+
+
+Time taken to build model (full training data) : 0 seconds
+
+=== Model and evaluation on training set ===
+
+Clustered Instances
+
+0       21 ( 21%)
+1       16 ( 16%)
+2        4 (  4%)
+3        7 (  7%)
+4       28 ( 28%)
+5        7 (  7%)
+6       17 ( 17%)
+
+Odpowiedzi do zadañ:
+Zad 1) 
+Do grupy casual'owców na pewno nale¿y cluster6 (nie dodaje do koszyka, nie finalizuje zakupu). Na si³ê mo¿na te¿ przy³¹czyæ cluster0, bo robi bardzo ma³o zakupów.
+
+Do grupy poszukiwaczy mo¿na zaliczyæ grupy cluster2, cluster3, poniewa¿ pomijaj¹ stronê products, a robi¹ zakupy wchodz¹c zawsze na search'a. Cluster3 dodatkowo dodaje produkty ju¿ z poziomu wyszukania, nie wchodzi na stronê towaru.
+
+Cluster1 oraz cluster5 to sfocusowani browserzy. Jednak ta druga grupa korzysta z jakiejœ innej strony ¿eby dostaæ siê na stronê z opisem produktu, bo nie odwiedza home i products, ani nie korzysta z search.
+
+Cluster4 od razu wchodzi na stronê z produktami i wie czego szuka, ale rzadko robi zakupy - powiedzia³bym ¿e to przeciêtny Kowalski, który boi siê robienia zakupów przez internet, ale czasem je zrobi. A adres z list¹ produktów zna, bo korzysta z wyszukiwarki google'a, która od razu umo¿liwia mu wejœcie na stronê z listingiem produktów pomijaj¹c home'a.
+
+U¿ytkownicy o sprecyzowanych potrzebach chêtniej robi¹ zakupy.
+
+Zad2)
+Cluster1 - typowy u¿ytkownik wa³êsaj¹cy siê po stronie zainteresowany produktem A. Przyk³adowo zna markê produktu, wchodzi wiêc na stronê Home, stamt¹d na Products i dalej na produkt A. Nie korzysta z wyszukiwarki, bo zak³adamy, ¿e produkt pojawia siê jako pierwszy na liœcie. Niemal zawsze kupuje towar.
+
+Cluster4 - zainteresowani s¹ produktem B, czêœciowo produktem C, ale rzadko robi¹ zakupy. Nie korzystaj¹ ze strony g³ównej, od razu trafiaj¹ na listê z produktami (kwestia skorzystania z wyszukiwarki do odnalezienia oferty)
+
+Cluster5 - kupuj¹ g³ównie produkt A, jednak nie korzystaj¹ z systemu nawigacji strony. Korzystaj¹ z zewnêtrznej wyszukiwarki ofert (porównywarka cen lub coœ podobnego umo¿liwiaj¹ca przejœcie bezpoœrednio do strony z produktem)
+
+Zad3)
+Cluster5 - baner A
+Cluster4 - baner B
+Obydwie  kampanie odnios³y czêœciowy sukces. Cluster4 zyska³ 9 zakupów, cluster5 zyska³ 6 zakupów. Zak³adamy, ¿e banery prowadzi³y bezpoœrednio do strony z produktem. Wynik ten mo¿e byæ zak³amany i przyk³adowo osoby z cluster1 równie¿ mog³y paœæ ofiar¹ kampanii produktu A, ale jeszcze wa³êsa³y siê po stronie zanim zakoñczy³y robienie zakupów. Wówczas skutecznoœæ tych kampanii mog³aby byæ jeszcze wy¿sza.
+
+Zad4)
+Home->Search->ProdB -> Zgodnie z analiz¹ klastrowania zaproponowaæ wypada produkt A (cluster2 potwierdza tak¹ regu³ê w zachowaniu) - co ciekawe w danych taki przypadek zosta³ zaklasyfikowany do cluster6, lecz tam równie¿ jako produkt, który jest najczêœciej przegl¹dany, wystêpuje produkt A - oczywiœcie klastry zawieraj¹ pewn¹ uogólnion¹ wiedzê i to, ¿e akurat taki przypadek zosta³ przypisany do tego klastra nie do koñca musi byæ prawdziwe i byæ mo¿e nale¿y on jednak do cluster2. dlaczego? wszystko tak naprawdê zale¿y od tego czy bardzo restrykcyjnie podejdziemy do tego, ¿e ten u¿ytkownik ju¿ nie odwiedzi stron cart i purchase - ale skoro jest to nowy delikwent i chcemy podpowiedzieæ mu coœ na temat produktów, którymi móg³by byæ zainteresowany, to wydaje siê, ¿e w analizowanych danych wejœcie na stronê cart i purchase powinno zostaæ pominiête - nie wiemy jeszcze, czy badany delikwent nie wejdzie na te strony po prostu!
+
+Prod->ProdC -> Tutaj sugesti¹ wydaje siê byæ produkt B (wynika to z tego, ¿e takie zapytanie jest najbardziej podobne do cluster4)
+
+
